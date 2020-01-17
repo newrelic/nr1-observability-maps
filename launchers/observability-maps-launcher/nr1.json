@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "observability-maps-launcher",
+    "description": "Observability Maps",
+    "displayName": "Observability Maps",
+    "rootNerdletId": "observability-maps-nerdlet"
+}
