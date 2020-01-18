@@ -93,7 +93,9 @@ export const gqlNrqlQuery = (accountId, query, timeout) => gql`{
 // search for entities by domain & account
 export const entitySearchByAccountQuery = (domain, accountId, cursor) => gql`{
   actor {
-    entitySearch(query: "domain IN ('${domain}') AND reporting = 'true' AND tags.accountId IN ('${accountId}')") {
+    entitySearch(query: "domain IN ('${domain}') AND reporting = 'true' ${
+    accountId ? `AND tags.accountId IN ('${accountId}')` : ""
+}") {
       query
       results${cursor ? `(cursor: "${cursor}")` : ""} {
         nextCursor

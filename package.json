@@ -2,15 +2,16 @@
     "private": true,
     "name": "observability-map",
     "description": "Nerdpack observability-map",
-    "version": "0.1.6",
+    "version": "0.1.8",
     "scripts": {
         "start": "nr1 nerdpack:serve",
         "test": "exit 0"
     },
     "nr1": {
-        "staging": "e616177e-c7cf-4922-8a05-b89c2a303dd8",
-        "uuid": "f3d05ddf-4a9d-429a-8758-165d3b439f8c",
-        "d11": "c9af90aa-e5d9-413d-a1b4-75a5ad381980"
+        "staging": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0",
+        "demotronv2": "f3d05ddf-4a9d-429a-8758-165d3b439f8c",
+        "d11": "c9af90aa-e5d9-413d-a1b4-75a5ad381980",
+        "uuid": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0"
     },
     "dependencies": {
         "d3": "^5.12.0",

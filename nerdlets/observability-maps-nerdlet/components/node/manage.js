@@ -15,7 +15,8 @@ export default class ManageNodes extends React.PureComponent {
             selectedDomain: "",
             searchedEntities: [],
             selectedEntity: null,
-            activeNodeItem: "Add Node"
+            activeNodeItem: "Add Node",
+            showSearchMsg: false
         };
         this.action = this.action.bind(this);
         this.fetchEntities = this.fetchEntities.bind(this);
@@ -102,7 +103,9 @@ export default class ManageNodes extends React.PureComponent {
             searchedEntities = [];
         }
         let accountSplit = selectedAccount.split(/: (.+)/);
-        let nerdGraphResult = await nerdGraphQuery(entitySearchByAccountQuery(selectedDomain, accountSplit[0], cursor));
+        let nerdGraphResult = await nerdGraphQuery(
+            entitySearchByAccountQuery(selectedDomain, accountSplit[0] == 0 ? null : accountSplit[0], cursor)
+        );
         let entitySearchResults = (((nerdGraphResult || {}).actor || {}).entitySearch || {}).results || {};
         // let foundGuids = ((entitySearchResults || {}).entities || []).map((result)=>result.guid)
 
@@ -114,6 +117,7 @@ export default class ManageNodes extends React.PureComponent {
         } else {
             // console.log("complete", this.state.searchedEntities.length)
         }
+        this.setState({ showSearchMsg: true });
     };
 
     handleItemClick = (e, { name }) => this.setState({ activeNodeItem: name });
@@ -126,7 +130,8 @@ export default class ManageNodes extends React.PureComponent {
             selectedAccount,
             selectedDomain,
             searchedEntities,
-            activeNodeItem
+            activeNodeItem,
+            showSearchMsg
         } = this.state;
         let { accounts, mapConfig, dataFetcher, selectedMap, setParentState } = this.props;
 
@@ -149,6 +154,23 @@ export default class ManageNodes extends React.PureComponent {
             text: account.id + ": " + account.name,
             value: account.id + ": " + account.name
         }));
+
+        accountOptions.sort((a, b) => {
+            if (a.key < b.key) {
+                return -1;
+            }
+            if (a.key > b.key) {
+                return 1;
+            }
+            return 0;
+        });
+
+        accountOptions.unshift({
+            key: "All Accounts",
+            text: "0: All Accounts",
+            value: "0: All Accounts"
+        });
+
         let customNodeErrorContent = { content: "", pointing: "above" };
         let customNodeError = false;
 
@@ -178,7 +200,10 @@ export default class ManageNodes extends React.PureComponent {
                         content="Nodes"
                     />
                 }
-                onUnmount={() => setParentState({ closeCharts: false })}
+                onUnmount={() => {
+                    setParentState({ closeCharts: false });
+                    this.setState({ showSearchMsg: false });
+                }}
                 onMount={() => setParentState({ closeCharts: true })}
             >
                 <Menu size="huge" pointing secondary>
@@ -230,6 +255,16 @@ export default class ManageNodes extends React.PureComponent {
                                         }}
                                     />
                                 </Form.Group>
+                                <div
+                                    style={{
+                                        overflowY: "scroll",
+                                        height: "300px",
+                                        display: searchedEntities.length == 0 && showSearchMsg ? "" : "none"
+                                    }}
+                                >
+                                    No entities found with tags.accountId =
+                                    {selectedAccount ? " " + selectedAccount.replace(":", " for") : ""}.
+                                </div>
                                 <div
                                     style={{
                                         overflowY: "scroll",
