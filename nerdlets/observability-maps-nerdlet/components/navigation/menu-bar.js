@@ -121,7 +121,12 @@ export default class MenuBar extends React.PureComponent {
                     <ImportMap userMaps={userMaps} dataFetcher={dataFetcher} setParentState={setParentState} />
 
                     {selectedMap ? (
-                        <ExportMap selectedMap={selectedMap} mapConfig={mapConfig} setParentState={setParentState} />
+                        <ExportMap
+                            selectedMap={selectedMap}
+                            userMaps={userMaps}
+                            mapConfig={mapConfig}
+                            setParentState={setParentState}
+                        />
                     ) : (
                         ""
                     )}

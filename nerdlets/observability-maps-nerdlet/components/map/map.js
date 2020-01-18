@@ -178,8 +178,10 @@ export default class Map extends React.PureComponent {
         }
 
         const ignoreNames = ["Select or create a map!", "Add a node!"];
-        if (rightClickType == "node" && !ignoreNames.includes(rightClickedNodeId))
+        if (rightClickType == "node" && !ignoreNames.includes(rightClickedNodeId)) {
             contextOptions.push({ name: "Edit", action: "editNode" });
+            contextOptions.push({ name: "Delete", action: "deleteNode" });
+        }
 
         const rightClick = item => {
             switch (item.action) {
@@ -194,6 +196,15 @@ export default class Map extends React.PureComponent {
                     break;
                 case "editLink":
                     setParentState({ editLinkOpen: true });
+                    break;
+                case "deleteNode":
+                    delete mapConfig.nodeData[rightClickedNodeId];
+                    Object.keys(mapConfig.linkData).forEach(link => {
+                        if (link.includes(rightClickedNodeId + ":::") || link.includes(":::" + rightClickedNodeId)) {
+                            delete mapConfig.linkData[link];
+                        }
+                    });
+                    setParentState({ mapConfig }, ["saveMap"]);
                     break;
             }
             this.setState({ showContextMenu: false });

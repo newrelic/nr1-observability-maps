@@ -3,7 +3,7 @@ import { Modal, Button } from "semantic-ui-react";
 
 export default class ExportMap extends React.PureComponent {
     render() {
-        let { mapConfig, selectedMap, setParentState } = this.props;
+        let { mapConfig, selectedMap, setParentState, userMaps } = this.props;
         return (
             <Modal
                 size="large"
