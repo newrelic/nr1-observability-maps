@@ -198,6 +198,7 @@ export default class ManageNodes extends React.PureComponent {
                         className="filter-button"
                         icon="block layout"
                         content="Nodes"
+                        id="nodesbtn"
                     />
                 }
                 onUnmount={() => {

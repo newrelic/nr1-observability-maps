@@ -270,7 +270,10 @@ export default class ObservabilityMaps extends React.Component {
             });
 
             // add dummy node if none exists
-            if (nodes.length == 0) nodes = [{ id: "Add a node!", y: 200, x: 375 }];
+            let element = document.getElementById("nodesbtn");
+            let dummyX = element ? element.getBoundingClientRect().x + 40 : 400;
+
+            if (nodes.length == 0) nodes = [{ id: "Add a node!", y: 30, x: dummyX, icon: "arrow up" }];
 
             // reconstruct link data for graph
             let mapLinks = Object.keys((mapData || {}).linkData || {}).map(link => {

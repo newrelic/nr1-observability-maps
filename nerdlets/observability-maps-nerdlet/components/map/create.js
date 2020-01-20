@@ -66,7 +66,7 @@ export default class CreateMap extends React.PureComponent {
                         onClick={() => this.setState({ open: true })}
                         className="filter-button"
                         icon="add"
-                        content="Create Map"
+                        content="Create"
                     />
                 }
             >
