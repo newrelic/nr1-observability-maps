@@ -99,7 +99,16 @@ export default class ObservabilityMaps extends React.Component {
                                 await this.setState({
                                     mapConfig: {
                                         nodeData: {
-                                            "Select or create a map!": { y: 200, x: 375, icon: "map" }
+                                            "Select or create a map, to get started!": {
+                                                y: 30,
+                                                x: 300,
+                                                icon: "arrow up"
+                                            },
+                                            "Tip: Right click on map nodes for more options!": {
+                                                y: 100,
+                                                x: 350,
+                                                icon: "help"
+                                            }
                                         },
                                         linkData: {}
                                     }
