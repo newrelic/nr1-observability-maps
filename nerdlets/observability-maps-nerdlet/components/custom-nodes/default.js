@@ -190,6 +190,7 @@ export default class CustomNode extends React.PureComponent {
                             style={style}
                             inverted
                             hoverable
+                            mouseLeaveDelay={3000}
                             content={this.renderContent(metrics)}
                         />
                     ) : (
