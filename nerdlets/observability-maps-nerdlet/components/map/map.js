@@ -175,6 +175,10 @@ export default class Map extends React.PureComponent {
                         name: "Add Connected Services",
                         action: "addConnectedServices"
                     });
+                    contextOptions.push({
+                        name: "View Distributed Traces",
+                        action: "viewDistributedTraces"
+                    });
                 }
             } else if (rightClickType == "link") {
                 contextOptions.push({ name: "Edit", action: "editLink" });
@@ -238,6 +242,39 @@ export default class Map extends React.PureComponent {
                     });
 
                     setParentState({ mapConfig }, ["saveMap"]);
+                    break;
+                case "viewDistributedTraces":
+                    let dt = {
+                        id: "distributed-tracing-nerdlets.distributed-tracing-launcher",
+                        urlState: {
+                            query: {
+                                operator: "AND",
+                                indexQuery: {
+                                    conditionType: "INDEX",
+                                    operator: "AND",
+                                    conditions: []
+                                },
+                                spanQuery: {
+                                    operator: "AND",
+                                    conditionSets: [
+                                        {
+                                            conditionType: "SPAN",
+                                            operator: "AND",
+                                            conditions: [
+                                                {
+                                                    attr: "appName",
+                                                    operator: "EQ",
+                                                    value: rightClickedNodeId
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    };
+
+                    navigation.openStackedNerdlet(dt);
                     break;
                 case "editNode":
                     setParentState({ editNodeOpen: true });
