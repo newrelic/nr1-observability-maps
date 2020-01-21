@@ -38,7 +38,8 @@ export default class ManageLinks extends React.PureComponent {
         setParentState({ mapConfig }, ["saveMap", "loadMap"]);
     };
 
-    close = () => this.setState({ open: false });
+    handleOpen = () => this.setState({ open: true });
+    handleClose = () => this.setState({ open: false });
 
     createLinkOptions = mapConfig => {
         let linkOptions = Object.keys((mapConfig || {}).linkData || []).map(link => ({
@@ -100,6 +101,7 @@ export default class ManageLinks extends React.PureComponent {
         return (
             <Modal
                 open={open}
+                onClose={this.handleClose}
                 size="small"
                 trigger={
                     <Button
@@ -170,7 +172,7 @@ export default class ManageLinks extends React.PureComponent {
                 </Modal.Content>
                 <Modal.Actions>
                     {/* <Button positive onClick={()=>this.save(dataFetcher, mapConfig, selectedMap, setParentState)}>Create</Button> */}
-                    <Button negative onClick={this.close}>
+                    <Button negative onClick={this.handleClose}>
                         Close
                     </Button>
                 </Modal.Actions>

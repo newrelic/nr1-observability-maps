@@ -94,7 +94,8 @@ export default class ManageNodes extends React.PureComponent {
         this.setState({ selectedNodeType: null, searchedEntities: [] });
     };
 
-    close = () => this.setState({ open: false });
+    handleOpen = () => this.setState({ open: true });
+    handleClose = () => this.setState({ open: false });
 
     fetchEntities = async cursor => {
         let { selectedAccount, selectedDomain, searchedEntities } = this.state;
@@ -191,6 +192,7 @@ export default class ManageNodes extends React.PureComponent {
         return (
             <Modal
                 open={open}
+                onClose={this.handleClose}
                 size="large"
                 trigger={
                     <Button
@@ -349,7 +351,7 @@ export default class ManageNodes extends React.PureComponent {
                     >
                         Create
                     </Button>
-                    <Button style={{ float: "left" }} negative onClick={this.close}>
+                    <Button style={{ float: "left" }} negative onClick={this.handleClose}>
                         Close
                     </Button>
                 </Modal.Actions>
