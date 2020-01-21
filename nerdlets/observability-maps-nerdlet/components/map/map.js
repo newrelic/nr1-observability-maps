@@ -111,7 +111,7 @@ export default class Map extends React.PureComponent {
 
     componentDidUpdate() {
         if (this.props.mapData != this.state.mapData) {
-            this.setState({ showContextMenu: false, mapData: this.props.mapData });
+            this.setState({ mapData: this.props.mapData });
         }
     }
 
@@ -171,6 +171,10 @@ export default class Map extends React.PureComponent {
                         action: "viewConnectedEntities",
                         view: "connections"
                     });
+                    contextOptions.push({
+                        name: "Add Connected Services",
+                        action: "addConnectedServices"
+                    });
                 }
             } else if (rightClickType == "link") {
                 contextOptions.push({ name: "Edit", action: "editLink" });
@@ -190,6 +194,50 @@ export default class Map extends React.PureComponent {
                     break;
                 case "viewConnectedEntities":
                     setParentState({ sidebarOpen: true, sidebarView: item.view });
+                    break;
+                case "addConnectedServices":
+                    // only support non infra entities
+                    mapData.nodeData[rightClickedNodeId].relationships.forEach(rs => {
+                        let sourceEntityType = (((rs || {}).source || {}).entity || {}).entityType || null;
+                        let targetEntityType = (((rs || {}).target || {}).entity || {}).entityType || null;
+
+                        if (
+                            rs.source.entity.name &&
+                            rs.target.entity.name &&
+                            rs.source.entity.name != rs.target.entity.name &&
+                            sourceEntityType &&
+                            targetEntityType &&
+                            !sourceEntityType.includes("INFRA") &&
+                            !targetEntityType.includes("INFRA")
+                        ) {
+                            // add node
+                            let selectedEntity = {};
+                            if (rightClickedNodeId != rs.source.entity.name) {
+                                selectedEntity = rs.source.entity;
+                            } else if (rightClickedNodeId != rs.target.entity.name) {
+                                selectedEntity = rs.target.entity;
+                            }
+                            if (selectedEntity.name && !mapConfig.nodeData[selectedEntity.name]) {
+                                mapConfig.nodeData[selectedEntity.name] = {
+                                    name: selectedEntity.name,
+                                    guid: selectedEntity.guid,
+                                    entityType: selectedEntity.entityType,
+                                    domain: selectedEntity.domain
+                                };
+                            }
+
+                            // add links
+                            let linkId = `${rs.source.entity.name}:::${rs.target.entity.name}`;
+                            if (!mapConfig.linkData[linkId]) {
+                                mapConfig.linkData[linkId] = {
+                                    source: rs.source.entity.name,
+                                    target: rs.target.entity.name
+                                };
+                            }
+                        }
+                    });
+
+                    setParentState({ mapConfig }, ["saveMap"]);
                     break;
                 case "editNode":
                     setParentState({ editNodeOpen: true });
