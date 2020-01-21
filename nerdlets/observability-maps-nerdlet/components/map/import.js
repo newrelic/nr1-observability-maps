@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Input, TextArea, Label } from "semantic-ui-react";
+import { Modal, Button, Input, TextArea, Label, Popup } from "semantic-ui-react";
 import { writeUserDocument } from "../../lib/utils";
 
 function isValidJson(json) {
@@ -16,28 +16,66 @@ export default class ImportMap extends React.PureComponent {
         super(props);
         this.state = {
             mapImport: "Paste map config here!",
-            mapName: ""
+            mapName: "",
+            importOpen: false
         };
         this.saveMap = this.saveMap.bind(this);
     }
 
+    handleOpen = () => this.setState({ importOpen: true });
+    handleClose = () => this.setState({ importOpen: false });
+
     async saveMap() {
         let { mapName, mapImport } = this.state;
-        await writeUserDocument("ObservabilityMaps", mapName, mapImport);
+        let jsonData = JSON.parse(mapImport);
+
+        // cleanse node data
+        let newNodeData = {};
+        Object.keys(jsonData.nodeData).forEach(node => {
+            newNodeData[node] = {
+                name: jsonData.nodeData[node].name,
+                domain: jsonData.nodeData[node].domain,
+                entityType: jsonData.nodeData[node].entityType,
+                guid: jsonData.nodeData[node].guid,
+                hoverType: jsonData.nodeData[node].hoverType,
+                iconSet: jsonData.nodeData[node].iconSet,
+                mainChart: jsonData.nodeData[node].mainChart,
+                customAlert: jsonData.nodeData[node].customAlert,
+                x: jsonData.nodeData[node].x,
+                y: jsonData.nodeData[node].y
+            };
+        });
+        jsonData.nodeData = newNodeData;
+
+        await writeUserDocument("ObservabilityMaps", mapName, jsonData);
         this.props.dataFetcher(["userMaps"]);
         this.setState({ mapImport: "", mapName: "" });
     }
 
     render() {
-        let { mapImport, mapName } = this.state;
+        let { mapImport, mapName, importOpen } = this.state;
         let { setParentState } = this.props;
 
         return (
             <Modal
                 size="large"
+                open={importOpen}
+                onClose={this.handleClose}
                 onUnmount={() => setParentState({ closeCharts: false })}
                 onMount={() => setParentState({ closeCharts: true })}
-                trigger={<Button icon="download" content="Import" className="filter-button" />}
+                trigger={
+                    <Popup
+                        content="Import"
+                        trigger={
+                            <Button
+                                onClick={this.handleOpen}
+                                icon="upload"
+                                style={{ height: "45px" }}
+                                className="filter-button"
+                            />
+                        }
+                    />
+                }
             >
                 <Modal.Header>Import Map</Modal.Header>
                 <Modal.Content>

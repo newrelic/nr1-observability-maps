@@ -1,16 +1,19 @@
 import React from "react";
-import { Modal, Button, Form, Header, Radio } from "semantic-ui-react";
+import { Modal, Button, Popup, Icon } from "semantic-ui-react";
 import { deleteAccountDocument, deleteUserDocument } from "../../lib/utils";
 
 export default class DeleteMap extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = { open: false };
+        this.state = { deleteOpen: false };
         this.save = this.save.bind(this);
     }
 
+    handleOpen = () => this.setState({ deleteOpen: true });
+    handleClose = () => this.setState({ deleteOpen: false });
+
     save = (map, dataFetcher, handleMapMenuChange) => {
-        this.setState({ open: false });
+        this.setState({ deleteOpen: false });
         switch (map.type) {
             case "account":
                 deleteAccountDocument("ObservabilityMaps", map.value);
@@ -25,31 +28,37 @@ export default class DeleteMap extends React.PureComponent {
         }
     };
 
-    close = () => this.setState({ open: false });
-
     render() {
-        let { open } = this.state;
+        let { deleteOpen } = this.state;
         let { selectedMap, dataFetcher, handleMapMenuChange, setParentState } = this.props;
         return (
             <Modal
                 onUnmount={() => setParentState({ closeCharts: false })}
                 onMount={() => setParentState({ closeCharts: true })}
-                open={open}
+                onClose={this.handleClose}
+                open={deleteOpen}
                 size="tiny"
                 trigger={
-                    <Button
-                        color="red"
-                        onClick={() => this.setState({ open: true })}
-                        icon="close"
-                        content="Delete"
-                        className="filter-button-clear"
+                    <Popup
+                        content="Delete Map"
+                        trigger={
+                            <Button onClick={this.handleOpen} style={{ height: "45px" }} className="filter-button">
+                                <Icon.Group
+                                    size="large"
+                                    style={{ marginTop: "5px", marginLeft: "8px", marginRight: "-10px" }}
+                                >
+                                    <Icon name="map" color="red" />
+                                    <Icon name="minus" color="red" corner="bottom right" />
+                                </Icon.Group>
+                            </Button>
+                        }
                     />
                 }
             >
                 <Modal.Header>Delete Map</Modal.Header>
                 <Modal.Content>Are you sure you want to delete "{selectedMap.label}" map?</Modal.Content>
                 <Modal.Actions>
-                    <Button style={{ float: "left" }} positive onClick={this.close}>
+                    <Button style={{ float: "left" }} positive onClick={this.handleClose}>
                         Don't Delete
                     </Button>
 

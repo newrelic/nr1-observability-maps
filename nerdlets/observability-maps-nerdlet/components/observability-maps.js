@@ -38,8 +38,8 @@ export default class ObservabilityMaps extends React.Component {
             selectedLink: "",
             mapConfig: {
                 nodeData: {
-                    "Select or create a map, to get started!": { y: 30, x: 400, icon: "arrow up" },
-                    "Tip: Right click on map nodes for more options!": { y: 100, x: 450, icon: "help" }
+                    "Select or create a map, to get started!": { y: 30, x: 300, icon: "arrow up" },
+                    "Tip: Right click on map nodes for more options!": { y: 100, x: 350, icon: "help" }
                 },
                 linkData: {}
             },

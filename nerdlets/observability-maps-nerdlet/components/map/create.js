@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Header, Radio } from "semantic-ui-react";
+import { Modal, Button, Form, Header, Radio, Popup, Icon } from "semantic-ui-react";
 import { writeUserDocument, writeAccountDocument } from "../../lib/utils";
 
 export default class CreateMap extends React.PureComponent {
@@ -8,14 +8,17 @@ export default class CreateMap extends React.PureComponent {
         this.state = {
             mapName: "",
             storeLocation: "user",
-            open: false
+            createOpen: false
         };
         this.save = this.save.bind(this);
     }
 
+    handleOpen = () => this.setState({ createOpen: true });
+    handleClose = () => this.setState({ createOpen: false });
+
     save = async (dataFetcher, handleMapMenuChange) => {
         let { mapName, storeLocation } = this.state;
-        this.setState({ open: false });
+        this.setState({ createOpen: false });
         let payload = {
             nodeData: {},
             linkData: {}
@@ -35,10 +38,8 @@ export default class CreateMap extends React.PureComponent {
         this.setState({ mapName: "" });
     };
 
-    close = () => this.setState({ open: false });
-
     render() {
-        let { mapName, storeLocation, open } = this.state;
+        let { mapName, storeLocation, createOpen } = this.state;
         let { dataFetcher, handleMapMenuChange, userMaps, accountMaps, setParentState } = this.props;
         userMaps = userMaps || [];
         accountMaps = accountMaps || [];
@@ -57,18 +58,35 @@ export default class CreateMap extends React.PureComponent {
 
         return (
             <Modal
-                open={open}
+                open={createOpen}
                 onUnmount={() => setParentState({ closeCharts: false })}
                 onMount={() => setParentState({ closeCharts: true })}
+                onClose={this.handleClose}
                 size="tiny"
                 trigger={
-                    <Button
-                        onClick={() => this.setState({ open: true })}
-                        className="filter-button"
-                        icon="add"
-                        content="Create"
+                    <Popup
+                        content="Create Map"
+                        trigger={
+                            <Button onClick={this.handleOpen} style={{ height: "45px" }} className="filter-button">
+                                <Icon.Group
+                                    size="large"
+                                    style={{ marginTop: "5px", marginLeft: "8px", marginRight: "-10px" }}
+                                >
+                                    <Icon name="map outline" />
+                                    <Icon corner="bottom right" name="add" />
+                                </Icon.Group>
+                            </Button>
+                        }
                     />
                 }
+                // trigger={
+                //     <Button
+                //         onClick={() => this.setState({ open: true })}
+                //         className="filter-button"
+                //         icon="add"
+                //         content="Create"
+                //     />
+                // }
             >
                 <Modal.Header>Create Map</Modal.Header>
                 <Modal.Content>
@@ -113,7 +131,7 @@ export default class CreateMap extends React.PureComponent {
                     >
                         Create
                     </Button>
-                    <Button style={{ float: "left" }} negative onClick={this.close}>
+                    <Button style={{ float: "left" }} negative onClick={this.handleClose}>
                         Close
                     </Button>
                 </Modal.Actions>
