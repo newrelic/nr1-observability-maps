@@ -175,11 +175,19 @@ export default class Map extends React.PureComponent {
                         name: "Add Connected Services",
                         action: "addConnectedServices"
                     });
+                }
+
+                if (mapData.nodeData[rightClickedNodeId].domain == "APM") {
                     contextOptions.push({
                         name: "View Distributed Traces",
                         action: "viewDistributedTraces"
                     });
                 }
+
+                contextOptions.push({
+                    name: "View Logs",
+                    action: "viewLogs"
+                });
             } else if (rightClickType == "link") {
                 contextOptions.push({ name: "Edit", action: "editLink" });
             }
@@ -273,8 +281,16 @@ export default class Map extends React.PureComponent {
                             }
                         }
                     };
-
                     navigation.openStackedNerdlet(dt);
+                    break;
+                case "viewLogs":
+                    let logs = {
+                        id: "logger.log-tailer",
+                        urlState: {
+                            query: `"${rightClickedNodeId}"`
+                        }
+                    };
+                    navigation.openStackedNerdlet(logs);
                     break;
                 case "editNode":
                     setParentState({ editNodeOpen: true });
