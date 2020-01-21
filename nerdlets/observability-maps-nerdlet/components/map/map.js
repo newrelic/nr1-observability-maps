@@ -195,7 +195,7 @@ export default class Map extends React.PureComponent {
 
         const ignoreNames = ["Select or create a map!", "Add a node!"];
         if (rightClickType == "node" && !ignoreNames.includes(rightClickedNodeId)) {
-            contextOptions.push({ name: "Edit", action: "editNode" });
+            contextOptions.unshift({ name: "Edit", action: "editNode" });
             contextOptions.push({ name: "Delete", action: "deleteNode" });
         }
 
@@ -328,7 +328,9 @@ export default class Map extends React.PureComponent {
                             {contextOptions.map((item, i) => {
                                 return (
                                     <Menu.Item key={i} link onClick={() => rightClick(item)}>
-                                        {item.name}
+                                        <span style={{ color: item.name == "Delete" ? "red" : "white" }}>
+                                            {item.name}
+                                        </span>
                                     </Menu.Item>
                                 );
                             })}
