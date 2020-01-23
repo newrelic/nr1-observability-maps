@@ -16,7 +16,7 @@ export default class ManageIcons extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            selected: "",
+            selected: "new",
             name: "",
             green: "",
             orange: "",
@@ -84,7 +84,7 @@ export default class ManageIcons extends React.PureComponent {
                     <Form>
                         <Form.Group inline widths={"16"}>
                             <Form.Field
-                                width={"14"}
+                                width={"10"}
                                 style={{ display: "inline", width: "100%" }}
                                 control={Select}
                                 options={options}
@@ -93,7 +93,18 @@ export default class ManageIcons extends React.PureComponent {
                                 onChange={(e, d) => this.handleIconSetChange(d.value)}
                             />
                             <Form.Button
-                                width={"2"}
+                                width={"3"}
+                                style={{ display: "inline", width: "100%" }}
+                                control={Button}
+                                positive
+                                disabled={name == "" && green == "" && orange == "" && red == ""}
+                                content={selected == "new" ? "Clear" : "Create New"}
+                                onClick={() =>
+                                    this.setState({ selected: "new", name: "", green: "", orange: "", red: "" })
+                                }
+                            />
+                            <Form.Button
+                                width={"3"}
                                 style={{ display: "inline", width: "100%" }}
                                 control={Button}
                                 negative
