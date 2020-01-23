@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Select, Table, Menu } from "semantic-ui-react";
+import { Modal, Button, Form, Select, Table, Menu, Input } from "semantic-ui-react";
 import { nerdGraphQuery, entitySearchByAccountQuery } from "../../lib/utils";
 import DeleteNode from "./delete-node";
 
@@ -16,7 +16,8 @@ export default class ManageNodes extends React.PureComponent {
             searchedEntities: [],
             selectedEntity: null,
             activeNodeItem: "Add Node",
-            showSearchMsg: false
+            showSearchMsg: false,
+            searchText: ""
         };
         this.action = this.action.bind(this);
         this.fetchEntities = this.fetchEntities.bind(this);
@@ -132,7 +133,8 @@ export default class ManageNodes extends React.PureComponent {
             selectedDomain,
             searchedEntities,
             activeNodeItem,
-            showSearchMsg
+            showSearchMsg,
+            searchText
         } = this.state;
         let { accounts, mapConfig, dataFetcher, selectedMap, setParentState } = this.props;
 
@@ -258,6 +260,15 @@ export default class ManageNodes extends React.PureComponent {
                                         }}
                                     />
                                 </Form.Group>
+                                <Form.Group style={{ display: searchedEntities.length == 0 ? "none" : "" }}>
+                                    <Form.Field
+                                        width="16"
+                                        control={Input}
+                                        label="Search"
+                                        placeholder="My service..."
+                                        onChange={e => this.setState({ searchText: e.target.value })}
+                                    />
+                                </Form.Group>
                                 <div
                                     style={{
                                         overflowY: "scroll",
@@ -277,29 +288,35 @@ export default class ManageNodes extends React.PureComponent {
                                 >
                                     <Table compact>
                                         <Table.Body>
-                                            {searchedEntities.map((entity, i) => {
-                                                let exists = mapConfig.nodeData[entity.name];
-                                                return (
-                                                    <Table.Row key={i}>
-                                                        <Table.Cell>{entity.name}</Table.Cell>
-                                                        <Table.Cell>
-                                                            <Button
-                                                                style={{ float: "right" }}
-                                                                onClick={() =>
-                                                                    this.action(
-                                                                        exists ? "del" : "add",
-                                                                        mapConfig,
-                                                                        setParentState,
-                                                                        entity
-                                                                    )
-                                                                }
-                                                            >
-                                                                {exists ? "Delete" : "Add"}
-                                                            </Button>
-                                                        </Table.Cell>
-                                                    </Table.Row>
-                                                );
-                                            })}
+                                            {searchedEntities
+                                                .filter(entity =>
+                                                    entity.name
+                                                        ? entity.name.toLowerCase().includes(searchText.toLowerCase())
+                                                        : false
+                                                )
+                                                .map((entity, i) => {
+                                                    let exists = mapConfig.nodeData[entity.name];
+                                                    return (
+                                                        <Table.Row key={i}>
+                                                            <Table.Cell>{entity.name}</Table.Cell>
+                                                            <Table.Cell>
+                                                                <Button
+                                                                    style={{ float: "right" }}
+                                                                    onClick={() =>
+                                                                        this.action(
+                                                                            exists ? "del" : "add",
+                                                                            mapConfig,
+                                                                            setParentState,
+                                                                            entity
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {exists ? "Delete" : "Add"}
+                                                                </Button>
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    );
+                                                })}
                                         </Table.Body>
                                     </Table>
                                 </div>
