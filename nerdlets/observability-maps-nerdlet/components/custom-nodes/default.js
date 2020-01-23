@@ -98,14 +98,14 @@ export default class CustomNode extends React.PureComponent {
         }
     }
 
-    renderIcon(nodeData, nodeId, isOpen, icon, colorOne) {
+    renderIcon(nodeData, nodeId, isOpen, icon, colorOne, colorTwo) {
         if (nodeData.iconSet) {
             let iconSet = this.props.userIcons.filter(set => set.id == nodeData.iconSet)[0];
             if (iconSet && iconSet.document) {
                 let iconSrc = iconSet.document.red || iconSet.document.orange || iconSet.document.green;
 
-                if (iconSet.document[colorOne]) {
-                    iconSrc = iconSet.document[colorOne];
+                if (iconSet.document[colorTwo]) {
+                    iconSrc = iconSet.document[colorTwo];
                 }
 
                 if (iconSet) {
@@ -199,7 +199,7 @@ export default class CustomNode extends React.PureComponent {
 
                     <Popup
                         // className="popup-custom"
-                        trigger={this.renderIcon(data, nodeId, isOpen, icon, colorOne)}
+                        trigger={this.renderIcon(data, nodeId, isOpen, icon, colorOne, colorTwo)}
                         on="click"
                         style={style}
                         inverted
