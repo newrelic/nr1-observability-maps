@@ -11,6 +11,7 @@ import ManageLinks from "../link/manage";
 import ImportMap from "../map/import";
 import RefreshSelector from "../map/refresh";
 import ManageIcons from "../icons/manage";
+import MapSettings from "../map/settings";
 
 function openChartBuilder(query, account) {
     const nerdlet = {
@@ -161,6 +162,18 @@ export default class MenuBar extends React.PureComponent {
                     {/* <UserConfig /> */}
 
                     <ManageIcons userIcons={userIcons} dataFetcher={dataFetcher} setParentState={setParentState} />
+
+                    {selectedMap ? (
+                        <MapSettings
+                            selectedMap={selectedMap}
+                            userMaps={userMaps}
+                            mapConfig={mapConfig}
+                            setParentState={setParentState}
+                            dataFetcher={dataFetcher}
+                        />
+                    ) : (
+                        ""
+                    )}
 
                     {selectedMap ? (
                         <Button

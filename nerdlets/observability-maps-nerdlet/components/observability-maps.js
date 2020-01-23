@@ -500,6 +500,21 @@ export default class ObservabilityMaps extends React.Component {
         let graphWidth = sidebarOpen ? (this.props.width / 4) * 3 : this.props.width;
         let nodeSize = 700;
 
+        let mainGridStyle = {
+            height: this.props.height - 60,
+            backgroundColor: "black",
+            marginTop: "0px"
+        };
+
+        // dynamically add map settings
+        if (mapConfig.settings) {
+            Object.keys(mapConfig.settings).forEach(key => {
+                if (key.startsWith("background")) {
+                    mainGridStyle[key] = mapConfig.settings[key];
+                }
+            });
+        }
+
         // the graph configuration, you only need to pass down properties
         // that you want to override, otherwise default ones will be used
         let d3MapConfig = {
@@ -563,14 +578,7 @@ export default class ObservabilityMaps extends React.Component {
                     timelineOpen={timelineOpen}
                 />
 
-                <Grid
-                    columns={16}
-                    style={{
-                        height: this.props.height - 60,
-                        backgroundColor: "black",
-                        marginTop: "0px"
-                    }}
-                >
+                <Grid columns={16} style={mainGridStyle}>
                     <Grid.Row style={{ paddingTop: "0px" }}>
                         <Grid.Column width={16}>
                             {data.nodes.length > 0 ? (
