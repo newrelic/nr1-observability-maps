@@ -24,6 +24,9 @@ const onMouseOutLink = (source, target) => {
     // window.alert(`Mouse out link between ${source} and ${target}`);
 };
 
+// do not allow negative coordinates
+const safeCoordinate = coordinate => (coordinate <= 0 ? Math.floor(Math.random() * 200) + 1 : coordinate);
+
 export default class Map extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -34,7 +37,14 @@ export default class Map extends React.PureComponent {
             menuX: 0,
             menuY: 0,
             freezeNodes: false,
-            rightClickedNodeId: null
+            rightClickedNodeId: null,
+            data: {
+                nodes: [
+                    { id: "Select or create a map, to get started!", y: 30, x: 300, icon: "arrow up" },
+                    { id: "Tip: Right click on map nodes for more options!", y: 100, x: 350, icon: "help" }
+                ],
+                links: []
+            }
         };
 
         this.onClickLink = this.onClickLink.bind(this);
@@ -48,7 +58,13 @@ export default class Map extends React.PureComponent {
     logRefs = () => console.log(this.refs);
 
     onNodePositionChange = async (nodeId, x, y, mapConfig, setParentState) => {
-        await this.setState({ freezeNodes: true });
+        // perform a quick artifical update, before coordinates are saved to nerdstore
+        let { data } = this.state;
+        let indexToUpdate = data.nodes.findIndex(o => o.id === nodeId);
+        data.nodes[indexToUpdate].x = x;
+        data.nodes[indexToUpdate].y = y;
+
+        await this.setState({ freezeNodes: true, data });
         const ignoreNames = ["Select or create a map!", "Add a node!"];
         if (!ignoreNames.includes(nodeId)) {
             mapConfig.nodeData[nodeId].x = x;
@@ -104,14 +120,14 @@ export default class Map extends React.PureComponent {
     };
 
     componentDidMount() {
-        if (this.props.mapData) {
-            this.setState({ mapData: this.props.mapData });
+        if (this.props.mapData && this.props.data) {
+            this.setState({ mapData: this.props.mapData, data: this.props.data });
         }
     }
 
-    componentDidUpdate() {
+    async componentDidUpdate() {
         if (this.props.mapData != this.state.mapData) {
-            this.setState({ mapData: this.props.mapData });
+            await this.setState({ mapData: this.props.mapData, data: this.props.data });
         }
     }
 
@@ -125,7 +141,8 @@ export default class Map extends React.PureComponent {
             freezeNodes,
             rightClickedNodeId,
             rightClickedLinkId,
-            rightClickType
+            rightClickType,
+            data
         } = this.state;
 
         if (freezeNodes) {
@@ -339,11 +356,10 @@ export default class Map extends React.PureComponent {
                 ) : (
                     ""
                 )}
-                {/* <Button onClick={this.logRefs}>restart sim</Button> */}
                 <Graph
                     id="graphid" // id is mandatory, if no id is defined rd3g will throw an error
                     ref="graph"
-                    data={this.props.data}
+                    data={data}
                     config={d3MapConfig}
                     onClickNode={this.onClickNode}
                     onRightClickNode={(e, n) => this.onRightClickNode(e, n, mapConfig, setParentState)}
@@ -355,7 +371,13 @@ export default class Map extends React.PureComponent {
                     onMouseOverLink={onMouseOverLink}
                     onMouseOutLink={onMouseOutLink}
                     onNodePositionChange={(nodeId, x, y) =>
-                        this.onNodePositionChange(nodeId, x, y, mapConfig, setParentState)
+                        this.onNodePositionChange(
+                            nodeId,
+                            safeCoordinate(x),
+                            safeCoordinate(y),
+                            mapConfig,
+                            setParentState
+                        )
                     }
                 />
             </>
