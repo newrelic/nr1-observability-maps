@@ -32,7 +32,21 @@ export default class CustomNode extends React.PureComponent {
                     <Table.Body>
                         <Table.Row>
                             {metrics.map((metric, i) => {
-                                let value = isNaN(metric.value) ? metric.value : metric.value.toFixed(4);
+                                let value = "";
+
+                                // allows support for percentiles
+                                if (typeof metric.value === "object" && metric.value !== null) {
+                                    Object.keys(metric.value).forEach((key, i) => {
+                                        let isLast = i + 1 == Object.keys(metric.value).length;
+                                        let keyValue = isNaN(metric.value[key])
+                                            ? metric.value[key]
+                                            : metric.value[key].toFixed(4);
+                                        value = value + ` ${key}: ${keyValue} ${isLast ? "" : "|"}`;
+                                    });
+                                } else {
+                                    value = isNaN(metric.value) ? metric.value : metric.value.toFixed(4);
+                                }
+
                                 return (
                                     <Table.Cell key={i}>
                                         {value} {metric.unit}

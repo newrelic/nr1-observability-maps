@@ -157,13 +157,18 @@ export default class EditNode extends React.PureComponent {
         let { mapConfig, setParentState, editNodeOpen, selectedNode, accounts } = this.props;
         let { selectedEditOption, selectedHoverOption } = this.state;
 
-        const editOptions = [
+        let editOptions = [
             { key: "hm", text: "Hover Metrics", value: "hoverMetrics" },
             { key: "mc", text: "Main Chart", value: "mainChart" },
             { key: "i", text: "Icon Set", value: "iconSet" },
             { key: "ca", text: "Custom Alert Severity", value: "customAlertSeverity" }
             // { key: 'cxy', text: 'Coordinates', value: 'coordinates' }
         ];
+
+        // if ((((mapConfig || {}).nodeData || {})[selectedNode] || {}).entityType || "" == "CUSTOM_NODE") {
+        //     console.log(mapConfig.nodeData[selectedNode].entityType);
+        //     editOptions.unshift({ key: "n", text: "Name", value: "name" });
+        // }
 
         const hoverOptions = [
             { key: "d", text: "Default", value: "default" },
