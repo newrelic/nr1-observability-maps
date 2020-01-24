@@ -44,7 +44,17 @@ export const setLinkData = (link, linkData) => {
     if (linkData[id]) {
         if (linkData[id].hoverData && linkData[id].hoverData.length > 0) {
             linkData[id].hoverData.forEach(metric => {
-                text = text + `${metric.value} ${metric.name} `;
+                // allows support for percentiles
+                if (typeof metric.value === "object" && metric.value !== null) {
+                    Object.keys(metric.value).forEach((key, i) => {
+                        let isLast = i + 1 == Object.keys(metric.value).length;
+                        let keyValue = isNaN(metric.value[key]) ? metric.value[key] : metric.value[key].toFixed(2);
+                        text = text + ` ${key}: ${keyValue} ${isLast ? "" : "|"}`;
+                    });
+                } else {
+                    let metricValue = isNaN(metric.value) ? metric.value : metric.value.toFixed(2);
+                    text = text + `${metricValue} ${metric.name} `;
+                }
             });
         } else if (linkData[id].externalSummary) {
             if (linkData[id].externalSummary.throughput) text += ` ${linkData[id].externalSummary.throughput} rpm`;
