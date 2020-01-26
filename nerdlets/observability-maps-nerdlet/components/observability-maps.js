@@ -498,7 +498,7 @@ export default class ObservabilityMaps extends React.Component {
             closeCharts
         } = this.state;
         let graphWidth = sidebarOpen ? (this.props.width / 4) * 3 : this.props.width;
-        let nodeSize = 700;
+        let nodeSize = 700; // increasing this will not adjust the icon sizing, it will increase the svg area
 
         let mainGridStyle = {
             height: this.props.height - 60,

@@ -54,38 +54,39 @@ export default class ManageNodes extends React.PureComponent {
                 }
                 break;
             case "del":
+                // ensure links are deleted first
                 switch (selectedNodeType) {
                     case "account":
                         // 0 == accountId, 1 == accountName
                         let accountSplit = selectedAccount.split(/: (.+)/);
-                        delete mapConfig.nodeData[accountSplit[1]];
-
                         // clean up links
                         Object.keys(mapConfig.linkData).forEach(link => {
                             if (link.includes(accountSplit[1] + ":::") || link.includes(":::" + accountSplit[1])) {
                                 delete mapConfig.linkData[link];
                             }
                         });
+
+                        delete mapConfig.nodeData[accountSplit[1]];
                         break;
                     case "entity":
-                        delete mapConfig.nodeData[entity.name];
-
                         // clean up links
                         Object.keys(mapConfig.linkData).forEach(link => {
                             if (link.includes(accountSplit[1] + ":::") || link.includes(":::" + accountSplit[1])) {
                                 delete mapConfig.linkData[link];
                             }
                         });
+
+                        delete mapConfig.nodeData[entity.name];
                         break;
                     case "node":
-                        delete mapConfig.nodeData[node];
-
                         // clean up links
                         Object.keys(mapConfig.linkData).forEach(link => {
                             if (link.includes(node + ":::") || link.includes(":::" + node)) {
                                 delete mapConfig.linkData[link];
                             }
                         });
+
+                        delete mapConfig.nodeData[node];
                         break;
                 }
                 break;
