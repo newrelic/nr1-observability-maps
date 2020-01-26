@@ -93,7 +93,7 @@ export default class ManageNodes extends React.PureComponent {
         }
 
         setParentState({ mapConfig }, ["saveMap"]);
-        this.setState({ selectedNodeType: null, searchedEntities: [] });
+        this.setState({ selectedNodeType: null, searchedEntities: [], customNodeName: "" });
     };
 
     handleOpen = () => this.setState({ open: true });
