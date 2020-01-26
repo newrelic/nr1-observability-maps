@@ -39,7 +39,7 @@ export default class ManageLinks extends React.PureComponent {
     };
 
     handleOpen = () => this.setState({ open: true });
-    handleClose = () => this.setState({ open: false });
+    handleClose = () => this.setState({ open: false, selectedSource: "", selectedTarget: "" });
 
     createLinkOptions = mapConfig => {
         let linkOptions = Object.keys((mapConfig || {}).linkData || []).map(link => ({
