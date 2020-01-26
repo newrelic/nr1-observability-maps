@@ -43,7 +43,7 @@ export default class ManageNodes extends React.PureComponent {
                         };
                         break;
                     case "entity":
-                        mapConfig.nodeData[entity.name] = {
+                        mapConfig.nodeData[`${entity.name} [${entity.domain}]`] = {
                             nodeType: "entity",
                             entityType: entity.entityType,
                             guid: entity.guid
@@ -52,11 +52,12 @@ export default class ManageNodes extends React.PureComponent {
                 }
                 break;
             case "del":
+                // 0 == accountId, 1 == accountName
+                let accountSplit = selectedAccount.split(/: (.+)/);
+
                 // ensure links are deleted first
                 switch (selectedNodeType) {
                     case "account":
-                        // 0 == accountId, 1 == accountName
-                        let accountSplit = selectedAccount.split(/: (.+)/);
                         // clean up links
                         Object.keys(mapConfig.linkData).forEach(link => {
                             if (link.includes(accountSplit[1] + ":::") || link.includes(":::" + accountSplit[1])) {
@@ -74,7 +75,9 @@ export default class ManageNodes extends React.PureComponent {
                             }
                         });
 
+                        // keep both deletes for backwards compatibility
                         delete mapConfig.nodeData[entity.name];
+                        delete mapConfig.nodeData[`${entity.name} [${entity.domain}]`];
                         break;
                     case "node":
                         // clean up links
@@ -118,9 +121,9 @@ export default class ManageNodes extends React.PureComponent {
         this.setState({ showSearchMsg: true });
     };
 
-    handleOpen = () => this.setState({ open: true });
+    handleOpen = () => this.setState({ open: true, searchText: "" });
     handleClose = () => this.setState({ open: false });
-    handleItemClick = (e, { name }) => this.setState({ activeNodeItem: name });
+    handleItemClick = (e, { name }) => this.setState({ activeNodeItem: name, searchText: "" });
 
     render() {
         let {
@@ -294,7 +297,10 @@ export default class ManageNodes extends React.PureComponent {
                                                         : false
                                                 )
                                                 .map((entity, i) => {
-                                                    let exists = mapConfig.nodeData[entity.name];
+                                                    // keep both for backwards compatibility
+                                                    let exists =
+                                                        mapConfig.nodeData[entity.name] ||
+                                                        mapConfig.nodeData[`${entity.name} [${entity.domain}]`];
                                                     return (
                                                         <Table.Row key={i}>
                                                             <Table.Cell>{entity.name}</Table.Cell>

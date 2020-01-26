@@ -24,6 +24,14 @@ const collectionName = "ObservabilityMaps";
 const userConfig = "ObservabilityUserConfig";
 const iconCollection = "ObservabilityIcons";
 
+const cleanNodeId = nodeId => {
+    // strip special domain tags added
+    ["[APM]", "[INFRA]", "[BROWSER]", "[SYNTH]", "[MOBILE]"].forEach(word => {
+        nodeId = nodeId.replace(word, "");
+    });
+    return nodeId;
+};
+
 const chunk = (arr, size) =>
     Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size));
 
@@ -530,7 +538,7 @@ export default class ObservabilityMaps extends React.Component {
                 highlightStrokeColor: "blue",
                 fontSize: 16,
                 highlightFontSize: 16,
-                // labelProperty: node => <CustomLabel node={node} />,
+                labelProperty: node => cleanNodeId(node.id),
                 // renderLabel: false,
                 fontColor: "white",
                 // viewGenerator: node => <Popup basic pinned on={"click"} content={node} trigger={<Button color="green" icon='add' />} />

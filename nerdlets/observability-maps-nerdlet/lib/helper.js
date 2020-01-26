@@ -28,6 +28,8 @@ export const setEntityDesign = entityType => {
             return { icon: "box" };
         case "INFRASTRUCTURE_HOST_ENTITY":
             return { icon: "server" };
+        case "BROWSER_APPLICATION_ENTITY":
+            return { icon: "computer" };
         case "MOBILE_APPLICATION_ENTITY":
             return { icon: "mobile" };
         case "CUSTOM_ACCOUNT":

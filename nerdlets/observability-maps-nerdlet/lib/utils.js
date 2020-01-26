@@ -315,6 +315,64 @@ export const entityBatchQuery = guids => {
             throughput
           }
         }
+        ... on BrowserApplicationEntity {
+          guid
+          name
+          account {
+            id
+            name
+          }
+          domain
+          browserSummary {
+            ajaxRequestThroughput
+            ajaxResponseTimeAverage
+            jsErrorRate
+            pageLoadThroughput
+            pageLoadTimeAverage
+            pageLoadTimeMedian
+            spaResponseTimeAverage
+            spaResponseTimeMedian
+          }
+          relationships {
+            source {
+              entity {
+                account {
+                  id
+                  name
+                }
+                domain
+                guid
+                entityType
+                name
+              }
+            }
+            target {
+              entity {
+                account {
+                  id
+                  name
+                }
+                domain
+                guid
+                entityType
+                name
+              }
+            }
+          }
+          servingApmApplicationId
+          recentAlertViolations(count: 5) {
+            agentUrl
+            alertSeverity
+            closedAt
+            label
+            level
+            openedAt
+            violationId
+            violationUrl
+          }
+          alertSeverity
+          entityType
+        }
       }
     }
   }`;
