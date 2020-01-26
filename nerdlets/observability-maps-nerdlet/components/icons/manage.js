@@ -69,7 +69,12 @@ export default class ManageIcons extends React.PureComponent {
         let { userIcons, setParentState } = this.props;
         let { selected, name, green, orange, red } = this.state;
 
-        let options = userIcons.map((set, i) => ({ key: i, text: set.id, value: set.id, data: set.document }));
+        let options = userIcons.map((set, i) => ({
+            key: i,
+            text: set.id.replace(/\+/g, " "),
+            value: set.id,
+            data: set.document
+        }));
         options.unshift({ key: "new", text: "New Icon Set", value: "new" });
 
         return (
@@ -122,7 +127,7 @@ export default class ManageIcons extends React.PureComponent {
                             fluid
                             label={`Name`}
                             placeholder={`Icon Set Name`}
-                            value={name}
+                            value={name.replace(/\+/g, " ")}
                             onChange={(e, d) => this.setState({ name: e.target.value })}
                         />
                         <Label

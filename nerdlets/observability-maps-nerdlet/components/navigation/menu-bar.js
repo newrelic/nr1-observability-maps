@@ -73,7 +73,7 @@ export default class MenuBar extends React.PureComponent {
         if (accountMaps) {
             accountMaps = accountMaps.map(map => ({
                 value: map.id,
-                label: map.id.replace("+", " "),
+                label: map.id.replace(/\+/g, " "),
                 type: "account"
             }));
             availableMaps = [...availableMaps, ...accountMaps];
@@ -81,7 +81,7 @@ export default class MenuBar extends React.PureComponent {
         if (userMaps) {
             userMaps = userMaps.map(map => ({
                 value: map.id,
-                label: map.id.replace("+", " "),
+                label: map.id.replace(/\+/g, " "),
                 type: "user"
             }));
             availableMaps = [...availableMaps, ...userMaps];
