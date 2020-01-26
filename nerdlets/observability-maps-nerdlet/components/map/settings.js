@@ -126,13 +126,21 @@ export default class MapSettings extends React.PureComponent {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Input
-                                onChange={(e, d) => this.handleChange(e, d, "backgroundRepeat")}
-                                value={backgroundRepeat || ""}
-                                width="8"
+                            <Form.Select
                                 fluid
                                 label="Background Repeat"
-                                placeholder="repeat"
+                                width="8"
+                                value={backgroundRepeat || ""}
+                                options={[
+                                    { key: "n", text: "None", value: "" },
+                                    { key: "r", text: "repeat", value: "repeat" },
+                                    { key: "rx", text: "repeat-x", value: "repeat-x" },
+                                    { key: "ry", text: "repeat-y", value: "repeat-y" },
+                                    { key: "nr", text: "no-repeat", value: "no-repeat" },
+                                    { key: "ini", text: "initial", value: "initial" },
+                                    { key: "inh", text: "inherit", value: "inherit" }
+                                ]}
+                                onChange={(e, d) => this.handleChange(e, d, "backgroundRepeat")}
                             />
                             <Form.Input
                                 onChange={(e, d) => this.handleChange(e, d, "backgroundPosition")}
