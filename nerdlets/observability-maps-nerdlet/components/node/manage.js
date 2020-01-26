@@ -19,8 +19,6 @@ export default class ManageNodes extends React.PureComponent {
             showSearchMsg: false,
             searchText: ""
         };
-        this.action = this.action.bind(this);
-        this.fetchEntities = this.fetchEntities.bind(this);
     }
 
     action = async (action, mapConfig, setParentState, entity, node) => {
@@ -96,9 +94,6 @@ export default class ManageNodes extends React.PureComponent {
         this.setState({ selectedNodeType: null, searchedEntities: [], customNodeName: "" });
     };
 
-    handleOpen = () => this.setState({ open: true });
-    handleClose = () => this.setState({ open: false });
-
     fetchEntities = async cursor => {
         let { selectedAccount, selectedDomain, searchedEntities } = this.state;
         // if no cursor its a new search so empty entities
@@ -123,6 +118,8 @@ export default class ManageNodes extends React.PureComponent {
         this.setState({ showSearchMsg: true });
     };
 
+    handleOpen = () => this.setState({ open: true });
+    handleClose = () => this.setState({ open: false });
     handleItemClick = (e, { name }) => this.setState({ activeNodeItem: name });
 
     render() {
@@ -175,21 +172,22 @@ export default class ManageNodes extends React.PureComponent {
             value: "0: All Accounts"
         });
 
-        let customNodeErrorContent = { content: "", pointing: "above" };
-        let customNodeError = false;
-
-        // needs handling for existing nodes
+        let customNodeError = { content: "", pointing: "above" };
         if (selectedNodeType == "custom") {
-            if (customNodeName.length == 0) {
-                customNodeErrorContent.content = "Please enter a node name";
-                customNodeError = true;
+            if (customNodeName.length === 0) {
+                customNodeError.content = "Please enter a node name";
+            } else {
+                // check if duplicate exists
+                if (Object.keys(mapConfig.nodeData || {}).filter(node => node === customNodeName).length > 0) {
+                    customNodeError.content = "Please enter a unique node name";
+                }
             }
         }
 
         let createDisabled =
             !selectedNodeType ||
             selectedNodeType == "entity" ||
-            (selectedNodeType == "custom" && !customNodeName) ||
+            (selectedNodeType == "custom" && customNodeError.content != "") ||
             (selectedNodeType == "account" && !selectedAccount);
 
         return (
@@ -328,9 +326,8 @@ export default class ManageNodes extends React.PureComponent {
 
                         {selectedNodeType === "custom" ? (
                             <Form.Input
-                                error={customNodeError ? customNodeErrorContent : false}
+                                error={customNodeError.content ? customNodeError.content : null}
                                 fluid
-                                // label='First name'
                                 value={customNodeName}
                                 onChange={e => this.setState({ customNodeName: e.target.value })}
                                 placeholder="Name..."
