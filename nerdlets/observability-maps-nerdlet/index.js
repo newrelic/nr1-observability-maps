@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint no-use-before-define: 0 */ // --> OFF
 import React from 'react';
 import { NerdletStateContext, PlatformStateContext, AutoSizer } from 'nr1';
 import ObservabilityMaps from './components/observability-maps';
@@ -7,9 +7,9 @@ export default class Root extends React.Component {
   render() {
     return (
       <PlatformStateContext.Consumer>
-        {(launcherUrlState) => (
+        {launcherUrlState => (
           <NerdletStateContext.Consumer>
-            {(nerdletUrlState) => (
+            {nerdletUrlState => (
               <AutoSizer>
                 {({ width, height }) => (
                   <ObservabilityMaps

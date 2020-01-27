@@ -1,43 +1,42 @@
 {
-    "private": true,
-    "name": "nr1-observability-maps",
-    "description": "Observability Maps",
-    "version": "0.2.9",
-    "scripts": {
-        "start": "nr1 nerdpack:serve",
-        "test": "exit 0"
-    },
-    "nr1": {
-        "staging": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0",
-        "uuid": "31e24370-048e-4f75-8bf1-89f4e292cb0c",
-        "d11": "c9af90aa-e5d9-413d-a1b4-75a5ad381980",
-        "x": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0"
-    },
-    "dependencies": {
-        "d3": "^5.12.0",
-        "graphql": "^14.5.8",
-        "graphql-tag": "^2.10.1",
-        "prop-types": "^15.6.2",
-        "react": "^16.6.3",
-        "react-d3-graph": "github:Kav91/react-d3-graph#test",
-        "react-dom": "^16.6.3",
-        "react-event-timeline": "^1.6.3",
-        "react-select": "^3.0.8",
-        "semantic-ui-react": "^0.88.1"
-    },
-    "browserslist": [
-        "last 2 versions",
-        "not ie < 11",
-        "not dead"
-    ],
-    "devDependencies": {
-        "babel-eslint": "^10.0.3",
-        "eslint": "^6.6.0",
-        "eslint-config-airbnb": "^18.0.1",
-        "eslint-plugin-babel": "^5.3.0",
-        "eslint-plugin-import": "^2.18.2",
-        "eslint-plugin-jsx-a11y": "^6.2.3",
-        "eslint-plugin-react": "^7.16.0",
-        "eslint-plugin-react-hooks": "^1.7.0"
-    }
+  "private": true,
+  "name": "nr1-observability-maps",
+  "description": "Observability Maps",
+  "version": "0.3.0",
+  "scripts": {
+    "start": "nr1 nerdpack:serve",
+    "test": "exit 0",
+    "eslint-check": "eslint nerdlets/",
+    "eslint-fix": "eslint nerdlets/ --fix"
+  },
+  "nr1": {
+    "staging": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0",
+    "uuid": "31e24370-048e-4f75-8bf1-89f4e292cb0c",
+    "d11": "c9af90aa-e5d9-413d-a1b4-75a5ad381980",
+    "x": "450584f0-ed9d-4b9b-a20b-01c3c20be1f0"
+  },
+  "dependencies": {
+    "d3": "^5.12.0",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-d3-graph": "github:Kav91/react-d3-graph#test",
+    "react-dom": "^16.6.3",
+    "react-event-timeline": "^1.6.3",
+    "react-select": "^3.0.8",
+    "semantic-ui-react": "^0.88.1"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not ie < 11",
+    "not dead"
+  ],
+  "devDependencies": {
+    "@newrelic/eslint-plugin-newrelic": "^0.3.0",
+    "eslint": "^6.6.0",
+    "prettier": "^1.19.1",
+    "@semantic-release/changelog": "^3.0.5",
+    "@semantic-release/git": "^7.0.18"
+  }
 }

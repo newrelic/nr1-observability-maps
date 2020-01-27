@@ -1,82 +1,84 @@
-/* eslint-disable */
+/* eslint no-use-before-define: 0 */ // --> OFF
 import {
-    NerdGraphQuery,
-    UserStorageQuery,
-    UserStorageMutation,
-    AccountStorageQuery,
-    AccountStorageMutation
-} from "nr1";
-import gql from "graphql-tag";
+  NerdGraphQuery,
+  UserStorageQuery,
+  UserStorageMutation,
+  AccountStorageQuery,
+  AccountStorageMutation
+} from 'nr1';
+import gql from 'graphql-tag';
 
 export const nerdGraphQuery = async query => {
-    const nerdGraphData = await NerdGraphQuery.query({
-        query: gql`
-            ${query}
-        `
-    });
-    return nerdGraphData.data;
+  const nerdGraphData = await NerdGraphQuery.query({
+    query: gql`
+      ${query}
+    `
+  });
+  return nerdGraphData.data;
 };
 
 export const getUserCollection = async (collection, documentId) => {
-    const payload = { collection };
-    if (documentId) payload.documentId = documentId;
-    const result = await UserStorageQuery.query(payload);
-    const collectionResult = (result || {}).data || [];
-    return collectionResult;
+  const payload = { collection };
+  if (documentId) payload.documentId = documentId;
+  const result = await UserStorageQuery.query(payload);
+  const collectionResult = (result || {}).data || [];
+  return collectionResult;
 };
 
 export const getAccountCollection = async (collection, documentId) => {
-    const payload = { collection };
-    if (documentId) payload.documentId = documentId;
-    const result = await AccountStorageQuery.query(payload);
-    const collectionResult = (result || {}).data || [];
-    return collectionResult;
+  const payload = { collection };
+  if (documentId) payload.documentId = documentId;
+  const result = await AccountStorageQuery.query(payload);
+  const collectionResult = (result || {}).data || [];
+  return collectionResult;
 };
 
 export const writeUserDocument = async (collection, documentId, payload) => {
-    const result = await UserStorageMutation.mutate({
-        actionType: UserStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
-        collection,
-        documentId,
-        document: payload
-    });
-    return result;
+  const result = await UserStorageMutation.mutate({
+    actionType: UserStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
+    collection,
+    documentId,
+    document: payload
+  });
+  return result;
 };
 
 export const writeAccountDocument = async (collection, documentId, payload) => {
-    const result = await AccountStorageMutation.mutate({
-        actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
-        collection,
-        documentId,
-        document: payload
-    });
-    return result;
+  const result = await AccountStorageMutation.mutate({
+    actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
+    collection,
+    documentId,
+    document: payload
+  });
+  return result;
 };
 
 export const deleteUserDocument = async (collection, documentId) => {
-    const result = await UserStorageMutation.mutate({
-        actionType: UserStorageMutation.ACTION_TYPE.DELETE_DOCUMENT,
-        collection,
-        documentId
-    });
-    return result;
+  const result = await UserStorageMutation.mutate({
+    actionType: UserStorageMutation.ACTION_TYPE.DELETE_DOCUMENT,
+    collection,
+    documentId
+  });
+  return result;
 };
 
 export const deleteAccountDocument = async (collection, documentId) => {
-    const result = await AccountStorageMutation.mutate({
-        actionType: AccountStorageMutation.ACTION_TYPE.DELETE_DOCUMENT,
-        collection,
-        documentId
-    });
-    return result;
+  const result = await AccountStorageMutation.mutate({
+    actionType: AccountStorageMutation.ACTION_TYPE.DELETE_DOCUMENT,
+    collection,
+    documentId
+  });
+  return result;
 };
 
 // may remove in favor of direct nrql query component
 export const nrdbQuery = async (accountId, query, timeout) => {
-    const q = gqlNrqlQuery(accountId, query, timeout);
-    const result = await NerdGraphQuery.query({ query: q });
-    const nrqlResult = (((((result || {}).data || {}).actor || {}).account || {}).nrql || {}).results || [];
-    return nrqlResult;
+  const q = gqlNrqlQuery(accountId, query, timeout);
+  const result = await NerdGraphQuery.query({ query: q });
+  const nrqlResult =
+    (((((result || {}).data || {}).actor || {}).account || {}).nrql || {})
+      .results || [];
+  return nrqlResult;
 };
 
 // no need to run directly, nrdbQuery just passes it through
@@ -94,10 +96,10 @@ export const gqlNrqlQuery = (accountId, query, timeout) => gql`{
 export const entitySearchByAccountQuery = (domain, accountId, cursor) => gql`{
   actor {
     entitySearch(query: "domain IN ('${domain}') AND reporting = 'true' ${
-    accountId ? `AND tags.accountId IN ('${accountId}')` : ""
+  accountId ? `AND tags.accountId IN ('${accountId}')` : ''
 }") {
       query
-      results${cursor ? `(cursor: "${cursor}")` : ""} {
+      results${cursor ? `(cursor: "${cursor}")` : ''} {
         nextCursor
         entities {
           name
@@ -118,7 +120,7 @@ export const singleNrql = (alias, query, accountId) => `
       }`;
 
 export const entityBatchQuery = guids => {
-    return `{
+  return `{
     actor {
       entities(guids: [${guids}]) {
         ... on InfrastructureHostEntity {
@@ -379,7 +381,7 @@ export const entityBatchQuery = guids => {
 };
 
 export const ApmEntityBatchQuery = guids => {
-    return `{
+  return `{
   actor {
     entities(guids: [${guids}]) {
       ... on ApmApplicationEntity {
