@@ -281,7 +281,7 @@ export default class Map extends React.PureComponent {
               // add node
               let selectedEntity = null;
               let alternateEntity = null;
-              console.log(rightClickedNodeId);
+
               if (cleanNodeId(rightClickedNodeId) !== rs.source.entity.name) {
                 selectedEntity = rs.source.entity;
                 alternateEntity = rs.target.entity;

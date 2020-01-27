@@ -270,7 +270,6 @@ export default class ObservabilityMaps extends React.Component {
 
       // fetchEntityData
       const allEntityData = await this.fetchEntityData(mapData);
-      console.log('all', allEntityData);
 
       const entityPromises = allEntityData.map(entity => {
         return new Promise(async resolve => {
