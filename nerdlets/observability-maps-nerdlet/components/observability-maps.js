@@ -117,7 +117,7 @@ export default class ObservabilityMaps extends React.Component {
         actions.forEach(async action => {
           switch (action) {
             case 'loadMap':
-              console.log(stateData.selectedMap);
+              console.log('loadingMap', stateData.selectedMap);
               if (stateData.selectedMap) {
                 switch (stateData.selectedMap.type) {
                   case 'user':
@@ -275,7 +275,6 @@ export default class ObservabilityMaps extends React.Component {
         return new Promise(async resolve => {
           for (let z = 0; z < Object.keys(mapData.nodeData).length; z++) {
             const key = Object.keys(mapData.nodeData)[z];
-            console.log(entity.name, key);
             // decorate entity data
             if (entity.guid && entity.guid === mapData.nodeData[key].guid) {
               mapData.nodeData[key] = Object.assign(
