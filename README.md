@@ -1,5 +1,7 @@
 # nr1-observability-maps
 
+ [![Snyk](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github/newrelic/nr1-observability-maps)
+
 ## Usage
 
 Create an Observability Map that goes beyond the traditional service map, attached your existing entities, or create your own from any of the data available within the New Relic platform.
