@@ -4,7 +4,7 @@
 
 ## Usage
 
-Create an observability map that goes beyond the traditional service map and attaches to your existing entities, or create your own from any of the data available within the New Relic platform.
+Create an observability map that goes beyond the traditional service map. Attach your existing entities, or create your own from any of the data available within the New Relic platform.
 
 ![Screenshot](./screenshots/screenshot1.png)
 
