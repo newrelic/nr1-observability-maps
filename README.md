@@ -1,6 +1,6 @@
-# nr1-observability-maps
+# Observability Maps (nr1-observability-maps)
 
- [![Snyk](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github/newrelic/nr1-observability-maps)
+[![Known Vulnerabilities](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github//newrelic/nr1-observability-maps)
 
 ## Usage
 
