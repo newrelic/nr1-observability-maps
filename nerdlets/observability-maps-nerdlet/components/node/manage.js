@@ -4,15 +4,7 @@ react/no-did-update-set-state: 0,
 react/no-string-refs: 0
 */
 import React from 'react';
-import {
-  Modal,
-  Button,
-  Form,
-  Select,
-  Table,
-  Menu,
-  Input
-} from 'semantic-ui-react';
+import { Modal, Button, Form, Table, Menu, Input } from 'semantic-ui-react';
 import { nerdGraphQuery, entitySearchByAccountQuery } from '../../lib/utils';
 import DeleteNode from './delete-node';
 
@@ -270,8 +262,7 @@ export default class ManageNodes extends React.PureComponent {
           style={{ display: activeNodeItem === 'Add Node' ? '' : 'none' }}
         >
           <Form>
-            <Form.Field
-              control={Select}
+            <Form.Select
               label="Type"
               options={options}
               placeholder="Select Type..."
@@ -283,9 +274,8 @@ export default class ManageNodes extends React.PureComponent {
               <>
                 {' '}
                 <Form.Group widths="16">
-                  <Form.Field
+                  <Form.Select
                     width="5"
-                    control={Select}
                     label="Domain"
                     options={domainOptions}
                     placeholder="Select Domain..."
@@ -293,9 +283,9 @@ export default class ManageNodes extends React.PureComponent {
                       this.setState({ selectedDomain: d.value })
                     }
                   />
-                  <Form.Field
+                  <Form.Select
                     width="8"
-                    control={Select}
+                    search
                     label="Account"
                     options={accountOptions}
                     placeholder="Select Account..."
@@ -412,8 +402,8 @@ export default class ManageNodes extends React.PureComponent {
             )}
 
             {selectedNodeType === 'account' ? (
-              <Form.Field
-                control={Select}
+              <Form.Select
+                search
                 label="Account"
                 options={accountOptions}
                 placeholder="Select Account..."

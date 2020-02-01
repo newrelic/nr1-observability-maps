@@ -5,15 +5,7 @@ react/no-string-refs: 0
 */
 
 import React from 'react';
-import {
-  Button,
-  Modal,
-  Header,
-  Form,
-  Select,
-  Divider,
-  Icon
-} from 'semantic-ui-react';
+import { Button, Modal, Header, Form, Divider, Icon } from 'semantic-ui-react';
 
 export default class EditNode extends React.PureComponent {
   constructor(props) {
@@ -372,10 +364,10 @@ export default class EditNode extends React.PureComponent {
           <Header as="h4">Select an Icon Set</Header>
 
           <Form.Group inline widths="16">
-            <Form.Field
+            <Form.Select
               width="16"
               style={{ display: 'inline', width: '100%' }}
-              control={Select}
+              search
               options={userIcons}
               placeholder="Select Icon Set"
               value={this.state.iconSet}
@@ -450,11 +442,10 @@ export default class EditNode extends React.PureComponent {
               <div key={i}>
                 <Header as="h4">{option.label}</Header>
                 <Form.Group inline widths="16">
-                  <Form.Field
+                  <Form.Select
                     label="Operator"
                     width="8"
                     style={{ display: 'inline', width: '100%' }}
-                    control={Select}
                     options={operators}
                     placeholder="Select Operator"
                     value={this.state[option.op]}
@@ -522,9 +513,8 @@ export default class EditNode extends React.PureComponent {
         <Modal.Content>
           <Form>
             <Form.Group>
-              <Form.Field
+              <Form.Select
                 label="Edit"
-                control={Select}
                 options={editOptions}
                 placeholder="Select Option"
                 onChange={(e, d) =>
@@ -532,9 +522,8 @@ export default class EditNode extends React.PureComponent {
                 }
               />
               {selectedEditOption === 'hoverMetrics' ? (
-                <Form.Field
+                <Form.Select
                   label="Type"
-                  control={Select}
                   options={hoverOptions}
                   placeholder="Select Option"
                   value={hoverOption}

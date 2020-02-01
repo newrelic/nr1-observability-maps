@@ -1,6 +1,6 @@
 /* eslint react/no-did-update-set-state: 0 */
 import React from 'react';
-import { Button, Modal, Header, Form, Select, Icon } from 'semantic-ui-react';
+import { Button, Modal, Header, Form, Icon } from 'semantic-ui-react';
 
 export default class EditLink extends React.PureComponent {
   constructor(props) {
@@ -185,9 +185,8 @@ export default class EditLink extends React.PureComponent {
           <Form>
             <Form.Group>
               {selectedEditOption === 'hoverMetrics' ? (
-                <Form.Field
+                <Form.Select
                   label="Type"
-                  control={Select}
                   options={hoverOptions}
                   placeholder="Select Option"
                   value={hoverOption}

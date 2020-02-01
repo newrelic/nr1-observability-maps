@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Form, Label, Select } from 'semantic-ui-react';
+import { Modal, Button, Form, Label } from 'semantic-ui-react';
 import { writeUserDocument, deleteUserDocument } from '../../lib/utils';
 
 const iconCollection = 'ObservabilityIcons';
@@ -91,10 +91,15 @@ export default class ManageIcons extends React.PureComponent {
         <Modal.Content>
           <Form>
             <Form.Group inline widths="16">
-              <Form.Field
+              <Form.Select
                 width="10"
-                style={{ display: 'inline', width: '100%' }}
-                control={Select}
+                style={{
+                  display: 'inline',
+                  width: '100%',
+                  position: ''
+                }}
+                search
+                fluid
                 options={options}
                 placeholder="Select Icon Set"
                 value={selected}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Form, Select } from 'semantic-ui-react';
+import { Modal, Button, Form } from 'semantic-ui-react';
 import LinksTable from './links-table';
 
 export default class ManageLinks extends React.PureComponent {
@@ -130,8 +130,8 @@ export default class ManageLinks extends React.PureComponent {
         <Modal.Header>Manage Links</Modal.Header>
         <Modal.Content>
           <Form>
-            <Form.Field
-              control={Select}
+            <Form.Select
+              search
               // label='Node Source'
               options={nodeOptions}
               placeholder="Select Node Source..."
@@ -139,10 +139,10 @@ export default class ManageLinks extends React.PureComponent {
               onChange={(e, d) => this.setState({ selectedSource: d.value })}
             />
             <Form.Group widths={16}>
-              <Form.Field
+              <Form.Select
                 width={13}
                 disabled={!selectedSource}
-                control={Select}
+                search
                 // label='Node Target'
                 options={nodeOptions}
                 placeholder="Select Node Target..."
