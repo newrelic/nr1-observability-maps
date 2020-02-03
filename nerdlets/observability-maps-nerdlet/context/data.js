@@ -6,39 +6,33 @@ require-atomic-updates: 0,
 no-unused-vars: 0
 */
 
-import React from 'react';
-import { Grid, Popup, Button } from 'semantic-ui-react';
-import MenuBar from './navigation/menu-bar';
-import Map from './map/map';
+import React, { Component } from 'react';
 import { NerdGraphQuery } from 'nr1';
 import {
   getUserCollection,
   getAccountCollection,
   entityBatchQuery,
   nerdGraphQuery,
-  writeUserDocument,
   singleNrql,
-  ApmEntityBatchQuery
+  ApmEntityBatchQuery,
+  writeUserDocument
 } from '../lib/utils';
-import NodeHandler from './custom-nodes/handler';
-// import CustomLabel from './node/custom-label';
-import Sidebar from './sidebar/sidebar';
-import EditNode from './node/edit-node';
-import EditLink from './link/edit-link';
-import { setLinkData, cleanNodeId, chunk } from '../lib/helper';
-import Timeline from './timeline/timeline';
+import { chunk } from '../lib/helper';
 
 const collectionName = 'ObservabilityMaps';
 const userConfig = 'ObservabilityUserConfig';
 const iconCollection = 'ObservabilityIcons';
 
-export default class ObservabilityMaps extends React.Component {
+const DataContext = React.createContext();
+
+export class DataProvider extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       loading: false,
-      bucketMs: { key: 1, label: '30 sec', value: 30000 },
       selectedMap: null,
+      bucketMs: { key: 1, label: '30 sec', value: 30000 },
       selectedNode: '',
       selectedLink: '',
       mapConfig: {
@@ -77,26 +71,23 @@ export default class ObservabilityMaps extends React.Component {
       isRefreshing: false,
       closeCharts: false
     };
-    this.dataFetcher = this.dataFetcher.bind(this);
-    this.setParentState = this.setParentState.bind(this);
-    this.handleMapData = this.handleMapData.bind(this);
-    this.fetchNrql = this.fetchNrql.bind(this);
-    this.refreshData = this.refreshData.bind(this);
   }
 
-  async componentDidMount() {
-    await this.dataFetcher([
-      'userConfig',
-      'userMaps',
-      'accountMaps',
-      'accounts',
-      'userIcons'
-    ]);
-    this.handleMapData();
-    this.refreshData();
-  }
+  // async componentDidMount() {
+  //   await this.dataFetcher([
+  //     'userConfig',
+  //     'userMaps',
+  //     'accountMaps',
+  //     'accounts',
+  //     'userIcons'
+  //   ]);
+  //   this.handleMapData();
+  //   this.refreshData();
+  // }
 
-  setParentState(stateData, actions) {
+  // updateDataContextState = data => this.setState(data);
+
+  updateDataContextState = (stateData, actions) => {
     return new Promise(async resolve => {
       await this.setState(stateData);
 
@@ -175,19 +166,81 @@ export default class ObservabilityMaps extends React.Component {
 
       resolve();
     });
+  };
+
+  // fetch data as required, supply array things to fetch
+  async dataFetcher(actions) {
+    return new Promise(async resolve => {
+      this.setState({ loading: true });
+      const dataPromises = [];
+      const content = [];
+
+      actions.forEach(action => {
+        switch (action) {
+          case 'userMaps':
+            content.push(action);
+            dataPromises.push(getUserCollection(collectionName));
+            break;
+          case 'userIcons':
+            content.push(action);
+            dataPromises.push(getUserCollection(iconCollection));
+            break;
+          case 'accountMaps':
+            content.push(action);
+            dataPromises.push(getAccountCollection(collectionName));
+            break;
+          case 'userConfig':
+            content.push(action);
+            dataPromises.push(getUserCollection(userConfig, userConfig));
+            break;
+          case 'accounts':
+            content.push(action);
+            const accountsQuery = `{actor {accounts {name id}}}`;
+            dataPromises.push(NerdGraphQuery.query({ query: accountsQuery }));
+            break;
+        }
+      });
+
+      await Promise.all(dataPromises).then(async values => {
+        const data = { loading: false };
+        values.forEach((value, i) => {
+          switch (content[i]) {
+            case 'userMaps':
+              data[content[i]] = value;
+              break;
+            case 'userIcons':
+              data[content[i]] = value;
+              break;
+            case 'accountMaps':
+              data[content[i]] = value;
+              break;
+            case 'userConfig':
+              data.userConfig = value.length > 0 ? value : {};
+              break;
+            case 'accounts':
+              data.accounts =
+                (((value || {}).data || {}).actor || {}).accounts || [];
+              break;
+          }
+        });
+
+        this.setState(data);
+        resolve();
+      });
+    });
   }
 
   refreshData = () => {
-    let interval = this.props.bucketMs.value;
+    let interval = this.state.bucketMs.value;
     Do = Do.bind(this);
     this.refresh = setInterval(async () => Do(), interval);
 
     async function Do() {
-      if (interval !== this.props.bucketMs.value) {
+      if (interval !== this.state.bucketMs.value) {
         console.log(
-          `Updating... (timer: ${interval}ms to ${this.props.bucketMs.value}ms)`
+          `Updating... (timer: ${interval}ms to ${this.state.bucketMs.value}ms)`
         );
-        interval = this.props.bucketMs.value;
+        interval = this.state.bucketMs.value;
         clearInterval(this.refresh);
         this.refresh = setInterval(async () => Do(), interval);
       }
@@ -207,7 +260,7 @@ export default class ObservabilityMaps extends React.Component {
   };
 
   // transforms mapConfig => mapData => d3 format & decorates
-  handleMapData() {
+  handleMapData = () => {
     return new Promise(async resolve => {
       // avoid nested references in mapConfig using parse & stringify
       const { mapConfig } = this.state;
@@ -352,10 +405,10 @@ export default class ObservabilityMaps extends React.Component {
       this.setState({ data, mapData });
       resolve();
     });
-  }
+  };
 
   // nodeData should be renamed to something generic
-  fetchNrql(nodeData, fetch) {
+  fetchNrql = async (nodeData, fetch) => {
     return new Promise(async resolve => {
       let nrqlQueries = [];
 
@@ -419,9 +472,9 @@ export default class ObservabilityMaps extends React.Component {
         resolve();
       }
     });
-  }
+  };
 
-  async fetchEntityData(mapData) {
+  fetchEntityData = async mapData => {
     return new Promise(async resolve => {
       const apmEntityGuids = [];
       const otherEntityGuids = [];
@@ -463,250 +516,22 @@ export default class ObservabilityMaps extends React.Component {
         }
       );
     });
-  }
-
-  // fetch data as required, supply array things to fetch
-  async dataFetcher(actions) {
-    return new Promise(async resolve => {
-      await this.setState({ loading: true });
-      const dataPromises = [];
-      const content = [];
-
-      actions.forEach(action => {
-        switch (action) {
-          case 'userMaps':
-            content.push(action);
-            dataPromises.push(getUserCollection(collectionName));
-            break;
-          case 'userIcons':
-            content.push(action);
-            dataPromises.push(getUserCollection(iconCollection));
-            break;
-          case 'accountMaps':
-            content.push(action);
-            dataPromises.push(getAccountCollection(collectionName));
-            break;
-          case 'userConfig':
-            content.push(action);
-            dataPromises.push(getUserCollection(userConfig, userConfig));
-            break;
-          case 'accounts':
-            content.push(action);
-            const accountsQuery = `{actor {accounts {name id}}}`;
-            dataPromises.push(NerdGraphQuery.query({ query: accountsQuery }));
-            break;
-        }
-      });
-
-      await Promise.all(dataPromises).then(async values => {
-        const data = { loading: false };
-        values.forEach((value, i) => {
-          switch (content[i]) {
-            case 'userMaps':
-              data[content[i]] = value;
-              break;
-            case 'userIcons':
-              data[content[i]] = value;
-              break;
-            case 'accountMaps':
-              data[content[i]] = value;
-              break;
-            case 'userConfig':
-              data.userConfig = value.length > 0 ? value : {};
-              break;
-            case 'accounts':
-              data.accounts =
-                (((value || {}).data || {}).actor || {}).accounts || [];
-              break;
-          }
-        });
-
-        await this.setState(data);
-        resolve();
-      });
-    });
-  }
-
-  // generate customized node view
-  viewGenerator = e => {
-    // style={{backgroundColor:"black"}}
-    return (
-      <div>
-        <Popup
-          pinned
-          on="click"
-          basic
-          content="Add users to your feed"
-          trigger={<Button icon="add" />}
-        />
-        {/* {e.label} */}
-      </div>
-    );
   };
 
   render() {
-    const {
-      data,
-      accountMaps,
-      userMaps,
-      accounts,
-      loading,
-      mapConfig,
-      mapData,
-      timelineOpen,
-      sidebarOpen,
-      sidebarView,
-      selectedMap,
-      selectedNode,
-      selectedLink,
-      bucketMs,
-      userIcons,
-      editNodeOpen,
-      editLinkOpen,
-      closeCharts
-    } = this.state;
-    const graphWidth = sidebarOpen
-      ? (this.props.width / 4) * 3
-      : this.props.width;
-    const nodeSize = 700; // increasing this will not adjust the icon sizing, it will increase the svg area
-
-    const mainGridStyle = {
-      height: this.props.height - 60,
-      backgroundColor: 'black',
-      marginTop: '0px'
-    };
-
-    // dynamically add map settings
-    if (mapConfig.settings) {
-      Object.keys(mapConfig.settings).forEach(key => {
-        if (key.startsWith('background')) {
-          mainGridStyle[key] = mapConfig.settings[key];
-        }
-      });
-    }
-
-    // the graph configuration, you only need to pass down properties
-    // that you want to override, otherwise default ones will be used
-    const d3MapConfig = {
-      staticGraph: false,
-      staticGraphWithDragAndDrop: true,
-      d3: {
-        linkLength: 200
-      },
-      nodeHighlightBehavior: false, // if this is set to true reset positions doesn't work
-      node: {
-        color: 'lightgreen',
-        size: nodeSize,
-        highlightStrokeColor: 'blue',
-        fontSize: 16,
-        highlightFontSize: 16,
-        labelProperty: node => cleanNodeId(node.id),
-        // renderLabel: false,
-        fontColor: 'white',
-        // viewGenerator: node => <Popup basic pinned on={"click"} content={node} trigger={<Button color="green" icon='add' />} />
-        viewGenerator: node => (
-          <NodeHandler
-            sidebarOpen={sidebarOpen}
-            node={node}
-            mapData={mapData}
-            nodeSize={nodeSize}
-            setParentState={this.setParentState}
-            userIcons={userIcons}
-            closeCharts={closeCharts}
-          />
-        )
-      },
-      link: {
-        highlightColor: 'lightblue',
-        type: 'CURVE_SMOOTH',
-        renderLabel: true,
-        labelProperty: link => setLinkData(link, mapData.linkData),
-        fontColor: '#21ba45',
-        fontSize: 13,
-        fontWeight: 'bold'
-      },
-      directed: true,
-      height: this.props.height - 80,
-      width: graphWidth
-    };
+    const { children } = this.props;
 
     return (
-      <div>
-        {/* mapData is sent through the menuBar to let react trigger updates for manage nodes & links, this should be reworked */}
-        <MenuBar
-          setParentState={this.setParentState}
-          loading={loading}
-          accounts={accounts}
-          accountMaps={accountMaps}
-          userMaps={userMaps}
-          dataFetcher={this.dataFetcher}
-          rawData={data}
-          mapConfig={mapConfig}
-          mapData={mapData}
-          bucketMs={bucketMs}
-          userIcons={userIcons}
-          timelineOpen={timelineOpen}
-        />
-
-        <Grid columns={16} style={mainGridStyle}>
-          <Grid.Row style={{ paddingTop: '0px' }}>
-            <Grid.Column width={16}>
-              {data.nodes.length > 0 ? (
-                <Map
-                  d3MapConfig={d3MapConfig}
-                  setParentState={this.setParentState}
-                  selectedMap={selectedMap}
-                  mapConfig={mapConfig}
-                  mapData={mapData}
-                  data={data}
-                  editNodeOpen={editNodeOpen}
-                  editLinkOpen={editLinkOpen}
-                />
-              ) : (
-                ''
-              )}
-            </Grid.Column>
-          </Grid.Row>
-
-          <Sidebar
-            height={this.props.height - 60}
-            sidebarOpen={sidebarOpen}
-            sidebarView={sidebarView}
-            setParentState={this.setParentState}
-            selectedNode={selectedNode}
-            mapConfig={mapConfig}
-            mapData={mapData}
-          />
-
-          <Timeline
-            height={this.props.height - 60}
-            timelineOpen={timelineOpen}
-            setParentState={this.setParentState}
-            selectedNode={selectedNode}
-            mapConfig={mapConfig}
-            mapData={mapData}
-            data={data}
-          />
-        </Grid>
-
-        <EditNode
-          setParentState={this.setParentState}
-          editNodeOpen={editNodeOpen}
-          selectedNode={selectedNode}
-          mapConfig={mapConfig}
-          accounts={accounts}
-          userIcons={userIcons}
-        />
-
-        <EditLink
-          setParentState={this.setParentState}
-          editLinkOpen={editLinkOpen}
-          selectedLink={selectedLink}
-          mapConfig={mapConfig}
-          accounts={accounts}
-          userIcons={userIcons}
-        />
-      </div>
+      <DataContext.Provider
+        value={{
+          ...this.state,
+          updateDataContextState: this.updateDataContextState
+        }}
+      >
+        {children}
+      </DataContext.Provider>
     );
   }
 }
+
+export const DataConsumer = DataContext.Consumer;

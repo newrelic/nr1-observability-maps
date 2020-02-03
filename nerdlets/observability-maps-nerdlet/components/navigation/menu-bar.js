@@ -67,7 +67,6 @@ export default class MenuBar extends React.PureComponent {
       setParentState,
       mapConfig,
       mapData,
-      bucketMs,
       userIcons,
       timelineOpen
     } = this.props;
@@ -102,6 +101,10 @@ export default class MenuBar extends React.PureComponent {
               classNamePrefix="react-select"
             />
           </div>
+
+          {/* <Button onClick={() => openSnackbar('opening snackbar')}>
+                  open
+                </Button> */}
 
           {selectedMap ? (
             <DeleteMap
@@ -197,10 +200,7 @@ export default class MenuBar extends React.PureComponent {
             ''
           )}
 
-          <RefreshSelector
-            bucketMs={bucketMs}
-            setParentState={setParentState}
-          />
+          <RefreshSelector />
 
           <Icon
             loading={loading}
