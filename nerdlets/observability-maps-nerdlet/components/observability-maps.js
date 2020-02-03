@@ -64,7 +64,6 @@ export default class ObservabilityMaps extends React.Component {
         nodes: [],
         links: []
       },
-      userIcons: [],
       storeLocation: 'user',
       accountMaps: null,
       userMaps: null,
@@ -559,7 +558,6 @@ export default class ObservabilityMaps extends React.Component {
       selectedNode,
       selectedLink,
       bucketMs,
-      userIcons,
       editNodeOpen,
       editLinkOpen,
       closeCharts
@@ -692,7 +690,6 @@ export default class ObservabilityMaps extends React.Component {
           selectedNode={selectedNode}
           mapConfig={mapConfig}
           accounts={accounts}
-          userIcons={userIcons}
         />
 
         <EditLink
@@ -701,7 +698,6 @@ export default class ObservabilityMaps extends React.Component {
           selectedLink={selectedLink}
           mapConfig={mapConfig}
           accounts={accounts}
-          userIcons={userIcons}
         />
       </div>
     );

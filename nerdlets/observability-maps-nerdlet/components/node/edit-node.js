@@ -6,6 +6,7 @@ react/no-string-refs: 0
 
 import React from 'react';
 import { Button, Modal, Header, Form, Divider, Icon } from 'semantic-ui-react';
+import { DataConsumer } from '../../context/data';
 
 export default class EditNode extends React.PureComponent {
   constructor(props) {
@@ -351,8 +352,8 @@ export default class EditNode extends React.PureComponent {
       );
     };
 
-    const renderIconSet = () => {
-      const userIcons = this.props.userIcons.map(set => ({
+    const renderIconSet = incomingUserIcons => {
+      const userIcons = incomingUserIcons.map(set => ({
         key: set.id,
         value: set.id,
         text: set.id
@@ -502,57 +503,63 @@ export default class EditNode extends React.PureComponent {
     };
 
     return (
-      <Modal
-        size="large"
-        open={editNodeOpen}
-        onUnmount={() => setParentState({ closeCharts: false })}
-        onMount={() => setParentState({ closeCharts: true })}
-      >
-        <Modal.Header>Edit Node - {selectedNode}</Modal.Header>
+      <DataConsumer>
+        {({ userIcons }) => (
+          <Modal
+            size="large"
+            open={editNodeOpen}
+            onUnmount={() => setParentState({ closeCharts: false })}
+            onMount={() => setParentState({ closeCharts: true })}
+          >
+            <Modal.Header>Edit Node - {selectedNode}</Modal.Header>
 
-        <Modal.Content>
-          <Form>
-            <Form.Group>
-              <Form.Select
-                label="Edit"
-                options={editOptions}
-                placeholder="Select Option"
-                onChange={(e, d) =>
-                  this.setState({ selectedEditOption: d.value })
-                }
-              />
-              {selectedEditOption === 'hoverMetrics' ? (
-                <Form.Select
-                  label="Type"
-                  options={hoverOptions}
-                  placeholder="Select Option"
-                  value={hoverOption}
-                  onChange={(e, d) => updateHoverType(d.value)}
-                />
-              ) : (
-                ''
-              )}
-            </Form.Group>
+            <Modal.Content>
+              <Form>
+                <Form.Group>
+                  <Form.Select
+                    label="Edit"
+                    options={editOptions}
+                    placeholder="Select Option"
+                    onChange={(e, d) =>
+                      this.setState({ selectedEditOption: d.value })
+                    }
+                  />
+                  {selectedEditOption === 'hoverMetrics' ? (
+                    <Form.Select
+                      label="Type"
+                      options={hoverOptions}
+                      placeholder="Select Option"
+                      value={hoverOption}
+                      onChange={(e, d) => updateHoverType(d.value)}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </Form.Group>
 
-            {selectedEditOption === 'hoverMetrics' &&
-            hoverOption === 'customNrql'
-              ? renderCustomNrql()
-              : ''}
-            {selectedEditOption === 'mainChart' ? renderMainChart() : ''}
-            {selectedEditOption === 'iconSet' ? renderIconSet() : ''}
-            {selectedEditOption === 'customAlertSeverity'
-              ? renderCustomAlerting()
-              : ''}
-          </Form>
-        </Modal.Content>
+                {selectedEditOption === 'hoverMetrics' &&
+                hoverOption === 'customNrql'
+                  ? renderCustomNrql()
+                  : ''}
+                {selectedEditOption === 'mainChart' ? renderMainChart() : ''}
+                {selectedEditOption === 'iconSet'
+                  ? renderIconSet(userIcons)
+                  : ''}
+                {selectedEditOption === 'customAlertSeverity'
+                  ? renderCustomAlerting()
+                  : ''}
+              </Form>
+            </Modal.Content>
 
-        <Modal.Actions>
-          <Button negative onClick={onEditDropDown}>
-            Close
-          </Button>
-          {/* <Button positive onClick={()=>this.save(setParentState, mapConfig)}>Save</Button> */}
-        </Modal.Actions>
-      </Modal>
+            <Modal.Actions>
+              <Button negative onClick={onEditDropDown}>
+                Close
+              </Button>
+              {/* <Button positive onClick={()=>this.save(setParentState, mapConfig)}>Save</Button> */}
+            </Modal.Actions>
+          </Modal>
+        )}
+      </DataConsumer>
     );
   }
 }
