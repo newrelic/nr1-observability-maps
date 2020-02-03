@@ -25,25 +25,12 @@ import NodeHandler from './custom-nodes/handler';
 import Sidebar from './sidebar/sidebar';
 import EditNode from './node/edit-node';
 import EditLink from './link/edit-link';
-import { setLinkData } from '../lib/helper';
+import { setLinkData, cleanNodeId, chunk } from '../lib/helper';
 import Timeline from './timeline/timeline';
 
 const collectionName = 'ObservabilityMaps';
 const userConfig = 'ObservabilityUserConfig';
 const iconCollection = 'ObservabilityIcons';
-
-const cleanNodeId = nodeId => {
-  // strip special domain tags added
-  ['[APM]', '[INFRA]', '[BROWSER]', '[SYNTH]', '[MOBILE]'].forEach(word => {
-    nodeId = nodeId.replace(word, '');
-  });
-  return nodeId.trim();
-};
-
-const chunk = (arr, size) =>
-  Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
-    arr.slice(i * size, i * size + size)
-  );
 
 export default class ObservabilityMaps extends React.Component {
   constructor(props) {

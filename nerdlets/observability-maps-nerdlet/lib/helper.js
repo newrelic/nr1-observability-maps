@@ -129,3 +129,17 @@ export const setCustomAlertDesign = (alert, alertData) => {
   }
   return { colorOne: 'grey', colorTwo: 'orange' };
 };
+
+// chunking for batching nerdgraph calls
+export const chunk = (arr, size) =>
+  Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+    arr.slice(i * size, i * size + size)
+  );
+
+// strip special domain tags added
+export const cleanNodeId = nodeId => {
+  ['[APM]', '[INFRA]', '[BROWSER]', '[SYNTH]', '[MOBILE]'].forEach(word => {
+    nodeId = nodeId.replace(word, '');
+  });
+  return nodeId.trim();
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, List, Checkbox, Header, Menu } from 'semantic-ui-react';
-import { setAlertDesign, setEntityDesign } from '../../lib/helper';
+import { setAlertDesign, setEntityDesign, cleanNodeId } from '../../lib/helper';
 
 const domains = [
   'APM',
@@ -11,14 +11,6 @@ const domains = [
   'OTHER',
   'EXTERNAL'
 ];
-
-const cleanNodeId = nodeId => {
-  // strip special domain tags added
-  ['[APM]', '[INFRA]', '[BROWSER]', '[SYNTH]', '[MOBILE]'].forEach(word => {
-    nodeId = nodeId.replace(word, '');
-  });
-  return nodeId.trim();
-};
 
 export default class SidebarConnections extends React.PureComponent {
   constructor(props) {

@@ -25,6 +25,7 @@
     "react-dom": "^16.6.3",
     "react-event-timeline": "^1.6.3",
     "react-select": "^3.0.8",
+    "react-toastify": "^5.5.0",
     "semantic-ui-react": "^0.88.1"
   },
   "browserslist": [

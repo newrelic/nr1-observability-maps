@@ -7,7 +7,7 @@ import React from 'react';
 import { Graph } from 'react-d3-graph';
 import { Menu } from 'semantic-ui-react';
 import { navigation } from 'nr1';
-
+import { cleanNodeId } from '../../lib/helper';
 // graph event callbacks
 // const onDoubleClickNode = nodeId => {
 //   console.log(`Double clicked node ${nodeId}`);
@@ -32,15 +32,6 @@ import { navigation } from 'nr1';
 // do not allow negative coordinates
 const safeCoordinate = coordinate =>
   coordinate <= 0 ? Math.floor(Math.random() * 200) + 1 : coordinate;
-
-// clean node id
-const cleanNodeId = nodeId => {
-  // strip special domain tags added
-  ['[APM]', '[INFRA]', '[BROWSER]', '[SYNTH]', '[MOBILE]'].forEach(word => {
-    nodeId = nodeId.replace(word, '');
-  });
-  return nodeId.trim();
-};
 
 export default class Map extends React.PureComponent {
   constructor(props) {
