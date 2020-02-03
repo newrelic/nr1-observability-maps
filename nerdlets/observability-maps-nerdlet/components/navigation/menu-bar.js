@@ -67,7 +67,6 @@ export default class MenuBar extends React.PureComponent {
       setParentState,
       mapConfig,
       mapData,
-      userIcons,
       timelineOpen
     } = this.props;
     let availableMaps = [];
@@ -171,11 +170,7 @@ export default class MenuBar extends React.PureComponent {
 
           {/* <UserConfig /> */}
 
-          <ManageIcons
-            userIcons={userIcons}
-            dataFetcher={dataFetcher}
-            setParentState={setParentState}
-          />
+          <ManageIcons />
 
           {selectedMap ? (
             <MapSettings

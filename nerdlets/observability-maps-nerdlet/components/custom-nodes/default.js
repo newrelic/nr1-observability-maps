@@ -7,6 +7,7 @@ import {
   setEntityDesign
 } from '../../lib/helper';
 import { LineChart, AreaChart, Billboard, PieChart, TableChart } from 'nr1';
+import { DataConsumer } from '../../context/data';
 
 // const languageIcons = {
 //   java: "https://image.flaticon.com/icons/svg/226/226777.svg",
@@ -126,11 +127,9 @@ export default class CustomNode extends React.PureComponent {
     }
   }
 
-  renderIcon(nodeData, nodeId, isOpen, icon, colorOne, colorTwo) {
+  renderIcon(userIcons, nodeData, nodeId, isOpen, icon, colorOne, colorTwo) {
     if (nodeData.iconSet) {
-      const iconSet = this.props.userIcons.filter(
-        set => set.id === nodeData.iconSet
-      )[0];
+      const iconSet = userIcons.filter(set => set.id === nodeData.iconSet)[0];
       if (iconSet && iconSet.document) {
         let iconSrc =
           iconSet.document.red ||
@@ -293,6 +292,7 @@ export default class CustomNode extends React.PureComponent {
     }
 
     const renderIconGroup = (
+      userIcons,
       data,
       nodeId,
       metrics,
@@ -326,6 +326,7 @@ export default class CustomNode extends React.PureComponent {
           <Popup
             // className="popup-custom"
             trigger={this.renderIcon(
+              userIcons,
               data,
               nodeId,
               isOpen,
@@ -349,22 +350,27 @@ export default class CustomNode extends React.PureComponent {
     };
 
     return (
-      <div style={{ height: nodeSize / 10, width: nodeSize / 10 }}>
-        <div
-          className="centered"
-          style={{ height: nodeSize / 10, width: nodeSize / 10 }}
-        >
-          {renderIconGroup(
-            data,
-            node.id,
-            metrics,
-            icon,
-            colorTwo,
-            colorOne,
-            closeCharts
-          )}
-        </div>
-      </div>
+      <DataConsumer>
+        {({ userIcons }) => (
+          <div style={{ height: nodeSize / 10, width: nodeSize / 10 }}>
+            <div
+              className="centered"
+              style={{ height: nodeSize / 10, width: nodeSize / 10 }}
+            >
+              {renderIconGroup(
+                userIcons,
+                data,
+                node.id,
+                metrics,
+                icon,
+                colorTwo,
+                colorOne,
+                closeCharts
+              )}
+            </div>
+          </div>
+        )}
+      </DataConsumer>
     );
   }
 }

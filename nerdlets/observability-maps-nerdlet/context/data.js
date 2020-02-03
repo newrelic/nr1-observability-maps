@@ -73,21 +73,22 @@ export class DataProvider extends Component {
     };
   }
 
-  // async componentDidMount() {
-  //   await this.dataFetcher([
-  //     'userConfig',
-  //     'userMaps',
-  //     'accountMaps',
-  //     'accounts',
-  //     'userIcons'
-  //   ]);
-  //   this.handleMapData();
-  //   this.refreshData();
-  // }
+  async componentDidMount() {
+    await this.dataFetcher([
+      // 'userConfig',
+      // 'userMaps',
+      // 'accountMaps',
+      // 'accounts',
+      'userIcons'
+    ]);
+    this.handleMapData();
+    this.refreshData();
+  }
 
   // updateDataContextState = data => this.setState(data);
 
   updateDataContextState = (stateData, actions) => {
+    console.log('context updating...');
     return new Promise(async resolve => {
       await this.setState(stateData);
 
@@ -169,7 +170,8 @@ export class DataProvider extends Component {
   };
 
   // fetch data as required, supply array things to fetch
-  async dataFetcher(actions) {
+  dataFetcher = async actions => {
+    console.log('context dataFetcher');
     return new Promise(async resolve => {
       this.setState({ loading: true });
       const dataPromises = [];
@@ -228,7 +230,7 @@ export class DataProvider extends Component {
         resolve();
       });
     });
-  }
+  };
 
   refreshData = () => {
     let interval = this.state.bucketMs.value;
@@ -525,7 +527,8 @@ export class DataProvider extends Component {
       <DataContext.Provider
         value={{
           ...this.state,
-          updateDataContextState: this.updateDataContextState
+          updateDataContextState: this.updateDataContextState,
+          dataFetcher: this.dataFetcher
         }}
       >
         {children}

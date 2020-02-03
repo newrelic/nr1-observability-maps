@@ -9,12 +9,10 @@ export default class NodeHandler extends React.PureComponent {
       mapData,
       nodeSize,
       setParentState,
-      userIcons,
       closeCharts
     } = this.props;
     return (
       <DefaultNode
-        userIcons={userIcons}
         sidebarOpen={sidebarOpen}
         node={node}
         mapData={mapData}

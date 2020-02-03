@@ -89,8 +89,7 @@ export default class ObservabilityMaps extends React.Component {
       'userConfig',
       'userMaps',
       'accountMaps',
-      'accounts',
-      'userIcons'
+      'accounts'
     ]);
     this.handleMapData();
     this.refreshData();
@@ -611,7 +610,6 @@ export default class ObservabilityMaps extends React.Component {
             mapData={mapData}
             nodeSize={nodeSize}
             setParentState={this.setParentState}
-            userIcons={userIcons}
             closeCharts={closeCharts}
           />
         )
@@ -644,7 +642,6 @@ export default class ObservabilityMaps extends React.Component {
           mapConfig={mapConfig}
           mapData={mapData}
           bucketMs={bucketMs}
-          userIcons={userIcons}
           timelineOpen={timelineOpen}
         />
 
