@@ -14,15 +14,16 @@ code, the source code can be found at [https://github.com/newrelic/nr1-observabi
 
 **[dependencies](#dependencies)**
 
--   [graphql-tag](#graphql-tag)
--   [graphql](#graphql)
--   [lodash](#lodash)
--   [prop-types](#prop-types)
--   [react-dom](#react-dom)
--   [react-select](#react-select)
--   [react](#react)
--   [semantic-ui-react](#semantic-ui-react)
--   [react-d3-graph](#react-d3-graph)
+- [graphql-tag](#graphql-tag)
+- [graphql](#graphql)
+- [lodash](#lodash)
+- [prop-types](#prop-types)
+- [react-dom](#react-dom)
+- [react-select](#react-select)
+- [react](#react)
+- [semantic-ui-react](#semantic-ui-react)
+- [react-d3-graph](#react-d3-graph)
+- [react-toastify](#react-toastify)
 
 **[devDependencies](#devDependencies)**
 
@@ -352,6 +353,34 @@ This product includes source derived from [react-d3-graph](https://github.com/da
 MIT License
 
 Copyright (c) 2017 Daniel Caldas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### react-toastify
+
+This product includes source derived from [react-toastify](https://github.com/fkhadra/react-toastify) , distributed under the [MIT License]https://github.com/fkhadra/react-toastify/blob/master/LICENSE):
+
+```
+MIT License
+
+Copyright (c) 2019 Fadi Khadra
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
