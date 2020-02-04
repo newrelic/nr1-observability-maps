@@ -76,8 +76,8 @@ export class DataProvider extends Component {
   async componentDidMount() {
     await this.dataFetcher([
       // 'userConfig',
-      // 'userMaps',
-      // 'accountMaps',
+      'userMaps',
+      'accountMaps',
       // 'accounts',
       'userIcons'
     ]);

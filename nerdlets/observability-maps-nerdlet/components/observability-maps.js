@@ -86,8 +86,8 @@ export default class ObservabilityMaps extends React.Component {
   async componentDidMount() {
     await this.dataFetcher([
       'userConfig',
-      'userMaps',
-      'accountMaps',
+      // 'userMaps',
+      // 'accountMaps',
       'accounts'
     ]);
     this.handleMapData();

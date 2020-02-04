@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button, Popup, Icon } from 'semantic-ui-react';
 import { deleteAccountDocument, deleteUserDocument } from '../../lib/utils';
+import { DataConsumer } from '../../context/data';
 
 export default class DeleteMap extends React.PureComponent {
   constructor(props) {
@@ -30,63 +31,68 @@ export default class DeleteMap extends React.PureComponent {
 
   render() {
     const { deleteOpen } = this.state;
-    const {
-      selectedMap,
-      dataFetcher,
-      handleMapMenuChange,
-      setParentState
-    } = this.props;
+    const { selectedMap, handleMapMenuChange } = this.props;
     return (
-      <Modal
-        onUnmount={() => setParentState({ closeCharts: false })}
-        onMount={() => setParentState({ closeCharts: true })}
-        onClose={this.handleClose}
-        open={deleteOpen}
-        size="tiny"
-        trigger={
-          <Popup
-            content="Delete Map"
-            trigger={
-              <Button
-                onClick={this.handleOpen}
-                style={{ height: '45px' }}
-                className="filter-button"
-              >
-                <Icon.Group
-                  size="large"
-                  style={{
-                    marginTop: '5px',
-                    marginLeft: '8px',
-                    marginRight: '-10px'
-                  }}
+      <DataConsumer>
+        {({ dataFetcher, updateDataContextState }) => {
+          return (
+            <Modal
+              onUnmount={() => updateDataContextState({ closeCharts: false })}
+              onMount={() => updateDataContextState({ closeCharts: true })}
+              onClose={this.handleClose}
+              open={deleteOpen}
+              size="tiny"
+              trigger={
+                <Popup
+                  content="Delete Map"
+                  trigger={
+                    <Button
+                      onClick={this.handleOpen}
+                      style={{ height: '45px' }}
+                      className="filter-button"
+                    >
+                      <Icon.Group
+                        size="large"
+                        style={{
+                          marginTop: '5px',
+                          marginLeft: '8px',
+                          marginRight: '-10px'
+                        }}
+                      >
+                        <Icon name="map" color="red" />
+                        <Icon name="minus" color="red" corner="bottom right" />
+                      </Icon.Group>
+                    </Button>
+                  }
+                />
+              }
+            >
+              <Modal.Header>Delete Map</Modal.Header>
+              <Modal.Content>
+                Are you sure you want to delete "{selectedMap.label}" map?
+              </Modal.Content>
+              <Modal.Actions>
+                <Button
+                  style={{ float: 'left' }}
+                  positive
+                  onClick={this.handleClose}
                 >
-                  <Icon name="map" color="red" />
-                  <Icon name="minus" color="red" corner="bottom right" />
-                </Icon.Group>
-              </Button>
-            }
-          />
-        }
-      >
-        <Modal.Header>Delete Map</Modal.Header>
-        <Modal.Content>
-          Are you sure you want to delete "{selectedMap.label}" map?
-        </Modal.Content>
-        <Modal.Actions>
-          <Button style={{ float: 'left' }} positive onClick={this.handleClose}>
-            Don't Delete
-          </Button>
+                  Don't Delete
+                </Button>
 
-          <Button
-            negative
-            onClick={() =>
-              this.save(selectedMap, dataFetcher, handleMapMenuChange)
-            }
-          >
-            Delete!
-          </Button>
-        </Modal.Actions>
-      </Modal>
+                <Button
+                  negative
+                  onClick={() =>
+                    this.save(selectedMap, dataFetcher, handleMapMenuChange)
+                  }
+                >
+                  Delete!
+                </Button>
+              </Modal.Actions>
+            </Modal>
+          );
+        }}
+      </DataConsumer>
     );
   }
 }
