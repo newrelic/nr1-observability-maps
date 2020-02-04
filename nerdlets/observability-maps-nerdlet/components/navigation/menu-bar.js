@@ -120,7 +120,6 @@ export default class MenuBar extends React.PureComponent {
                 <CreateMap
                   accountMaps={accountMaps}
                   userMaps={userMaps}
-                  dataFetcher={dataFetcher}
                   handleMapMenuChange={map =>
                     this.handleMapMenuChange(
                       map,
