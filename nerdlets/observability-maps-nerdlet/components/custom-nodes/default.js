@@ -1,15 +1,15 @@
 /* eslint react/no-access-state-in-setstate: 0 */
 import React from 'react';
-import { Icon, Popup, Table, Image } from 'semantic-ui-react';
+import { Icon, Popup, Image } from 'semantic-ui-react';
 import {
   setAlertDesign,
   setCustomAlertDesign,
   setEntityDesign
 } from '../../lib/helper';
-import { LineChart, AreaChart, Billboard, PieChart, TableChart } from 'nr1';
 import { DataConsumer } from '../../context/data';
-import { buildNodeMetrics } from './node-utills';
-
+import { buildNodeMetrics } from './node-utils';
+import MainChart from './main-chart';
+import HoverContent from './hover-content';
 // const languageIcons = {
 //   java: "https://image.flaticon.com/icons/svg/226/226777.svg",
 //   nodejs: "https://image.flaticon.com/icons/svg/919/919825.svg",
@@ -23,109 +23,6 @@ export default class CustomNode extends React.PureComponent {
     super(props);
     this.state = {};
     this.renderIcon = this.renderIcon.bind(this);
-  }
-
-  //   .nr1-dashboards .vz-theme-dark .MosaicWidget {
-  //     background-color: #212229;
-  //     border: 1px solid transparent;
-  // }
-
-  renderContent(metrics) {
-    return (
-      <>
-        {/* <Segment inverted style={{width:"300px", height:"30px"}}>
-            test
-            </Segment> */}
-        <Table inverted compact columns={3} style={{ width: '300px' }}>
-          <Table.Body>
-            <Table.Row>
-              {metrics.map((metric, i) => {
-                let value = '';
-
-                // allows support for percentiles
-                if (typeof metric.value === 'object' && metric.value !== null) {
-                  Object.keys(metric.value).forEach((key, i) => {
-                    const isLast = i + 1 === Object.keys(metric.value).length;
-                    const keyValue = isNaN(metric.value[key])
-                      ? metric.value[key]
-                      : metric.value[key].toFixed(4);
-                    value = `${value} ${key}: ${keyValue} ${isLast ? '' : '|'}`;
-                  });
-                } else {
-                  value = isNaN(metric.value)
-                    ? metric.value
-                    : metric.value.toFixed(4);
-                }
-
-                return (
-                  <Table.Cell key={i}>
-                    {value} {metric.unit}
-                    <h4>{metric.name}</h4>
-                  </Table.Cell>
-                );
-              })}
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </>
-    );
-  }
-
-  renderChart(mainChart) {
-    if (
-      mainChart &&
-      mainChart[1] &&
-      mainChart[1].nrql &&
-      mainChart[1].accountId &&
-      mainChart[1].type
-    ) {
-      switch (mainChart[1].type) {
-        case 'line':
-          return (
-            <LineChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
-        case 'area':
-          return (
-            <AreaChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
-        case 'billboard':
-          return (
-            <Billboard
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
-        case 'pie':
-          return (
-            <PieChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
-        case 'table':
-          return (
-            <TableChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
-        default:
-          return 'No Chart Configured';
-      }
-    } else {
-      return 'No Chart Configured';
-    }
   }
 
   renderIcon(userIcons, nodeData, nodeId, isOpen, icon, colorOne, colorTwo) {
@@ -198,7 +95,7 @@ export default class CustomNode extends React.PureComponent {
             inverted
             hoverable
             mouseLeaveDelay={3000}
-            content={this.renderContent(metrics)}
+            content={<HoverContent metrics={metrics} />}
           />
         ) : (
           <Icon loading size="big" color={colorTwo} name={iconOuter} />
@@ -221,7 +118,7 @@ export default class CustomNode extends React.PureComponent {
           // onClose={() => this.setState({[`popup_${nodeId}`]:false})}
           // onOpen={() => this.setState({[`popup_${nodeId}`]:true})}
           open={this.state[`popup_${nodeId}`] === true && closeCharts === false}
-          content={this.renderChart(data.mainChart)}
+          content={<MainChart mainChart={data.mainChart} />}
           position="bottom center"
         />
       </Icon.Group>
