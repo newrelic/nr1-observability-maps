@@ -554,7 +554,6 @@ export default class ObservabilityMaps extends React.Component {
       timelineOpen,
       sidebarOpen,
       sidebarView,
-      selectedMap,
       selectedNode,
       selectedLink,
       bucketMs,
@@ -649,13 +648,8 @@ export default class ObservabilityMaps extends React.Component {
               {data.nodes.length > 0 ? (
                 <Map
                   d3MapConfig={d3MapConfig}
-                  setParentState={this.setParentState}
-                  selectedMap={selectedMap}
-                  mapConfig={mapConfig}
-                  mapData={mapData}
-                  data={data}
-                  editNodeOpen={editNodeOpen}
-                  editLinkOpen={editLinkOpen}
+                  graphWidth={graphWidth}
+                  height={this.props.height}
                 />
               ) : (
                 ''

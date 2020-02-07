@@ -69,7 +69,8 @@ export class DataProvider extends Component {
       editNodeOpen: false,
       editLinkOpen: false,
       isRefreshing: false,
-      closeCharts: false
+      closeCharts: false,
+      showContextMenu: false
     };
   }
 
