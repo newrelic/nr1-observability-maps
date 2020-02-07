@@ -76,11 +76,11 @@ export default class Map extends React.PureComponent {
     mapConfig,
     updateDataContextState
   ) => {
-    // perform a quick artifical update, before coordinates are saved to nerdstore
-    const { data } = this.state;
-    const indexToUpdate = data.nodes.findIndex(o => o.id === nodeId);
-    data.nodes[indexToUpdate].x = x;
-    data.nodes[indexToUpdate].y = y;
+    // // perform a quick artifical update, before coordinates are saved to nerdstore
+    // const { data } = this.state;
+    // const indexToUpdate = data.nodes.findIndex(o => o.id === nodeId);
+    // data.nodes[indexToUpdate].x = x;
+    // data.nodes[indexToUpdate].y = y;
 
     const ignoreNames = ['Select or create a map!', 'Add a node!'];
     if (!ignoreNames.includes(nodeId)) {
