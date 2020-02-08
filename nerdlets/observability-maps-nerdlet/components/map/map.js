@@ -41,24 +41,7 @@ export default class Map extends React.PureComponent {
       menuX: 0,
       menuY: 0,
       freezeNodes: false,
-      rightClickedNodeId: null,
-      data: {
-        nodes: [
-          {
-            id: 'Select or create a map, to get started!',
-            y: 30,
-            x: 300,
-            icon: 'arrow up'
-          },
-          {
-            id: 'Tip: Right click on map nodes for more options!',
-            y: 100,
-            x: 350,
-            icon: 'help'
-          }
-        ],
-        links: []
-      }
+      rightClickedNodeId: null
     };
 
     this.onClickGraph = this.onClickGraph.bind(this);
@@ -247,7 +230,7 @@ export default class Map extends React.PureComponent {
               <Graph
                 id="graphid" // id is mandatory, if no id is defined rd3g will throw an error
                 // ref="graph"
-                data={data || this.state.data}
+                data={data}
                 config={d3MapConfig}
                 onClickNode={(n, x, y) =>
                   this.onClickNode(n, x, y, updateDataContextState)

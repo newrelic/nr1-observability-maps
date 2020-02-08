@@ -55,7 +55,20 @@ export class DataProvider extends Component {
         linkData: {}
       },
       data: {
-        nodes: [],
+        nodes: [
+          {
+            id: 'Select or create a map, to get started!',
+            y: 30,
+            x: 300,
+            icon: 'arrow up'
+          },
+          {
+            id: 'Tip: Right click on map nodes for more options!',
+            y: 100,
+            x: 350,
+            icon: 'help'
+          }
+        ],
         links: []
       },
       userIcons: [],
@@ -79,7 +92,7 @@ export class DataProvider extends Component {
       // 'userConfig',
       'userMaps',
       'accountMaps',
-      // 'accounts',
+      'accounts',
       'userIcons'
     ]);
     this.handleMapData();

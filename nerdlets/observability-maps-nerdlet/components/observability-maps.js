@@ -23,7 +23,7 @@ import {
 import NodeHandler from './custom-nodes/handler';
 // import CustomLabel from './node/custom-label';
 import Sidebar from './sidebar/sidebar';
-import EditNode from './node/edit-node';
+import EditNode from './node/edit/edit-node';
 import EditLink from './link/edit-link';
 import { setLinkData, cleanNodeId, chunk } from '../lib/helper';
 import Timeline from './timeline/timeline';
@@ -42,18 +42,7 @@ export default class ObservabilityMaps extends React.Component {
       selectedNode: '',
       selectedLink: '',
       mapConfig: {
-        nodeData: {
-          'Select or create a map, to get started!': {
-            y: 30,
-            x: 300,
-            icon: 'arrow up'
-          },
-          'Tip: Right click on map nodes for more options!': {
-            y: 100,
-            x: 350,
-            icon: 'help'
-          }
-        },
+        nodeData: {},
         linkData: {}
       },
       mapData: {

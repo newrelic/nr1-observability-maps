@@ -131,15 +131,7 @@ export default class MenuBar extends React.PureComponent {
 
                 <ImportMap />
 
-                {selectedMap ? (
-                  <ExportMap
-                    selectedMap={selectedMap}
-                    userMaps={userMaps}
-                    mapConfig={mapConfig}
-                  />
-                ) : (
-                  ''
-                )}
+                {selectedMap ? <ExportMap selectedMap={selectedMap} /> : ''}
 
                 <div className="flex-push" />
 
