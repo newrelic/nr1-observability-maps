@@ -1,51 +1,19 @@
-/* eslint 
-no-console: 0,
-react/no-did-update-set-state: 0,
-react/no-string-refs: 0
-*/
 import React from 'react';
 import { Modal, Button, Form } from 'semantic-ui-react';
 import { writeUserDocument } from '../../lib/utils';
+import { DataConsumer } from '../../context/data';
 
 export default class MapSettings extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       settingsOpen: false,
-      backgroundColor: '',
-      backgroundImage: '',
-      backgroundPosition: '',
-      backgroundRepeat: '',
-      backgroundSize: '',
-      selectedMapName: ''
+      backgroundColor: null,
+      backgroundImage: null,
+      backgroundPosition: null,
+      backgroundRepeat: null,
+      backgroundSize: null
     };
-  }
-
-  componentDidUpdate() {
-    if (this.props.selectedMap && this.props.selectedMap.value) {
-      const { selectedMapName } = this.state;
-      if (selectedMapName !== this.props.selectedMap.value) {
-        this.setState({ selectedMapName: this.props.selectedMap.value });
-        // check if map settings were available
-        const { mapConfig } = this.props;
-        if (mapConfig.settings) {
-          const {
-            backgroundColor,
-            backgroundImage,
-            backgroundPosition,
-            backgroundRepeat,
-            backgroundSize
-          } = mapConfig.settings;
-          this.setState({
-            backgroundColor,
-            backgroundImage,
-            backgroundPosition,
-            backgroundRepeat,
-            backgroundSize
-          });
-        }
-      }
-    }
   }
 
   handleOpen = () => this.setState({ settingsOpen: true });
@@ -53,125 +21,182 @@ export default class MapSettings extends React.PureComponent {
   handleChange = (e, { value }, formType) =>
     this.setState({ [formType]: value });
 
-  handleSave = async () => {
-    let {
-      backgroundColor,
-      backgroundImage,
-      backgroundPosition,
-      backgroundRepeat,
-      backgroundSize,
-      selectedMapName
-    } = this.state;
-    const { mapConfig, dataFetcher } = this.props;
-    const settings = {};
-
-    if (backgroundColor) settings.backgroundColor = backgroundColor;
-    if (backgroundImage) {
-      if (!backgroundImage.includes(`url("`)) {
-        backgroundImage = `url("${backgroundImage}")`;
-      }
-      settings.backgroundImage = backgroundImage;
-    }
-    if (backgroundPosition) settings.backgroundPosition = backgroundPosition;
-    if (backgroundRepeat) settings.backgroundRepeat = backgroundRepeat;
-    if (backgroundSize) settings.backgroundSize = backgroundSize;
-
-    mapConfig.settings = settings;
-
-    await writeUserDocument('ObservabilityMaps', selectedMapName, mapConfig);
-    await dataFetcher(['userMaps']);
-  };
-
-  render() {
+  handleSave = async (tempState, dataFetcher, mapConfig, selectedMap) => {
     const {
-      settingsOpen,
       backgroundColor,
       backgroundImage,
       backgroundPosition,
       backgroundRepeat,
       backgroundSize
-    } = this.state;
-    const { setParentState } = this.props;
+    } = tempState;
+
+    if (!mapConfig.settings) {
+      mapConfig.settings = {};
+    }
+
+    mapConfig.settings.backgroundColor =
+      this.state.backgroundColor || backgroundColor;
+
+    if (backgroundImage) {
+      if (!backgroundImage.includes(`url("`)) {
+        mapConfig.settings.backgroundImage = `url("${backgroundImage}")`;
+      } else {
+        mapConfig.settings.backgroundImage =
+          this.state.backgroundImage || backgroundImage;
+      }
+    }
+
+    mapConfig.settings.backgroundPosition =
+      this.state.backgroundPosition || backgroundPosition;
+    mapConfig.settings.backgroundRepeat =
+      this.state.backgroundRepeat || backgroundRepeat;
+    mapConfig.settings.backgroundSize =
+      this.state.backgroundSize || backgroundSize;
+
+    await writeUserDocument('ObservabilityMaps', selectedMap.value, mapConfig);
+    await dataFetcher(['userMaps']);
+  };
+
+  onUnmount = updateDataContextState => {
+    updateDataContextState({ closeCharts: false });
+    this.setState({
+      backgroundColor: null,
+      backgroundImage: null,
+      backgroundPosition: null,
+      backgroundRepeat: null,
+      backgroundSize: null
+    });
+  };
+
+  render() {
+    const { settingsOpen } = this.state;
+
     return (
-      <Modal
-        size="large"
-        open={settingsOpen}
-        onClose={this.handleClose}
-        onUnmount={() => setParentState({ closeCharts: false })}
-        onMount={() => setParentState({ closeCharts: true })}
-        trigger={
-          <Button
-            onClick={this.handleOpen}
-            icon="images outline"
-            content="Settings"
-            style={{ height: '45px' }}
-            className="filter-button"
-          />
-        }
-      >
-        <Modal.Header>Map Settings</Modal.Header>
-        <Modal.Content>
-          <Form>
-            <Form.Group widths="16">
-              <Form.Input
-                onChange={(e, d) => this.handleChange(e, d, 'backgroundColor')}
-                value={backgroundColor || ''}
-                width="8"
-                fluid
-                label="Background Color"
-                placeholder="#000000"
-              />
-              <Form.Input
-                onChange={(e, d) => this.handleChange(e, d, 'backgroundImage')}
-                width="8"
-                fluid
-                value={backgroundImage || ''}
-                label="Background Image"
-                placeholder={`url("https://someimage.com/image.jpg")`}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Select
-                fluid
-                label="Background Repeat"
-                width="8"
-                value={backgroundRepeat || ''}
-                options={[
-                  { key: 'n', text: 'None', value: '' },
-                  { key: 'r', text: 'repeat', value: 'repeat' },
-                  { key: 'rx', text: 'repeat-x', value: 'repeat-x' },
-                  { key: 'ry', text: 'repeat-y', value: 'repeat-y' },
-                  { key: 'nr', text: 'no-repeat', value: 'no-repeat' },
-                  { key: 'ini', text: 'initial', value: 'initial' },
-                  { key: 'inh', text: 'inherit', value: 'inherit' }
-                ]}
-                onChange={(e, d) => this.handleChange(e, d, 'backgroundRepeat')}
-              />
-              <Form.Input
-                onChange={(e, d) =>
-                  this.handleChange(e, d, 'backgroundPosition')
-                }
-                value={backgroundPosition || ''}
-                width="8"
-                fluid
-                label="Background Position"
-                placeholder="center"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Input
-                onChange={(e, d) => this.handleChange(e, d, 'backgroundSize')}
-                value={backgroundSize || ''}
-                width="8"
-                fluid
-                label="Background Size"
-                placeholder="auto"
-              />
-            </Form.Group>
-            <Form.Button onClick={this.handleSave}>Update</Form.Button>
-          </Form>
-        </Modal.Content>
-      </Modal>
+      <DataConsumer>
+        {({ updateDataContextState, dataFetcher, mapConfig, selectedMap }) => {
+          const tempState = {
+            backgroundColor: '',
+            backgroundImage: '',
+            backgroundPosition: '',
+            backgroundRepeat: '',
+            backgroundSize: ''
+          };
+
+          if (mapConfig.settings) {
+            tempState.backgroundColor = mapConfig.settings.backgroundColor;
+            tempState.backgroundImage = mapConfig.settings.backgroundImage;
+            tempState.backgroundPosition =
+              mapConfig.settings.backgroundPosition;
+            tempState.backgroundRepeat = mapConfig.settings.backgroundRepeat;
+            tempState.backgroundSize = mapConfig.settings.backgroundSize;
+          }
+
+          const value = name =>
+            (this.state[name] != null ? this.state[name] : tempState[name]) ||
+            '';
+
+          return (
+            <Modal
+              size="large"
+              open={settingsOpen}
+              onClose={this.handleClose}
+              onUnmount={() => this.onUnmount(updateDataContextState)}
+              onMount={() => updateDataContextState({ closeCharts: true })}
+              trigger={
+                <Button
+                  onClick={this.handleOpen}
+                  icon="images outline"
+                  content="Settings"
+                  style={{ height: '45px' }}
+                  className="filter-button"
+                />
+              }
+            >
+              <Modal.Header>Map Settings</Modal.Header>
+              <Modal.Content>
+                <Form>
+                  <Form.Group widths="16">
+                    <Form.Input
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'backgroundColor')
+                      }
+                      value={value('backgroundColor')}
+                      width="8"
+                      fluid
+                      label="Background Color"
+                      placeholder="#000000"
+                    />
+                    <Form.Input
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'backgroundImage')
+                      }
+                      width="8"
+                      fluid
+                      value={value('backgroundImage')}
+                      label="Background Image"
+                      placeholder={`url("https://someimage.com/image.jpg")`}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Select
+                      fluid
+                      label="Background Repeat"
+                      width="8"
+                      value={value('backgroundRepeat')}
+                      options={[
+                        { key: 'n', text: 'None', value: '' },
+                        { key: 'r', text: 'repeat', value: 'repeat' },
+                        { key: 'rx', text: 'repeat-x', value: 'repeat-x' },
+                        { key: 'ry', text: 'repeat-y', value: 'repeat-y' },
+                        { key: 'nr', text: 'no-repeat', value: 'no-repeat' },
+                        { key: 'ini', text: 'initial', value: 'initial' },
+                        { key: 'inh', text: 'inherit', value: 'inherit' }
+                      ]}
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'backgroundRepeat')
+                      }
+                    />
+                    <Form.Input
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'backgroundPosition')
+                      }
+                      value={value('backgroundPosition')}
+                      width="8"
+                      fluid
+                      label="Background Position"
+                      placeholder="center"
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Input
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'backgroundSize')
+                      }
+                      value={value('backgroundSize')}
+                      width="8"
+                      fluid
+                      label="Background Size"
+                      placeholder="auto"
+                    />
+                  </Form.Group>
+                  <Form.Button
+                    onClick={() =>
+                      this.handleSave(
+                        tempState,
+                        dataFetcher,
+                        mapConfig,
+                        selectedMap
+                      )
+                    }
+                  >
+                    Update
+                  </Form.Button>
+                </Form>
+              </Modal.Content>
+            </Modal>
+          );
+        }}
+      </DataConsumer>
     );
   }
 }
