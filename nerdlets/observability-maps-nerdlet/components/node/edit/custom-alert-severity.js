@@ -47,7 +47,6 @@ export default class CustomAlertSeverity extends React.PureComponent {
       alertHealthy,
       alertHealthyOperator
     } = tempState;
-    this.setState({ isSaving: true });
 
     mapConfig.nodeData[nodeId].customAlert = {
       alertNrql: this.state.alertNrql || alertNrql,
@@ -64,7 +63,6 @@ export default class CustomAlertSeverity extends React.PureComponent {
     };
 
     await updateDataContextState({ mapConfig }, ['saveMap']);
-    this.setState({ isSaving: false });
   };
 
   render() {

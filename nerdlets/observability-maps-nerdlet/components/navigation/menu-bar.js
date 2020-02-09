@@ -135,18 +135,7 @@ export default class MenuBar extends React.PureComponent {
 
                 <div className="flex-push" />
 
-                {selectedMap ? (
-                  <ManageNodes
-                    accounts={accounts}
-                    mapConfig={mapConfig}
-                    mapData={mapData}
-                    dataFetcher={dataFetcher}
-                    selectedMap={selectedMap}
-                    setParentState={setParentState}
-                  />
-                ) : (
-                  ''
-                )}
+                {selectedMap ? <ManageNodes /> : ''}
                 {selectedMap ? (
                   <ManageLinks
                     accounts={accounts}

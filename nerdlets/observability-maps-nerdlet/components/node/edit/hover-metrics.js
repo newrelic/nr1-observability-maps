@@ -30,7 +30,6 @@ export default class HoverMetrics extends React.PureComponent {
       hm_2_ACC,
       hm_3_ACC
     } = tempState;
-    this.setState({ isSaving: true });
 
     mapConfig.nodeData[nodeId].hoverMetrics = {
       1: {
@@ -48,7 +47,6 @@ export default class HoverMetrics extends React.PureComponent {
     };
 
     await updateDataContextState({ mapConfig }, ['saveMap']);
-    this.setState({ isSaving: false });
   };
 
   render() {

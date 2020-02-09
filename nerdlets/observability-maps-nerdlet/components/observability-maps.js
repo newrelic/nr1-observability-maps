@@ -37,7 +37,6 @@ export default class ObservabilityMaps extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      bucketMs: { key: 1, label: '30 sec', value: 30000 },
       selectedMap: null,
       selectedNode: '',
       selectedLink: '',
@@ -62,25 +61,23 @@ export default class ObservabilityMaps extends React.Component {
       sidebarView: '',
       editNodeOpen: false,
       editLinkOpen: false,
-      isRefreshing: false,
       closeCharts: false
     };
     this.dataFetcher = this.dataFetcher.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.handleMapData = this.handleMapData.bind(this);
     this.fetchNrql = this.fetchNrql.bind(this);
-    this.refreshData = this.refreshData.bind(this);
   }
 
   async componentDidMount() {
-    await this.dataFetcher([
-      'userConfig',
-      // 'userMaps',
-      // 'accountMaps',
-      'accounts'
-    ]);
-    this.handleMapData();
-    this.refreshData();
+    // await this.dataFetcher([
+    //   // 'userConfig',
+    //   // 'userMaps',
+    //   // 'accountMaps',
+    //   // 'accounts'
+    // ]);
+    // this.handleMapData();
+    // this.refreshData();
   }
 
   setParentState(stateData, actions) {
@@ -163,35 +160,6 @@ export default class ObservabilityMaps extends React.Component {
       resolve();
     });
   }
-
-  refreshData = () => {
-    let interval = this.props.bucketMs.value;
-    Do = Do.bind(this);
-    this.refresh = setInterval(async () => Do(), interval);
-
-    async function Do() {
-      if (interval !== this.props.bucketMs.value) {
-        console.log(
-          `Updating... (timer: ${interval}ms to ${this.props.bucketMs.value}ms)`
-        );
-        interval = this.props.bucketMs.value;
-        clearInterval(this.refresh);
-        this.refresh = setInterval(async () => Do(), interval);
-      }
-      if (!this.state.isRefreshing) {
-        console.log(
-          `Refreshing... (timer: ${interval}ms) ${new Date().getTime()}`
-        );
-        await this.setState({ isRefreshing: true });
-        await this.handleMapData();
-        await this.setState({ isRefreshing: false });
-      } else {
-        console.log(
-          `Already refreshing... waiting for next cycle (timer: ${interval}ms) ${new Date().getTime()}`
-        );
-      }
-    }
-  };
 
   // transforms mapConfig => mapData => d3 format & decorates
   handleMapData() {
@@ -545,7 +513,6 @@ export default class ObservabilityMaps extends React.Component {
       sidebarView,
       selectedNode,
       selectedLink,
-      bucketMs,
       editNodeOpen,
       editLinkOpen,
       closeCharts
@@ -624,25 +591,19 @@ export default class ObservabilityMaps extends React.Component {
           accountMaps={accountMaps}
           userMaps={userMaps}
           dataFetcher={this.dataFetcher}
-          rawData={data}
           mapConfig={mapConfig}
           mapData={mapData}
-          bucketMs={bucketMs}
           timelineOpen={timelineOpen}
         />
 
         <Grid columns={16} style={mainGridStyle}>
           <Grid.Row style={{ paddingTop: '0px' }}>
             <Grid.Column width={16}>
-              {data.nodes.length > 0 ? (
-                <Map
-                  d3MapConfig={d3MapConfig}
-                  graphWidth={graphWidth}
-                  height={this.props.height}
-                />
-              ) : (
-                ''
-              )}
+              <Map
+                d3MapConfig={d3MapConfig}
+                graphWidth={graphWidth}
+                height={this.props.height}
+              />
             </Grid.Column>
           </Grid.Row>
 

@@ -264,9 +264,10 @@ export class DataProvider extends Component {
         console.log(
           `Refreshing... (timer: ${interval}ms) ${new Date().getTime()}`
         );
-        await this.setState({ isRefreshing: true });
-        await this.handleMapData();
-        await this.setState({ isRefreshing: false });
+        this.setState({ isRefreshing: true }, async () => {
+          await this.handleMapData();
+          this.setState({ isRefreshing: false });
+        });
       } else {
         console.log(
           `Already refreshing... waiting for next cycle (timer: ${interval}ms) ${new Date().getTime()}`

@@ -6,17 +6,13 @@ export default class IconSet extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      iconSet: '',
-      isSaving: false
+      iconSet: ''
     };
   }
 
   saveNrql = async (updateDataContextState, mapConfig, nodeId, iconSet) => {
-    this.setState({ isSaving: true }, async () => {
-      mapConfig.nodeData[nodeId].iconSet = iconSet;
-      await updateDataContextState({ mapConfig }, ['saveMap']);
-      this.setState({ isSaving: false });
-    });
+    mapConfig.nodeData[nodeId].iconSet = iconSet;
+    await updateDataContextState({ mapConfig }, ['saveMap']);
   };
 
   render() {

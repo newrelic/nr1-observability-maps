@@ -20,8 +20,6 @@ export default class MainChart extends React.PureComponent {
     mc_1_ACC,
     mc_1_TYPE
   ) => {
-    this.setState({ isSaving: true });
-
     mapConfig.nodeData[nodeId].mainChart = {
       1: {
         nrql: this.state.mc_1_NRQL || mc_1_NRQL,
@@ -31,7 +29,6 @@ export default class MainChart extends React.PureComponent {
     };
 
     await updateDataContextState({ mapConfig }, ['saveMap']);
-    this.setState({ isSaving: false });
   };
 
   render() {
