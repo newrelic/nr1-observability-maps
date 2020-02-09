@@ -25,7 +25,7 @@ export default class CreateMap extends React.PureComponent {
   handleOpen = () => this.setState({ createOpen: true });
   handleClose = () => this.setState({ createOpen: false });
 
-  save = async (dataFetcher, handleMapMenuChange) => {
+  save = async (dataFetcher, selectMap) => {
     const { mapName, storeLocation } = this.state;
     this.setState({ createOpen: false });
     const payload = {
@@ -40,8 +40,8 @@ export default class CreateMap extends React.PureComponent {
         break;
       case 'user':
         await writeUserDocument('ObservabilityMaps', mapName, payload);
-        await dataFetcher(['userMaps']);
-        handleMapMenuChange(mapName);
+        await dataFetcher(['userMaps', 'selectMap', mapName]);
+        selectMap(mapName);
         break;
     }
     this.setState({ mapName: '' });
@@ -49,13 +49,13 @@ export default class CreateMap extends React.PureComponent {
 
   render() {
     const { mapName, storeLocation, createOpen } = this.state;
-    let { handleMapMenuChange, userMaps, accountMaps } = this.props;
+    let { userMaps, accountMaps } = this.props;
     userMaps = userMaps || [];
     accountMaps = accountMaps || [];
     let mapNameError = false;
     const mapNameErrorContent = { content: '', pointing: 'above' };
     const existingMap = [...userMaps, ...accountMaps].filter(
-      map => map.value === mapName
+      map => map.value.replace(/\+/g, ' ') === mapName || map.value === mapName
     );
     if (existingMap.length > 0) {
       mapNameErrorContent.content = 'This map name already exists';
@@ -69,7 +69,7 @@ export default class CreateMap extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({ dataFetcher, updateDataContextState }) => {
+        {({ dataFetcher, updateDataContextState, selectMap }) => {
           return (
             <Modal
               closeIcon
@@ -141,7 +141,7 @@ export default class CreateMap extends React.PureComponent {
                 <Button
                   disabled={mapNameError}
                   positive
-                  onClick={() => this.save(dataFetcher, handleMapMenuChange)}
+                  onClick={() => this.save(dataFetcher, selectMap)}
                 >
                   Create
                 </Button>

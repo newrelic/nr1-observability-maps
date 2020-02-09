@@ -18,13 +18,6 @@ import MapSettings from '../map/settings';
 import { DataConsumer } from '../../context/data';
 
 export default class MenuBar extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedMap: null
-    };
-  }
-
   handleMapMenuChange = (
     selectedMap,
     availableMaps,
@@ -34,24 +27,20 @@ export default class MenuBar extends React.PureComponent {
       const map = availableMaps.filter(map => map.id === selectedMap);
       if (map.length === 1) {
         const selected = { value: map[0].id, label: map[0].id, type: 'user' };
-        this.setState({ selectedMap: selected });
         updateDataContextState({ selectedMap: selected }, ['loadMap']);
+        console.log(`Map selected:`, selectedMap);
       }
     } else {
-      this.setState(
-        { selectedMap },
-        () => updateDataContextState({ selectedMap }, ['loadMap']),
-        () => console.log(`Map selected:`, this.state.selectedMap)
-      );
+      updateDataContextState({ selectedMap }, ['loadMap']);
+      console.log(`Map selected:`, selectedMap);
     }
   };
 
   render() {
-    const { selectedMap } = this.state;
-
     return (
       <DataConsumer>
         {({
+          selectedMap,
           loading,
           userMaps,
           accountMaps,
@@ -100,32 +89,9 @@ export default class MenuBar extends React.PureComponent {
                   open
                 </Button> */}
 
-                {selectedMap ? (
-                  <DeleteMap
-                    selectedMap={selectedMap}
-                    handleMapMenuChange={map =>
-                      this.handleMapMenuChange(
-                        map,
-                        availableMaps,
-                        updateDataContextState
-                      )
-                    }
-                  />
-                ) : (
-                  ''
-                )}
+                {selectedMap ? <DeleteMap /> : ''}
 
-                <CreateMap
-                  accountMaps={accountMaps}
-                  userMaps={userMaps}
-                  handleMapMenuChange={map =>
-                    this.handleMapMenuChange(
-                      map,
-                      availableMaps,
-                      updateDataContextState
-                    )
-                  }
-                />
+                <CreateMap accountMaps={accountMaps} userMaps={userMaps} />
 
                 <ImportMap />
 

@@ -75,6 +75,7 @@ export class DataProvider extends Component {
       storeLocation: 'user',
       accountMaps: null,
       userMaps: null,
+      availableMaps: [],
       accounts: [],
       sidebarOpen: false,
       timelineOpen: false,
@@ -220,14 +221,17 @@ export class DataProvider extends Component {
       await Promise.all(dataPromises).then(async values => {
         const data = { loading: false };
         values.forEach((value, i) => {
+          data.availableMaps = [];
           switch (content[i]) {
             case 'userMaps':
               data[content[i]] = value;
-              break;
-            case 'userIcons':
-              data[content[i]] = value;
+              data.availableMaps = [...data.availableMaps, ...value];
               break;
             case 'accountMaps':
+              data[content[i]] = value;
+              data.availableMaps = [...data.availableMaps, ...value];
+              break;
+            case 'userIcons':
               data[content[i]] = value;
               break;
             case 'userConfig':
@@ -273,6 +277,26 @@ export class DataProvider extends Component {
           `Already refreshing... waiting for next cycle (timer: ${interval}ms) ${new Date().getTime()}`
         );
       }
+    }
+  };
+
+  selectMap = selectedMap => {
+    if (typeof selectedMap === 'string' || selectedMap instanceof String) {
+      const map = this.state.availableMaps.filter(
+        map => map.id === selectedMap.replace(/ /g, '+')
+      );
+      if (map.length === 1) {
+        const selected = { value: map[0].id, label: map[0].id, type: 'user' };
+        this.setState({ selectedMap: selected });
+        this.updateDataContextState({ selectedMap: selected }, ['loadMap']);
+        console.log(`Map selected:`, selected);
+      }
+    } else {
+      this.setState(
+        { selectedMap },
+        () => this.updateDataContextState({ selectedMap }, ['loadMap']),
+        () => console.log(`Map selected:`, this.state.selectedMap)
+      );
     }
   };
 
@@ -543,7 +567,8 @@ export class DataProvider extends Component {
         value={{
           ...this.state,
           updateDataContextState: this.updateDataContextState,
-          dataFetcher: this.dataFetcher
+          dataFetcher: this.dataFetcher,
+          selectMap: this.selectMap
         }}
       >
         {children}
