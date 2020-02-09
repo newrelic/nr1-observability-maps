@@ -70,12 +70,12 @@ export default class ManageNodes extends React.PureComponent {
         }
         break;
       case 'del':
-        // 0 == accountId, 1 == accountName
-        const accountSplit = selectedAccount.split(/: (.+)/);
-
         // ensure links are deleted first
         switch (selectedNodeType) {
           case 'account':
+            // 0 == accountId, 1 == accountName
+            const accountSplit = selectedAccount.split(/: (.+)/);
+
             // clean up links
             Object.keys(mapConfig.linkData).forEach(link => {
               if (
@@ -180,13 +180,7 @@ export default class ManageNodes extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({
-          accounts,
-          dataFetcher,
-          mapConfig,
-          selectedMap,
-          updateDataContextState
-        }) => {
+        {({ accounts, mapConfig, updateDataContextState }) => {
           const accountOptions = accounts.map(account => ({
             key: account.id,
             text: `${account.id}: ${account.name}`,
@@ -428,13 +422,7 @@ export default class ManageNodes extends React.PureComponent {
                   display: activeNodeItem === 'Delete Node' ? '' : 'none'
                 }}
               >
-                <DeleteNode
-                  mapConfig={mapConfig}
-                  action={this.action}
-                  dataFetcher={dataFetcher}
-                  selectedMap={selectedMap}
-                  // setParentState={setParentState}
-                />
+                <DeleteNode action={this.action} />
               </Modal.Content>
               <Modal.Actions>
                 <Button
