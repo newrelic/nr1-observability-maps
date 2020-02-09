@@ -15,10 +15,9 @@ export default class ExportMap extends React.PureComponent {
 
   render() {
     const { exportOpen } = this.state;
-    const { selectedMap } = this.props;
     return (
       <DataConsumer>
-        {({ updateDataContextState, mapConfig }) => (
+        {({ updateDataContextState, mapConfig, selectedMap }) => (
           <Modal
             closeIcon
             size="large"

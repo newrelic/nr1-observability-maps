@@ -3,7 +3,6 @@ no-console: 0
 */
 import React from 'react';
 import { Icon, Button } from 'semantic-ui-react';
-// import { navigation } from 'nr1';
 import CreateMap from '../map/create';
 import DeleteMap from '../map/delete';
 import ExportMap from '../map/export';
@@ -95,7 +94,7 @@ export default class MenuBar extends React.PureComponent {
 
                 <ImportMap />
 
-                {selectedMap ? <ExportMap selectedMap={selectedMap} /> : ''}
+                {selectedMap ? <ExportMap /> : ''}
 
                 <div className="flex-push" />
 

@@ -19,11 +19,26 @@ import {
 } from '../lib/utils';
 import { chunk } from '../lib/helper';
 
+const DataContext = React.createContext();
+
 const collectionName = 'ObservabilityMaps';
 const userConfig = 'ObservabilityUserConfig';
 const iconCollection = 'ObservabilityIcons';
 
-const DataContext = React.createContext();
+const defaultNodeData = {
+  'Select or create a map, to get started!': {
+    id: 'Select or create a map, to get started!',
+    y: 30,
+    x: 300,
+    icon: 'arrow up'
+  },
+  'Tip: Right click on map nodes for more options!': {
+    id: 'Tip: Right click on map nodes for more options!',
+    y: 100,
+    x: 350,
+    icon: 'help'
+  }
+};
 
 export class DataProvider extends Component {
   constructor(props) {
@@ -36,18 +51,7 @@ export class DataProvider extends Component {
       selectedNode: '',
       selectedLink: '',
       mapConfig: {
-        nodeData: {
-          'Select or create a map, to get started!': {
-            y: 30,
-            x: 300,
-            icon: 'arrow up'
-          },
-          'Tip: Right click on map nodes for more options!': {
-            y: 100,
-            x: 350,
-            icon: 'help'
-          }
-        },
+        nodeData: defaultNodeData,
         linkData: {}
       },
       mapData: {
@@ -56,18 +60,8 @@ export class DataProvider extends Component {
       },
       data: {
         nodes: [
-          {
-            id: 'Select or create a map, to get started!',
-            y: 30,
-            x: 300,
-            icon: 'arrow up'
-          },
-          {
-            id: 'Tip: Right click on map nodes for more options!',
-            y: 100,
-            x: 350,
-            icon: 'help'
-          }
+          defaultNodeData['Select or create a map, to get started!'],
+          defaultNodeData['Tip: Right click on map nodes for more options!']
         ],
         links: []
       },
@@ -100,8 +94,6 @@ export class DataProvider extends Component {
     this.refreshData();
   }
 
-  // updateDataContextState = data => this.setState(data);
-
   updateDataContextState = (stateData, actions) => {
     console.log('context updating...');
     return new Promise(async resolve => {
@@ -115,39 +107,21 @@ export class DataProvider extends Component {
               if (stateData.selectedMap) {
                 switch (stateData.selectedMap.type) {
                   case 'user':
-                    const { userMaps } = this.state;
-                    for (let i = 0; i < userMaps.length; i++) {
-                      if (userMaps[i].id === stateData.selectedMap.value) {
-                        const mapConfig = JSON.parse(
-                          JSON.stringify(userMaps[i].document)
-                        );
-                        await this.setState({ mapConfig });
-                        break;
-                      }
-                    }
+                    await this.pluckMap(stateData.selectedMap.value);
+                    this.handleMapData();
                     break;
                 }
               } else {
-                await this.setState({
-                  mapConfig: {
-                    nodeData: {
-                      'Select or create a map, to get started!': {
-                        y: 30,
-                        x: 300,
-                        icon: 'arrow up'
-                      },
-                      'Tip: Right click on map nodes for more options!': {
-                        y: 100,
-                        x: 350,
-                        icon: 'help'
-                      }
-                    },
-                    linkData: {}
-                  }
-                });
+                await this.setState(
+                  {
+                    mapConfig: {
+                      nodeData: defaultNodeData,
+                      linkData: {}
+                    }
+                  },
+                  this.handleMapData()
+                );
               }
-
-              this.handleMapData();
 
               break;
             case 'saveMap':
@@ -181,6 +155,21 @@ export class DataProvider extends Component {
       }
 
       resolve();
+    });
+  };
+
+  pluckMap = map => {
+    return new Promise(async resolve => {
+      const { userMaps } = this.state;
+      let found = false;
+      for (let i = 0; i < userMaps.length; i++) {
+        if (userMaps[i].id === map) {
+          found = true;
+          const mapConfig = JSON.parse(JSON.stringify(userMaps[i].document));
+          this.setState({ mapConfig }, resolve(found));
+        }
+      }
+      if (!found) resolve(found);
     });
   };
 
