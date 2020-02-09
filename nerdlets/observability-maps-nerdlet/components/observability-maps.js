@@ -21,11 +21,11 @@ import {
   ApmEntityBatchQuery
 } from '../lib/utils';
 import NodeHandler from './custom-nodes/handler';
-// import CustomLabel from './node/custom-label';
+import LinkHandler from './custom-links/handler';
 import Sidebar from './sidebar/sidebar';
 import EditNode from './node/edit/edit-node';
-import EditLink from './link/edit-link';
-import { setLinkData, cleanNodeId, chunk } from '../lib/helper';
+import EditLink from './link/edit/edit-link';
+import { cleanNodeId, chunk } from '../lib/helper';
 import Timeline from './timeline/timeline';
 
 const collectionName = 'ObservabilityMaps';
@@ -556,22 +556,13 @@ export default class ObservabilityMaps extends React.Component {
         // renderLabel: false,
         fontColor: 'white',
         // viewGenerator: node => <Popup basic pinned on={"click"} content={node} trigger={<Button color="green" icon='add' />} />
-        viewGenerator: node => (
-          <NodeHandler
-            sidebarOpen={sidebarOpen}
-            node={node}
-            mapData={mapData}
-            nodeSize={nodeSize}
-            setParentState={this.setParentState}
-            closeCharts={closeCharts}
-          />
-        )
+        viewGenerator: node => <NodeHandler node={node} nodeSize={nodeSize} />
       },
       link: {
         highlightColor: 'lightblue',
         type: 'CURVE_SMOOTH',
         renderLabel: true,
-        labelProperty: link => setLinkData(link, mapData.linkData),
+        labelProperty: link => <LinkHandler link={link} />,
         fontColor: '#21ba45',
         fontSize: 13,
         fontWeight: 'bold'

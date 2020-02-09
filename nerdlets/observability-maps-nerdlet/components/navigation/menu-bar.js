@@ -48,18 +48,17 @@ export default class MenuBar extends React.PureComponent {
 
   render() {
     const { selectedMap } = this.state;
-    const {
-      accounts,
-      loading,
-      setParentState,
-      mapConfig,
-      mapData,
-      timelineOpen
-    } = this.props;
+    const { setParentState, mapConfig, timelineOpen } = this.props;
 
     return (
       <DataConsumer>
-        {({ userMaps, accountMaps, dataFetcher, updateDataContextState }) => {
+        {({
+          loading,
+          userMaps,
+          accountMaps,
+          dataFetcher,
+          updateDataContextState
+        }) => {
           let availableMaps = [];
 
           if (accountMaps) {
@@ -136,18 +135,7 @@ export default class MenuBar extends React.PureComponent {
                 <div className="flex-push" />
 
                 {selectedMap ? <ManageNodes /> : ''}
-                {selectedMap ? (
-                  <ManageLinks
-                    accounts={accounts}
-                    mapConfig={mapConfig}
-                    mapData={mapData}
-                    dataFetcher={dataFetcher}
-                    selectedMap={selectedMap}
-                    setParentState={setParentState}
-                  />
-                ) : (
-                  ''
-                )}
+                {selectedMap ? <ManageLinks /> : ''}
 
                 {/* <UserConfig /> */}
 
