@@ -42,6 +42,7 @@ export default class EditNode extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               size="large"
               open={editNodeOpen}
               onClose={() => updateDataContextState({ editNodeOpen: false })}

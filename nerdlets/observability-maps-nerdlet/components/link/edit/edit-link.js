@@ -36,6 +36,7 @@ export default class EditLink extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               size="large"
               open={editLinkOpen}
               onClose={() => updateDataContextState({ editLinkOpen: false })}

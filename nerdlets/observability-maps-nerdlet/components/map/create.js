@@ -72,6 +72,7 @@ export default class CreateMap extends React.PureComponent {
         {({ dataFetcher, updateDataContextState }) => {
           return (
             <Modal
+              closeIcon
               open={createOpen}
               onUnmount={() => updateDataContextState({ closeCharts: false })}
               onMount={() => updateDataContextState({ closeCharts: true })}
@@ -143,13 +144,6 @@ export default class CreateMap extends React.PureComponent {
                   onClick={() => this.save(dataFetcher, handleMapMenuChange)}
                 >
                   Create
-                </Button>
-                <Button
-                  style={{ float: 'left' }}
-                  negative
-                  onClick={this.handleClose}
-                >
-                  Close
                 </Button>
               </Modal.Actions>
             </Modal>

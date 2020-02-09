@@ -97,6 +97,7 @@ export default class MapSettings extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               size="large"
               open={settingsOpen}
               onClose={this.handleClose}

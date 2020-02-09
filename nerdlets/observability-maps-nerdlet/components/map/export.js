@@ -20,6 +20,7 @@ export default class ExportMap extends React.PureComponent {
       <DataConsumer>
         {({ updateDataContextState, mapConfig }) => (
           <Modal
+            closeIcon
             size="large"
             open={exportOpen}
             onClose={this.handleClose}

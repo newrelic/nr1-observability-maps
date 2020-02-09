@@ -82,6 +82,7 @@ export default class ManageIcons extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               size="large"
               onUnmount={() => updateDataContextState({ closeCharts: false })}
               onMount={() => updateDataContextState({ closeCharts: true })}

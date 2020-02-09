@@ -223,6 +223,7 @@ export default class ManageNodes extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               open={open}
               onClose={this.handleClose}
               size="large"

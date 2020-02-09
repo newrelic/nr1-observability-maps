@@ -116,6 +116,7 @@ export default class ManageLinks extends React.PureComponent {
 
           return (
             <Modal
+              closeIcon
               open={open}
               onClose={this.handleClose}
               size="small"

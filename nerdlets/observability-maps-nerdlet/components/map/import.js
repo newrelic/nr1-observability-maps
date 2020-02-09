@@ -68,6 +68,7 @@ export default class ImportMap extends React.PureComponent {
         {({ dataFetcher, updateDataContextState }) => {
           return (
             <Modal
+              closeIcon
               size="large"
               open={importOpen}
               onClose={this.handleClose}
