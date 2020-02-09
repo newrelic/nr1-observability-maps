@@ -38,8 +38,6 @@ export default class ObservabilityMaps extends React.Component {
     this.state = {
       loading: false,
       selectedMap: null,
-      selectedNode: '',
-      selectedLink: '',
       mapConfig: {
         nodeData: {},
         linkData: {}
@@ -56,28 +54,12 @@ export default class ObservabilityMaps extends React.Component {
       accountMaps: null,
       userMaps: null,
       accounts: [],
-      sidebarOpen: false,
-      timelineOpen: false,
-      sidebarView: '',
-      editNodeOpen: false,
-      editLinkOpen: false,
-      closeCharts: false
+      sidebarOpen: false
     };
     this.dataFetcher = this.dataFetcher.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.handleMapData = this.handleMapData.bind(this);
     this.fetchNrql = this.fetchNrql.bind(this);
-  }
-
-  async componentDidMount() {
-    // await this.dataFetcher([
-    //   // 'userConfig',
-    //   // 'userMaps',
-    //   // 'accountMaps',
-    //   // 'accounts'
-    // ]);
-    // this.handleMapData();
-    // this.refreshData();
   }
 
   setParentState(stateData, actions) {
@@ -508,14 +490,7 @@ export default class ObservabilityMaps extends React.Component {
       loading,
       mapConfig,
       mapData,
-      timelineOpen,
-      sidebarOpen,
-      sidebarView,
-      selectedNode,
-      selectedLink,
-      editNodeOpen,
-      editLinkOpen,
-      closeCharts
+      sidebarOpen
     } = this.state;
     const graphWidth = sidebarOpen
       ? (this.props.width / 4) * 3
@@ -584,7 +559,6 @@ export default class ObservabilityMaps extends React.Component {
           dataFetcher={this.dataFetcher}
           mapConfig={mapConfig}
           mapData={mapData}
-          timelineOpen={timelineOpen}
         />
 
         <Grid columns={16} style={mainGridStyle}>
@@ -598,42 +572,13 @@ export default class ObservabilityMaps extends React.Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Sidebar
-            height={this.props.height - 60}
-            sidebarOpen={sidebarOpen}
-            sidebarView={sidebarView}
-            setParentState={this.setParentState}
-            selectedNode={selectedNode}
-            mapConfig={mapConfig}
-            mapData={mapData}
-          />
-
-          <Timeline
-            height={this.props.height - 60}
-            timelineOpen={timelineOpen}
-            setParentState={this.setParentState}
-            selectedNode={selectedNode}
-            mapConfig={mapConfig}
-            mapData={mapData}
-            data={data}
-          />
+          <Sidebar height={this.props.height - 60} />
+          <Timeline height={this.props.height - 60} />
         </Grid>
 
-        <EditNode
-          setParentState={this.setParentState}
-          editNodeOpen={editNodeOpen}
-          selectedNode={selectedNode}
-          mapConfig={mapConfig}
-          accounts={accounts}
-        />
+        <EditNode />
 
-        <EditLink
-          setParentState={this.setParentState}
-          editLinkOpen={editLinkOpen}
-          selectedLink={selectedLink}
-          mapConfig={mapConfig}
-          accounts={accounts}
-        />
+        <EditLink />
       </div>
     );
   }

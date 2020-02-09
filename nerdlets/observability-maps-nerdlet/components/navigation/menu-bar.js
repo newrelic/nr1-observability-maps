@@ -48,7 +48,7 @@ export default class MenuBar extends React.PureComponent {
 
   render() {
     const { selectedMap } = this.state;
-    const { setParentState, mapConfig, timelineOpen } = this.props;
+    const { setParentState, mapConfig } = this.props;
 
     return (
       <DataConsumer>
@@ -57,7 +57,8 @@ export default class MenuBar extends React.PureComponent {
           userMaps,
           accountMaps,
           dataFetcher,
-          updateDataContextState
+          updateDataContextState,
+          timelineOpen
         }) => {
           let availableMaps = [];
 
@@ -159,7 +160,7 @@ export default class MenuBar extends React.PureComponent {
                     content="Timeline"
                     className="filter-button"
                     onClick={() =>
-                      setParentState({ timelineOpen: !timelineOpen })
+                      updateDataContextState({ timelineOpen: !timelineOpen })
                     }
                   />
                 ) : (
