@@ -1,4 +1,3 @@
-/* eslint react/no-access-state-in-setstate: 0 */
 import React from 'react';
 import { DataConsumer } from '../../context/data';
 import { setLinkData } from './link-utils';

@@ -1,13 +1,5 @@
-/* eslint 
-no-console: 0,
-no-async-promise-executor: 0,
-no-func-assign: 0,
-require-atomic-updates: 0,
-no-unused-vars: 0
-*/
-
 import React from 'react';
-import { Grid, Popup, Button } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import MenuBar from './navigation/menu-bar';
 import Map from './map/map';
 import NodeHandler from './custom-nodes/handler';
@@ -50,9 +42,7 @@ export default class ObservabilityMaps extends React.Component {
         fontSize: 16,
         highlightFontSize: 16,
         labelProperty: node => cleanNodeId(node.id),
-        // renderLabel: false,
         fontColor: 'white',
-        // viewGenerator: node => <Popup basic pinned on={"click"} content={node} trigger={<Button color="green" icon='add' />} />
         viewGenerator: node => <NodeHandler node={node} nodeSize={nodeSize} />
       },
       link: {
@@ -107,7 +97,6 @@ export default class ObservabilityMaps extends React.Component {
               </Grid>
 
               <EditNode />
-
               <EditLink />
             </div>
           );

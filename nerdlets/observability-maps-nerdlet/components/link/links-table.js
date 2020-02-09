@@ -1,4 +1,3 @@
-/* eslint react/prop-types: 0 */
 import React from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import { DataConsumer } from '../../context/data';

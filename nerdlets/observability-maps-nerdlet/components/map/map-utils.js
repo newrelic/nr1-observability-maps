@@ -1,7 +1,5 @@
 /* eslint 
 no-console: 0,
-react/no-did-update-set-state: 0,
-react/no-string-refs: 0
 */
 
 import { navigation } from 'nr1';
