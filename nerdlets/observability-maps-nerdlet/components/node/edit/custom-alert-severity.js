@@ -25,14 +25,14 @@ export default class CustomAlertSeverity extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      alertNrql: '',
-      alertNrqlAcc: '',
-      alertCritical: '',
-      alertCriticalOperator: '',
-      alertWarning: '',
-      alertWarningOperator: '',
-      alertHealthy: '',
-      alertHealthyOperator: ''
+      alertNrql: null,
+      alertNrqlAcc: null,
+      alertCritical: null,
+      alertCriticalOperator: null,
+      alertWarning: null,
+      alertWarningOperator: null,
+      alertHealthy: null,
+      alertHealthyOperator: null
     };
   }
 
@@ -105,6 +105,10 @@ export default class CustomAlertSeverity extends React.PureComponent {
               mapConfig.nodeData[selectedNode].customAlert.alertHealthyOperator;
           }
 
+          const value = name =>
+            (this.state[name] != null ? this.state[name] : tempState[name]) ||
+            '';
+
           return (
             <>
               <Divider />
@@ -123,22 +127,14 @@ export default class CustomAlertSeverity extends React.PureComponent {
                   fluid
                   label="NRQL"
                   placeholder={`SELECT average(duration) from Transaction from 'myApp'`}
-                  value={
-                    this.state.alertNrql === ''
-                      ? tempState.alertNrql
-                      : this.state.alertNrql
-                  }
+                  value={value('alertNrql')}
                   onChange={e => this.setState({ alertNrql: e.target.value })}
                 />
                 <Form.Select
                   search
                   width="6"
                   label="Account"
-                  value={
-                    this.state.alertNrqlAcc === ''
-                      ? tempState.alertNrqlAcc
-                      : this.state.alertNrqlAcc
-                  }
+                  value={value('alertNrqlAcc')}
                   options={accountOptions}
                   onChange={(e, d) => this.setState({ alertNrqlAcc: d.value })}
                 />
@@ -161,11 +157,7 @@ export default class CustomAlertSeverity extends React.PureComponent {
                         style={{ display: 'inline', width: '100%' }}
                         options={operators}
                         placeholder="Select Operator"
-                        value={
-                          this.state[option.op] === ''
-                            ? tempState[option.op]
-                            : this.state[option.op]
-                        }
+                        value={value(option.op)}
                         onChange={(e, d) =>
                           this.setState({ [option.op]: d.value })
                         }
@@ -175,11 +167,7 @@ export default class CustomAlertSeverity extends React.PureComponent {
                         fluid
                         label="Value"
                         placeholder="20"
-                        value={
-                          this.state[option.val] === ''
-                            ? tempState[option.val]
-                            : this.state[option.val]
-                        }
+                        value={value(option.val)}
                         onChange={e =>
                           this.setState({ [option.val]: e.target.value })
                         }

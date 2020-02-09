@@ -111,6 +111,10 @@ export default class HoverMetrics extends React.PureComponent {
               ? tempState.selectedHoverOption
               : this.state.selectedHoverOption;
 
+          const value = name =>
+            (this.state[name] != null ? this.state[name] : tempState[name]) ||
+            '';
+
           return (
             <>
               <Form.Group>
@@ -138,11 +142,7 @@ export default class HoverMetrics extends React.PureComponent {
                           fluid
                           label={`Query ${i + 1}`}
                           placeholder={`SELECT average(duration) as 'ms' from Transaction`}
-                          value={
-                            this.state[`hm_${i + 1}_NRQL`] === ''
-                              ? tempState[`hm_${i + 1}_NRQL`]
-                              : this.state[`hm_${i + 1}_NRQL`]
-                          }
+                          value={value(`hm_${i + 1}_NRQL`)}
                           onChange={e =>
                             this.setState({
                               [`hm_${i + 1}_NRQL`]: e.target.value
@@ -153,11 +153,7 @@ export default class HoverMetrics extends React.PureComponent {
                           search
                           width={4}
                           label="Account"
-                          value={
-                            this.state[`hm_${i + 1}_ACC`] === ''
-                              ? tempState[`hm_${i + 1}_ACC`]
-                              : this.state[`hm_${i + 1}_ACC`]
-                          }
+                          value={value(`hm_${i + 1}_ACC`)}
                           options={accountOptions}
                           onChange={(e, d) =>
                             this.setState({ [`hm_${i + 1}_ACC`]: d.value })

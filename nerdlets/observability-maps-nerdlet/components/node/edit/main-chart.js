@@ -6,20 +6,14 @@ export default class MainChart extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      mc_1_NRQL: '',
-      mc_1_ACC: '',
-      mc_1_TYPE: ''
+      mc_1_NRQL: null,
+      mc_1_ACC: null,
+      mc_1_TYPE: null
     };
   }
 
-  saveNrql = async (
-    updateDataContextState,
-    mapConfig,
-    nodeId,
-    mc_1_NRQL,
-    mc_1_ACC,
-    mc_1_TYPE
-  ) => {
+  saveNrql = async (updateDataContextState, mapConfig, nodeId, tempState) => {
+    const { mc_1_NRQL, mc_1_ACC, mc_1_TYPE } = tempState;
     mapConfig.nodeData[nodeId].mainChart = {
       1: {
         nrql: this.state.mc_1_NRQL || mc_1_NRQL,
@@ -49,18 +43,27 @@ export default class MainChart extends React.PureComponent {
             { key: 'table', value: 'table', text: 'Table' }
           ];
 
-          let mc_1_NRQL = '';
-          let mc_1_ACC = '';
-          let mc_1_TYPE = '';
+          const tempState = {
+            mc_1_NRQL: '',
+            mc_1_ACC: '',
+            mc_1_TYPE: ''
+          };
 
           if (
             ((((mapConfig || {}).nodeData || {})[selectedNode] || {})
               .mainChart || {})[1]
           ) {
-            mc_1_NRQL = mapConfig.nodeData[selectedNode].mainChart[1].nrql;
-            mc_1_ACC = mapConfig.nodeData[selectedNode].mainChart[1].accountId;
-            mc_1_TYPE = mapConfig.nodeData[selectedNode].mainChart[1].type;
+            tempState.mc_1_NRQL =
+              mapConfig.nodeData[selectedNode].mainChart[1].nrql;
+            tempState.mc_1_ACC =
+              mapConfig.nodeData[selectedNode].mainChart[1].accountId;
+            tempState.mc_1_TYPE =
+              mapConfig.nodeData[selectedNode].mainChart[1].type;
           }
+
+          const value = name =>
+            (this.state[name] != null ? this.state[name] : tempState[name]) ||
+            '';
 
           return (
             <>
@@ -74,11 +77,7 @@ export default class MainChart extends React.PureComponent {
                       fluid
                       label={`Query ${i + 1}`}
                       placeholder={`SELECT average(duration) as 'ms' from Transaction TIMESERIES`}
-                      value={
-                        this.state[`mc_${i + 1}_NRQL`] === ''
-                          ? mc_1_NRQL
-                          : this.state[`mc_${i + 1}_NRQL`]
-                      }
+                      value={value(`mc_${i + 1}_NRQL`)}
                       onChange={e =>
                         this.setState({ [`mc_${i + 1}_NRQL`]: e.target.value })
                       }
@@ -86,11 +85,7 @@ export default class MainChart extends React.PureComponent {
                     <Form.Select
                       width={3}
                       label="Chart"
-                      value={
-                        this.state[`mc_${i + 1}_TYPE`] === ''
-                          ? mc_1_TYPE
-                          : this.state[`mc_${i + 1}_TYPE`]
-                      }
+                      value={value(`mc_${i + 1}_TYPE`)}
                       options={chartOptions}
                       onChange={(e, d) =>
                         this.setState({ [`mc_${i + 1}_TYPE`]: d.value })
@@ -100,11 +95,7 @@ export default class MainChart extends React.PureComponent {
                       search
                       width={4}
                       label="Account"
-                      value={
-                        this.state[`mc_${i + 1}_ACC`] === ''
-                          ? mc_1_ACC
-                          : this.state[`mc_${i + 1}_ACC`]
-                      }
+                      value={value(`mc_${i + 1}_ACC`)}
                       options={accountOptions}
                       onChange={(e, d) =>
                         this.setState({ [`mc_${i + 1}_ACC`]: d.value })
@@ -126,9 +117,7 @@ export default class MainChart extends React.PureComponent {
                     updateDataContextState,
                     mapConfig,
                     selectedNode,
-                    mc_1_NRQL,
-                    mc_1_ACC,
-                    mc_1_TYPE
+                    tempState
                   )
                 }
               >
