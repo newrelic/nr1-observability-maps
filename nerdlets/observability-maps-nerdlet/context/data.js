@@ -18,6 +18,9 @@ import {
   writeUserDocument
 } from '../lib/utils';
 import { chunk } from '../lib/helper';
+import { ToastContainer, toast } from 'react-toastify';
+
+toast.configure();
 
 const DataContext = React.createContext();
 
@@ -40,18 +43,19 @@ const defaultNodeData = {
   }
 };
 
+const cleanName = name => name.replace(/\+/g, ' ');
+
 export class DataProvider extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: false,
       selectedMap: null,
       bucketMs: { key: 1, label: '30 sec', value: 30000 },
       selectedNode: '',
       selectedLink: '',
       mapConfig: {
-        nodeData: defaultNodeData,
+        nodeData: { ...defaultNodeData },
         linkData: {}
       },
       mapData: {
@@ -95,66 +99,82 @@ export class DataProvider extends Component {
   }
 
   updateDataContextState = (stateData, actions) => {
-    console.log('context updating...');
-    return new Promise(async resolve => {
-      await this.setState(stateData);
-
-      if (actions && actions.length > 0) {
-        actions.forEach(async action => {
-          switch (action) {
-            case 'loadMap':
-              console.log('loadingMap', stateData.selectedMap);
-              if (stateData.selectedMap) {
-                switch (stateData.selectedMap.type) {
-                  case 'user':
-                    await this.pluckMap(stateData.selectedMap.value);
-                    this.handleMapData();
-                    break;
-                }
-              } else {
-                await this.setState(
-                  {
-                    mapConfig: {
-                      nodeData: defaultNodeData,
-                      linkData: {}
+    return new Promise(resolve => {
+      this.setState(stateData, () => {
+        if (actions && actions.length > 0) {
+          actions.forEach(async action => {
+            switch (action) {
+              case 'loadMap':
+                if (stateData.selectedMap) {
+                  this.toastLoad = toast(
+                    `Loading Map: ${cleanName(stateData.selectedMap.value)}`,
+                    {
+                      containerId: 'B'
                     }
-                  },
-                  this.handleMapData()
-                );
-              }
-
-              break;
-            case 'saveMap':
-              const { storeLocation, selectedMap } = this.state;
-              switch (storeLocation) {
-                case 'account':
-                  // not implemented yet
-                  // writeAccountDocument("ObservabilityMaps", mapName, payload)
-                  // dataFetcher(["accountMaps"])
-                  break;
-                case 'user':
-                  if (stateData.mapConfig) {
-                    const mapConfig = JSON.parse(
-                      JSON.stringify(stateData.mapConfig)
-                    );
-                    console.log('savingMap', mapConfig);
-                    await writeUserDocument(
-                      'ObservabilityMaps',
-                      selectedMap.value,
-                      mapConfig
-                    );
-                    await this.dataFetcher(['userMaps']);
-                    this.handleMapData();
+                  );
+                  switch (stateData.selectedMap.type) {
+                    case 'user':
+                      await this.pluckMap(stateData.selectedMap.value);
+                      await this.handleMapData();
+                      toast.dismiss(this.toastLoad);
+                      break;
                   }
-
-                  break;
-              }
-              break;
-          }
-        });
-      }
-
-      resolve();
+                } else {
+                  this.toastLoad = toast(`Map deleted, please select another`, {
+                    containerId: 'B'
+                  });
+                  this.setState(
+                    {
+                      mapConfig: {
+                        nodeData: { ...defaultNodeData },
+                        linkData: {}
+                      }
+                    },
+                    async () => {
+                      await this.handleMapData();
+                    }
+                  );
+                }
+                break;
+              case 'saveMap':
+                const { storeLocation, selectedMap } = this.state;
+                this.toastSaveMap = toast(
+                  `Saving Map: ${cleanName(selectedMap.value)}`,
+                  {
+                    containerId: 'B'
+                  }
+                );
+                switch (storeLocation) {
+                  case 'account':
+                    // not implemented yet
+                    // writeAccountDocument("ObservabilityMaps", mapName, payload)
+                    // dataFetcher(["accountMaps"])
+                    break;
+                  case 'user':
+                    if (stateData.mapConfig) {
+                      const mapConfig = JSON.parse(
+                        JSON.stringify(stateData.mapConfig)
+                      );
+                      console.log('savingMap', mapConfig);
+                      await writeUserDocument(
+                        'ObservabilityMaps',
+                        selectedMap.value,
+                        mapConfig
+                      );
+                      await this.dataFetcher(['userMaps']);
+                      await this.handleMapData();
+                      toast.dismiss(this.toastSaveMap);
+                    }
+                    break;
+                  default:
+                    toast.dismiss(this.toastSaveMap);
+                }
+                break;
+            }
+          });
+        }
+        resolve();
+      });
     });
   };
 
@@ -177,7 +197,6 @@ export class DataProvider extends Component {
   dataFetcher = async actions => {
     console.log('context dataFetcher');
     return new Promise(async resolve => {
-      this.setState({ loading: true });
       const dataPromises = [];
       const content = [];
 
@@ -208,7 +227,7 @@ export class DataProvider extends Component {
       });
 
       await Promise.all(dataPromises).then(async values => {
-        const data = { loading: false };
+        const data = {};
         values.forEach((value, i) => {
           data.availableMaps = [];
           switch (content[i]) {
@@ -233,8 +252,9 @@ export class DataProvider extends Component {
           }
         });
 
-        this.setState(data);
-        resolve();
+        this.setState(data, () => {
+          resolve();
+        });
       });
     });
   };
@@ -254,13 +274,19 @@ export class DataProvider extends Component {
         this.refresh = setInterval(async () => Do(), interval);
       }
       if (!this.state.isRefreshing) {
-        console.log(
-          `Refreshing... (timer: ${interval}ms) ${new Date().getTime()}`
-        );
-        this.setState({ isRefreshing: true }, async () => {
-          await this.handleMapData();
-          this.setState({ isRefreshing: false });
-        });
+        if (this.state.selectedMap) {
+          this.toastRefresh = toast(`Refreshing...`, {
+            containerId: 'C'
+          });
+
+          console.log(
+            `Refreshing... (timer: ${interval}ms) ${new Date().getTime()}`
+          );
+          this.setState({ isRefreshing: true }, async () => {
+            await this.handleMapData();
+            this.setState({ isRefreshing: false });
+          });
+        }
       } else {
         console.log(
           `Already refreshing... waiting for next cycle (timer: ${interval}ms) ${new Date().getTime()}`
@@ -280,12 +306,16 @@ export class DataProvider extends Component {
         this.updateDataContextState({ selectedMap: selected }, ['loadMap']);
         console.log(`Map selected:`, selected);
       }
-    } else {
-      this.setState(
-        { selectedMap },
-        () => this.updateDataContextState({ selectedMap }, ['loadMap']),
-        () => console.log(`Map selected:`, this.state.selectedMap)
-      );
+    } else if (selectedMap) {
+      this.setState({ selectedMap }, () => {
+        this.updateDataContextState({ selectedMap }, ['loadMap']);
+        console.log(`Map selected:`, this.state.selectedMap);
+      });
+    } else if (!selectedMap) {
+      this.setState({ selectedMap }, () => {
+        this.updateDataContextState({ selectedMap: null }, ['loadMap']);
+        console.log(`Map deselected`);
+      });
     }
   };
 
@@ -432,8 +462,7 @@ export class DataProvider extends Component {
 
       console.log('decorated mapData', mapData);
 
-      this.setState({ data, mapData });
-      resolve();
+      this.setState({ data, mapData }, resolve());
     });
   };
 
@@ -560,6 +589,18 @@ export class DataProvider extends Component {
           selectMap: this.selectMap
         }}
       >
+        <ToastContainer
+          enableMultiContainer
+          containerId="B"
+          position={toast.POSITION.TOP_RIGHT}
+        />
+
+        <ToastContainer
+          enableMultiContainer
+          containerId="C"
+          position={toast.POSITION.BOTTOM_RIGHT}
+        />
+
         {children}
       </DataContext.Provider>
     );

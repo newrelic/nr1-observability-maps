@@ -142,17 +142,18 @@ export default class ManageNodes extends React.PureComponent {
     // let foundGuids = ((entitySearchResults || {}).entities || []).map((result)=>result.guid)
 
     searchedEntities = [...searchedEntities, ...entitySearchResults.entities];
-    await this.setState({ searchedEntities });
-    if (entitySearchResults.nextCursor) {
-      console.log(
-        'collecting next entitySearch batch guid:',
-        entitySearchResults.nextCursor
-      );
-      this.fetchEntities(entitySearchResults.nextCursor);
-    } else {
-      // console.log("complete", this.state.searchedEntities.length)
-    }
-    this.setState({ showSearchMsg: true });
+    this.setState({ searchedEntities }, () => {
+      if (entitySearchResults.nextCursor) {
+        console.log(
+          'collecting next entitySearch batch guid:',
+          entitySearchResults.nextCursor
+        );
+        this.fetchEntities(entitySearchResults.nextCursor);
+      } else {
+        // console.log("complete", this.state.searchedEntities.length)
+      }
+      this.setState({ showSearchMsg: true });
+    });
   };
 
   handleOpen = () =>

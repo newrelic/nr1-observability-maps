@@ -2,7 +2,7 @@
 no-console: 0
 */
 import React from 'react';
-import { Icon, Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import CreateMap from '../map/create';
 import DeleteMap from '../map/delete';
 import ExportMap from '../map/export';
@@ -40,7 +40,6 @@ export default class MenuBar extends React.PureComponent {
       <DataConsumer>
         {({
           selectedMap,
-          loading,
           userMaps,
           accountMaps,
           updateDataContextState,
@@ -64,6 +63,9 @@ export default class MenuBar extends React.PureComponent {
             }));
             availableMaps = [...availableMaps, ...userMaps];
           }
+
+          if (selectedMap)
+            selectedMap.label = selectedMap.label.replace(/\+/g, ' ');
 
           return (
             <div>
@@ -121,14 +123,6 @@ export default class MenuBar extends React.PureComponent {
                 )}
 
                 <RefreshSelector />
-
-                <Icon
-                  loading={loading}
-                  circular
-                  name={loading ? 'spinner' : 'circle'}
-                  color={loading ? 'black' : 'green'}
-                  style={{ backgroundColor: 'white' }}
-                />
               </div>
             </div>
           );

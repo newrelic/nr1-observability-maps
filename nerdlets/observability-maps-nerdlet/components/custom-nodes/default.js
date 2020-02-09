@@ -115,8 +115,6 @@ export default class CustomNode extends React.PureComponent {
           on="click"
           style={{ borderRadius: 0 }}
           inverted
-          // onClose={() => this.setState({[`popup_${nodeId}`]:false})}
-          // onOpen={() => this.setState({[`popup_${nodeId}`]:true})}
           open={this.state[`popup_${nodeId}`] === true && closeCharts === false}
           content={<MainChart mainChart={data.mainChart} />}
           position="bottom center"

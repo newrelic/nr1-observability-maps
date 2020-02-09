@@ -1,4 +1,6 @@
 @import url('//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css');
+@import '/css/toastify.css';
+@import '/css/overrides.css';
 
 i {
   margin-bottom: 5px !important;
@@ -481,25 +483,3 @@ i {
 // div.selection > input.search {
 //   position: relative !important;
 // }
-
-.ui.search.selection.dropdown > input.search {
-  line-height: 1.21428571em !important;
-  padding: 0.67857143em 2.1em 0.67857143em 1em !important;
-}
-.ui.search.dropdown > input.search {
-  position: absolute !important;
-  z-index: 2 !important;
-}
-.ui.search.dropdown > input.search {
-  background: none transparent !important;
-  border: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  cursor: text !important;
-  top: 0 !important;
-  left: 1px !important;
-  width: 100% !important;
-  outline: 0 !important;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
-  padding: inherit !important;
-}
