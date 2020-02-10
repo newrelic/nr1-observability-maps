@@ -72,7 +72,7 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertCriticalOperator
       )
     ) {
-      return { colorOne: 'red', colorTwo: 'red' };
+      return { colorOne: 'red', colorTwo: 'red', iconOne: 'notch' };
     }
     if (
       customAlertCalc(
@@ -81,7 +81,7 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertWarningOperator
       )
     ) {
-      return { colorOne: 'orange', colorTwo: 'orange' };
+      return { colorOne: 'orange', colorTwo: 'orange', iconOne: 'notch' };
     }
     if (
       customAlertCalc(
@@ -90,10 +90,10 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertHealthyOperator
       )
     ) {
-      return { colorOne: 'green', colorTwo: 'green' };
+      return { colorOne: 'green', colorTwo: 'green', iconOne: 'outline' };
     }
   }
-  return { colorOne: 'grey', colorTwo: 'orange' };
+  return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
 };
 
 // chunking for batching nerdgraph calls

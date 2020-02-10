@@ -148,6 +148,7 @@ export default class CustomNode extends React.PureComponent {
             );
             colorOne = customAlertDesign.colorOne;
             colorTwo = customAlertDesign.colorTwo;
+            iconOne = customAlertDesign.iconOne;
           }
 
           return (
