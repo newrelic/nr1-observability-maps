@@ -434,13 +434,6 @@ export default class ManageNodes extends React.PureComponent {
                 >
                   Create
                 </Button>
-                <Button
-                  style={{ float: 'left' }}
-                  negative
-                  onClick={this.handleClose}
-                >
-                  Close
-                </Button>
               </Modal.Actions>
             </Modal>
           );
