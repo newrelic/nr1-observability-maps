@@ -11,13 +11,13 @@ export default class HoverMetrics extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      hm_1_NRQL: '',
-      hm_2_NRQL: '',
-      hm_3_NRQL: '',
-      hm_1_ACC: '',
-      hm_2_ACC: '',
-      hm_3_ACC: '',
-      selectedHoverOption: ''
+      hm_1_NRQL: null,
+      hm_2_NRQL: null,
+      hm_3_NRQL: null,
+      hm_1_ACC: null,
+      hm_2_ACC: null,
+      hm_3_ACC: null,
+      selectedHoverOption: null
     };
   }
 
@@ -106,14 +106,11 @@ export default class HoverMetrics extends React.PureComponent {
             }
           }
 
-          const selectedHoverOption =
-            this.state.selectedHoverOption === ''
-              ? tempState.selectedHoverOption
-              : this.state.selectedHoverOption;
-
           const value = name =>
             (this.state[name] != null ? this.state[name] : tempState[name]) ||
             '';
+
+          const selectedHoverOption = value('selectedHoverOption');
 
           return (
             <>

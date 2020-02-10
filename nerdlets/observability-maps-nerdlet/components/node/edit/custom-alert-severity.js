@@ -102,6 +102,8 @@ export default class CustomAlertSeverity extends React.PureComponent {
             tempState.alertWarningOperator =
               mapConfig.nodeData[selectedNode].customAlert.alertWarningOperator;
             tempState.alertHealthy =
+              mapConfig.nodeData[selectedNode].customAlert.alertHealthy;
+            tempState.alertHealthyOperator =
               mapConfig.nodeData[selectedNode].customAlert.alertHealthyOperator;
           }
 

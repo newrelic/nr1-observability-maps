@@ -284,6 +284,7 @@ export class DataProvider extends Component {
           );
           this.setState({ isRefreshing: true }, async () => {
             await this.handleMapData();
+            toast.dismiss(this.toastRefresh);
             this.setState({ isRefreshing: false });
           });
         }

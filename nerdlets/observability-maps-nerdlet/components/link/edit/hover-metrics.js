@@ -17,7 +17,7 @@ export default class HoverMetrics extends React.PureComponent {
       hm_1_ACC: null,
       hm_2_ACC: null,
       hm_3_ACC: null,
-      selectedHoverOption: ''
+      selectedHoverOption: null
     };
   }
 
@@ -106,14 +106,11 @@ export default class HoverMetrics extends React.PureComponent {
             }
           }
 
-          const selectedHoverOption =
-            this.state.selectedHoverOption === ''
-              ? tempState.selectedHoverOption
-              : this.state.selectedHoverOption;
-
           const value = name =>
             (this.state[name] != null ? this.state[name] : tempState[name]) ||
             '';
+
+          const selectedHoverOption = value('selectedHoverOption');
 
           return (
             <>

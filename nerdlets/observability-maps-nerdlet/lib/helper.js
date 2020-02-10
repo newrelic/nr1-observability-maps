@@ -64,7 +64,7 @@ export const customAlertCalc = (valueOne, valueTwo, operator) => {
 };
 
 export const setCustomAlertDesign = (alert, alertData) => {
-  if (alertData[0].value) {
+  if (alertData[0].value || alertData[0].value === 0) {
     if (
       customAlertCalc(
         alertData[0].value,
