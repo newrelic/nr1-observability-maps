@@ -180,19 +180,23 @@ export default class MapSettings extends React.PureComponent {
                       placeholder="auto"
                     />
                   </Form.Group>
-                  <Form.Button
-                    onClick={() =>
-                      this.handleSave(
-                        tempState,
-                        dataFetcher,
-                        mapConfig,
-                        selectedMap
-                      )
-                    }
-                  >
-                    Update
-                  </Form.Button>
                 </Form>
+                <br />
+                <br />
+                <Button
+                  positive
+                  content="Save"
+                  style={{ float: 'right' }}
+                  onClick={() =>
+                    this.handleSave(
+                      tempState,
+                      dataFetcher,
+                      mapConfig,
+                      selectedMap
+                    )
+                  }
+                />
+                <br /> <br />
               </Modal.Content>
             </Modal>
           );

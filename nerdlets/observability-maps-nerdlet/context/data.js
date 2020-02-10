@@ -75,6 +75,7 @@ export class DataProvider extends Component {
       userMaps: null,
       availableMaps: [],
       accounts: [],
+      userConfig: null,
       sidebarOpen: false,
       timelineOpen: false,
       sidebarView: '',
@@ -88,15 +89,31 @@ export class DataProvider extends Component {
 
   async componentDidMount() {
     await this.dataFetcher([
-      // 'userConfig',
+      'userConfig',
       'userMaps',
       'accountMaps',
       'accounts',
       'userIcons'
     ]);
-    this.handleMapData();
+    this.handleDefaults();
     this.refreshData();
   }
+
+  handleDefaults = async () => {
+    if (this.state.userConfig) {
+      const { availableMaps, userConfig } = this.state;
+      const { defaultMap } = userConfig;
+      let found = false;
+      for (let z = 0; z < availableMaps.length; z++) {
+        if (defaultMap === availableMaps[z].id) {
+          await this.selectMap(defaultMap);
+          found = true;
+          break;
+        }
+      }
+      if (!found) await this.handleMapData();
+    }
+  };
 
   updateDataContextState = (stateData, actions) => {
     return new Promise(resolve => {
@@ -120,9 +137,12 @@ export class DataProvider extends Component {
                       break;
                   }
                 } else {
-                  this.toastLoad = toast(`Map deleted, please select another`, {
-                    containerId: 'B'
-                  });
+                  this.toastDeleteMap = toast(
+                    `Map deleted, please select another`,
+                    {
+                      containerId: 'B'
+                    }
+                  );
                   this.setState(
                     {
                       mapConfig: {
@@ -216,7 +236,7 @@ export class DataProvider extends Component {
             break;
           case 'userConfig':
             content.push(action);
-            dataPromises.push(getUserCollection(userConfig, userConfig));
+            dataPromises.push(getUserCollection(userConfig, 'v1'));
             break;
           case 'accounts':
             content.push(action);
@@ -228,8 +248,8 @@ export class DataProvider extends Component {
 
       await Promise.all(dataPromises).then(async values => {
         const data = {};
+        data.availableMaps = [];
         values.forEach((value, i) => {
-          data.availableMaps = [];
           switch (content[i]) {
             case 'userMaps':
               data[content[i]] = value;
@@ -243,7 +263,7 @@ export class DataProvider extends Component {
               data[content[i]] = value;
               break;
             case 'userConfig':
-              data.userConfig = value.length > 0 ? value : {};
+              data.userConfig = value || null;
               break;
             case 'accounts':
               data.accounts =

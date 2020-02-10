@@ -8,7 +8,7 @@ export const setAlertDesign = (alertSeverity, entityType) => {
 
   switch (alertSeverity) {
     case 'NOT_CONFIGURED':
-      return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
+      return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
     case 'CRITICAL':
       return { colorOne: 'red', colorTwo: 'red', iconOne: 'notch' };
     case 'WARNING':
@@ -93,7 +93,7 @@ export const setCustomAlertDesign = (alert, alertData) => {
       return { colorOne: 'green', colorTwo: 'green', iconOne: 'outline' };
     }
   }
-  return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
+  return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
 };
 
 // chunking for batching nerdgraph calls

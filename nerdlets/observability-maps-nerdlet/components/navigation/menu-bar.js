@@ -14,6 +14,7 @@ import ImportMap from '../map/import';
 import RefreshSelector from '../map/refresh';
 import ManageIcons from '../icons/manage';
 import MapSettings from '../map/settings';
+import UserSettings from '../user/settings';
 import { DataConsumer } from '../../context/data';
 
 export default class MenuBar extends React.PureComponent {
@@ -121,6 +122,8 @@ export default class MenuBar extends React.PureComponent {
                 ) : (
                   ''
                 )}
+
+                <UserSettings />
 
                 <RefreshSelector />
               </div>
