@@ -37,30 +37,34 @@ export default class CustomAlertSeverity extends React.PureComponent {
   }
 
   saveNrql = async (updateDataContextState, mapConfig, nodeId, tempState) => {
-    const {
-      alertNrql,
-      alertNrqlAcc,
-      alertCritical,
-      alertCriticalOperator,
-      alertWarning,
-      alertWarningOperator,
-      alertHealthy,
-      alertHealthyOperator
-    } = tempState;
+    if (!tempState) {
+      mapConfig.nodeData[nodeId].customAlert = {};
+    } else {
+      const {
+        alertNrql,
+        alertNrqlAcc,
+        alertCritical,
+        alertCriticalOperator,
+        alertWarning,
+        alertWarningOperator,
+        alertHealthy,
+        alertHealthyOperator
+      } = tempState;
 
-    mapConfig.nodeData[nodeId].customAlert = {
-      alertNrql: this.state.alertNrql || alertNrql,
-      alertNrqlAcc: this.state.alertNrqlAcc || alertNrqlAcc,
-      alertCritical: this.state.alertCritical || alertCritical,
-      alertCriticalOperator:
-        this.state.alertCriticalOperator || alertCriticalOperator,
-      alertWarning: this.state.alertWarning || alertWarning,
-      alertWarningOperator:
-        this.state.alertWarningOperator || alertWarningOperator,
-      alertHealthy: this.state.alertHealthy || alertHealthy,
-      alertHealthyOperator:
-        this.state.alertHealthyOperator || alertHealthyOperator
-    };
+      mapConfig.nodeData[nodeId].customAlert = {
+        alertNrql: this.state.alertNrql || alertNrql,
+        alertNrqlAcc: this.state.alertNrqlAcc || alertNrqlAcc,
+        alertCritical: this.state.alertCritical || alertCritical,
+        alertCriticalOperator:
+          this.state.alertCriticalOperator || alertCriticalOperator,
+        alertWarning: this.state.alertWarning || alertWarning,
+        alertWarningOperator:
+          this.state.alertWarningOperator || alertWarningOperator,
+        alertHealthy: this.state.alertHealthy || alertHealthy,
+        alertHealthyOperator:
+          this.state.alertHealthyOperator || alertHealthyOperator
+      };
+    }
 
     await updateDataContextState({ mapConfig }, ['saveMap']);
   };
@@ -182,23 +186,28 @@ export default class CustomAlertSeverity extends React.PureComponent {
               <Button
                 negative
                 style={{ float: 'right' }}
-                onClick={() =>
-                  this.saveNrql(
-                    updateDataContextState,
-                    mapConfig,
-                    selectedNode,
+                onClick={() => {
+                  this.setState(
                     {
-                      alertNrql: '',
-                      alertNrqlAcc: '',
-                      alertCritical: '',
-                      alertCriticalOperator: '',
-                      alertWarning: '',
-                      alertWarningOperator: '',
-                      alertHealthy: '',
-                      alertHealthyOperator: ''
+                      alertNrql: null,
+                      alertNrqlAcc: null,
+                      alertCritical: null,
+                      alertCriticalOperator: null,
+                      alertWarning: null,
+                      alertWarningOperator: null,
+                      alertHealthy: null,
+                      alertHealthyOperator: null
+                    },
+                    () => {
+                      this.saveNrql(
+                        updateDataContextState,
+                        mapConfig,
+                        selectedNode,
+                        null
+                      );
                     }
-                  )
-                }
+                  );
+                }}
               >
                 Clear
               </Button>

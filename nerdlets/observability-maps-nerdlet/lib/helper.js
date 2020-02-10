@@ -16,7 +16,7 @@ export const setAlertDesign = (alertSeverity, entityType) => {
     case 'NOT_ALERTING':
       return { colorOne: 'green', colorTwo: 'green', iconOne: 'outline' };
     default:
-      return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
+      return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
   }
 };
 
