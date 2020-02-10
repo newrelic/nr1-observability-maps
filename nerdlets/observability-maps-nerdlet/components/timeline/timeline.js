@@ -2,6 +2,7 @@ import React from 'react';
 import { Rail, Segment, Icon, Menu, Button } from 'semantic-ui-react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import { navigation } from 'nr1';
+import { DataConsumer } from '../../context/data';
 
 export default class TimelineView extends React.PureComponent {
   constructor(props) {
@@ -104,80 +105,97 @@ export default class TimelineView extends React.PureComponent {
   }
 
   render() {
-    const { timelineOpen, data, height } = this.props;
+    const { height } = this.props;
     const { activeItem } = this.state;
 
-    // construct data
-    const recentAlerts = [];
-    const recentDeployments = [];
-    if (data && data.nodes && data.nodes.length > 0) {
-      for (let i = 0; i < data.nodes.length; i++) {
-        if (
-          data.nodes[i].recentAlertViolations &&
-          data.nodes[i].recentAlertViolations.length > 0
-        ) {
-          for (let z = 0; z < data.nodes[i].recentAlertViolations.length; z++) {
-            data.nodes[i].recentAlertViolations[z].name = data.nodes[i].name;
-            data.nodes[i].recentAlertViolations[z].guid = data.nodes[i].guid;
-            data.nodes[i].recentAlertViolations[z].timestamp =
-              data.nodes[i].recentAlertViolations[z].openedAt;
+    return (
+      <DataConsumer>
+        {({ timelineOpen, data }) => {
+          // construct data
+          const recentAlerts = [];
+          const recentDeployments = [];
+          if (data && data.nodes && data.nodes.length > 0) {
+            for (let i = 0; i < data.nodes.length; i++) {
+              if (
+                data.nodes[i].recentAlertViolations &&
+                data.nodes[i].recentAlertViolations.length > 0
+              ) {
+                for (
+                  let z = 0;
+                  z < data.nodes[i].recentAlertViolations.length;
+                  z++
+                ) {
+                  data.nodes[i].recentAlertViolations[z].name =
+                    data.nodes[i].name;
+                  data.nodes[i].recentAlertViolations[z].guid =
+                    data.nodes[i].guid;
+                  data.nodes[i].recentAlertViolations[z].timestamp =
+                    data.nodes[i].recentAlertViolations[z].openedAt;
 
-            recentAlerts.push(data.nodes[i].recentAlertViolations[z]);
+                  recentAlerts.push(data.nodes[i].recentAlertViolations[z]);
+                }
+              }
+              if (
+                data.nodes[i].deployments &&
+                data.nodes[i].deployments.length > 0
+              ) {
+                for (let z = 0; z < data.nodes[i].deployments.length; z++) {
+                  data.nodes[i].deployments[z].name = data.nodes[i].name;
+                  data.nodes[i].deployments[z].guid = data.nodes[i].guid;
+                  recentDeployments.push(data.nodes[i].deployments[z]);
+                }
+              }
+            }
           }
-        }
-        if (data.nodes[i].deployments && data.nodes[i].deployments.length > 0) {
-          for (let z = 0; z < data.nodes[i].deployments.length; z++) {
-            data.nodes[i].deployments[z].name = data.nodes[i].name;
-            data.nodes[i].deployments[z].guid = data.nodes[i].guid;
-            recentDeployments.push(data.nodes[i].deployments[z]);
+          recentAlerts.sort((a, b) => b.timestamp - a.timestamp);
+          recentDeployments.sort((a, b) => b.timestamp - a.timestamp);
+          const allEvents = [...recentAlerts, ...recentDeployments].sort(
+            (a, b) => b.timestamp - a.timestamp
+          );
+
+          if (timelineOpen) {
+            return (
+              <Rail
+                attached
+                internal
+                position="right"
+                style={{ width: '33%', marginTop: '60px', height: height }}
+              >
+                <Segment className="map-sidebar" style={{ height: '100%' }}>
+                  <Menu pointing secondary>
+                    <Menu.Item
+                      name="all"
+                      active={activeItem === 'all'}
+                      onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                      name="alerts"
+                      active={activeItem === 'alerts'}
+                      onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                      name="deployments"
+                      active={activeItem === 'deployments'}
+                      onClick={this.handleItemClick}
+                    />
+                  </Menu>
+                  {activeItem === 'all'
+                    ? this.renderTimeline(allEvents, height)
+                    : ''}
+                  {activeItem === 'alerts'
+                    ? this.renderTimeline(recentAlerts, height)
+                    : ''}
+                  {activeItem === 'deployments'
+                    ? this.renderTimeline(recentDeployments, height)
+                    : ''}
+                </Segment>
+              </Rail>
+            );
           }
-        }
-      }
-    }
-    recentAlerts.sort((a, b) => b.timestamp - a.timestamp);
-    recentDeployments.sort((a, b) => b.timestamp - a.timestamp);
-    const allEvents = [...recentAlerts, ...recentDeployments].sort(
-      (a, b) => b.timestamp - a.timestamp
+
+          return '';
+        }}
+      </DataConsumer>
     );
-
-    if (timelineOpen) {
-      return (
-        <Rail
-          attached
-          internal
-          position="right"
-          style={{ width: '33%', marginTop: '60px', height: height }}
-        >
-          <Segment className="map-sidebar" style={{ height: '100%' }}>
-            <Menu pointing secondary>
-              <Menu.Item
-                name="all"
-                active={activeItem === 'all'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                name="alerts"
-                active={activeItem === 'alerts'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                name="deployments"
-                active={activeItem === 'deployments'}
-                onClick={this.handleItemClick}
-              />
-            </Menu>
-            {activeItem === 'all' ? this.renderTimeline(allEvents, height) : ''}
-            {activeItem === 'alerts'
-              ? this.renderTimeline(recentAlerts, height)
-              : ''}
-            {activeItem === 'deployments'
-              ? this.renderTimeline(recentDeployments, height)
-              : ''}
-          </Segment>
-        </Rail>
-      );
-    }
-
-    return '';
   }
 }

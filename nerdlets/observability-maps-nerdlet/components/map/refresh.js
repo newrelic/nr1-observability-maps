@@ -1,17 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
+import { DataConsumer } from '../../context/data';
 
 export default class RefreshSelector extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.updateBucket = this.updateBucket.bind(this);
-  }
-
-  updateBucket = data => {
-    this.props.setParentState({ bucketMs: data });
-  };
-
   render() {
     const timeBucketOptions = [
       { key: 1, label: '30 sec', value: 30000 },
@@ -23,15 +14,19 @@ export default class RefreshSelector extends React.PureComponent {
     ];
 
     return (
-      <div className="react-select-input-group" style={{ width: '100px' }}>
-        <label>Refresh</label>
-        <Select
-          options={timeBucketOptions}
-          onChange={this.updateBucket}
-          value={this.props.bucketMs}
-          classNamePrefix="react-select"
-        />
-      </div>
+      <DataConsumer>
+        {({ bucketMs, updateDataContextState }) => (
+          <div className="react-select-input-group" style={{ width: '100px' }}>
+            <label>Refresh</label>
+            <Select
+              options={timeBucketOptions}
+              onChange={data => updateDataContextState({ bucketMs: data })}
+              value={bucketMs}
+              classNamePrefix="react-select"
+            />
+          </div>
+        )}
+      </DataConsumer>
     );
   }
 }

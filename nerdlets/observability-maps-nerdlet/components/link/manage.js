@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button, Form } from 'semantic-ui-react';
 import LinksTable from './links-table';
+import { DataConsumer } from '../../context/data';
 
 export default class ManageLinks extends React.PureComponent {
   constructor(props) {
@@ -65,7 +66,7 @@ export default class ManageLinks extends React.PureComponent {
   manageLink = async (
     action,
     mapConfig,
-    setParentState,
+    updateDataContextState,
     incomingSelectedSource,
     incomingSelectedTarget
   ) => {
@@ -81,7 +82,7 @@ export default class ManageLinks extends React.PureComponent {
       delete mapConfig.linkData[`${selectedSource}:::${selectedTarget}`];
     }
 
-    setParentState({ mapConfig }, ['saveMap']);
+    updateDataContextState({ mapConfig }, ['saveMap']);
   };
 
   render() {
@@ -92,108 +93,117 @@ export default class ManageLinks extends React.PureComponent {
       selectedTarget,
       selectedSource
     } = this.state;
-    const { mapConfig, setParentState, mapData } = this.props;
-    // let linkOptions = this.createLinkOptions(mapConfig)
-    const nodeOptions = this.createNodeOptions(mapConfig);
-
-    const customLinkErrorContent = { content: '', pointing: 'above' };
-
-    // needs handling for existing nodes
-    if (selectedLinkType === 'custom') {
-      if (linkName.length === 0) {
-        customLinkErrorContent.content = 'Please enter a node name';
-      }
-    }
-
-    const foundLink = !!(
-      mapConfig &&
-      mapConfig.linkData &&
-      mapConfig.linkData[`${selectedSource}:::${selectedTarget}`]
-    );
 
     return (
-      <Modal
-        open={open}
-        onClose={this.handleClose}
-        size="small"
-        trigger={
-          <Button
-            onClick={() => this.setState({ open: true })}
-            className="filter-button"
-            icon="linkify"
-            content="Links"
-          />
-        }
-        onUnmount={() => setParentState({ closeCharts: false })}
-        onMount={() => setParentState({ closeCharts: true })}
-      >
-        <Modal.Header>Manage Links</Modal.Header>
-        <Modal.Content>
-          <Form>
-            <Form.Select
-              search
-              // label='Node Source'
-              options={nodeOptions}
-              placeholder="Select Node Source..."
-              value={selectedSource}
-              onChange={(e, d) => this.setState({ selectedSource: d.value })}
-            />
-            <Form.Group widths={16}>
-              <Form.Select
-                width={13}
-                disabled={!selectedSource}
-                search
-                // label='Node Target'
-                options={nodeOptions}
-                placeholder="Select Node Target..."
-                value={selectedTarget}
-                onChange={(e, d) => this.setState({ selectedTarget: d.value })}
-                style={{ width: '100%' }}
-              />
-              {foundLink ? (
-                <Form.Button
-                  width={3}
-                  disabled={!selectedSource || !selectedTarget}
-                  style={{ float: 'right', height: '38px' }}
-                  content="Delete"
-                  icon="minus"
-                  onClick={() =>
-                    this.manageLink('del', mapConfig, setParentState)
-                  }
+      <DataConsumer>
+        {({ mapConfig, updateDataContextState }) => {
+          const nodeOptions = this.createNodeOptions(mapConfig);
+
+          const customLinkErrorContent = { content: '', pointing: 'above' };
+
+          // needs handling for existing nodes
+          if (selectedLinkType === 'custom') {
+            if (linkName.length === 0) {
+              customLinkErrorContent.content = 'Please enter a node name';
+            }
+          }
+
+          const foundLink = !!(
+            mapConfig &&
+            mapConfig.linkData &&
+            mapConfig.linkData[`${selectedSource}:::${selectedTarget}`]
+          );
+
+          return (
+            <Modal
+              closeIcon
+              open={open}
+              onClose={this.handleClose}
+              size="small"
+              trigger={
+                <Button
+                  onClick={() => this.setState({ open: true })}
+                  className="filter-button"
+                  icon="linkify"
+                  content="Links"
                 />
-              ) : (
-                <Form.Button
-                  width={3}
-                  disabled={!selectedSource || !selectedTarget}
-                  style={{ float: 'right', height: '38px' }}
-                  content="Add"
-                  icon="plus"
-                  onClick={() =>
-                    this.manageLink('add', mapConfig, setParentState)
-                  }
-                />
-              )}
-            </Form.Group>
-          </Form>
-          {selectedSource ? (
-            <LinksTable
-              mapData={mapData}
-              mapConfig={mapConfig}
-              selectedSource={selectedSource}
-              manageLink={this.manageLink}
-              setParentState={setParentState}
-            />
-          ) : (
-            ''
-          )}
-        </Modal.Content>
-        <Modal.Actions>
-          {/* <Button positive onClick={()=>this.save(dataFetcher, mapConfig, selectedMap, setParentState)}>Create</Button> */}
-          <Button negative onClick={this.handleClose}>
-            Close
-          </Button>
-        </Modal.Actions>
-      </Modal>
+              }
+              onUnmount={() => updateDataContextState({ closeCharts: false })}
+              onMount={() => updateDataContextState({ closeCharts: true })}
+            >
+              <Modal.Header>Manage Links</Modal.Header>
+              <Modal.Content>
+                <Form>
+                  <Form.Select
+                    search
+                    // label='Node Source'
+                    options={nodeOptions}
+                    placeholder="Select Node Source..."
+                    value={selectedSource}
+                    onChange={(e, d) =>
+                      this.setState({ selectedSource: d.value })
+                    }
+                  />
+                  <Form.Group widths={16}>
+                    <Form.Select
+                      width={13}
+                      disabled={!selectedSource}
+                      search
+                      // label='Node Target'
+                      options={nodeOptions}
+                      placeholder="Select Node Target..."
+                      value={selectedTarget}
+                      onChange={(e, d) =>
+                        this.setState({ selectedTarget: d.value })
+                      }
+                      style={{ width: '100%' }}
+                    />
+                    {foundLink ? (
+                      <Form.Button
+                        width={3}
+                        disabled={!selectedSource || !selectedTarget}
+                        style={{ float: 'right', height: '38px' }}
+                        content="Delete"
+                        icon="minus"
+                        onClick={() =>
+                          this.manageLink(
+                            'del',
+                            mapConfig,
+                            updateDataContextState
+                          )
+                        }
+                      />
+                    ) : (
+                      <Form.Button
+                        width={3}
+                        disabled={!selectedSource || !selectedTarget}
+                        style={{ float: 'right', height: '38px' }}
+                        content="Add"
+                        icon="plus"
+                        onClick={() =>
+                          this.manageLink(
+                            'add',
+                            mapConfig,
+                            updateDataContextState
+                          )
+                        }
+                      />
+                    )}
+                  </Form.Group>
+                </Form>
+                {selectedSource ? (
+                  <LinksTable
+                    selectedSource={selectedSource}
+                    manageLink={this.manageLink}
+                  />
+                ) : (
+                  ''
+                )}
+              </Modal.Content>
+            </Modal>
+          );
+        }}
+      </DataConsumer>
     );
   }
 }

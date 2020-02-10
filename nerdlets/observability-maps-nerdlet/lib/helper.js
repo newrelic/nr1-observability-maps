@@ -8,7 +8,7 @@ export const setAlertDesign = (alertSeverity, entityType) => {
 
   switch (alertSeverity) {
     case 'NOT_CONFIGURED':
-      return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
+      return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
     case 'CRITICAL':
       return { colorOne: 'red', colorTwo: 'red', iconOne: 'notch' };
     case 'WARNING':
@@ -16,7 +16,7 @@ export const setAlertDesign = (alertSeverity, entityType) => {
     case 'NOT_ALERTING':
       return { colorOne: 'green', colorTwo: 'green', iconOne: 'outline' };
     default:
-      return { colorOne: 'grey', colorTwo: 'orange', iconOne: 'notch' };
+      return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
   }
 };
 
@@ -37,40 +37,6 @@ export const setEntityDesign = entityType => {
     default:
       return { icon: 'circle' };
   }
-};
-
-export const setLinkData = (link, linkData) => {
-  const id = `${link.source}:::${link.target}`;
-  let text = '';
-
-  if (linkData[id]) {
-    if (linkData[id].hoverData && linkData[id].hoverData.length > 0) {
-      linkData[id].hoverData.forEach(metric => {
-        // allows support for percentiles
-        if (typeof metric.value === 'object' && metric.value !== null) {
-          Object.keys(metric.value).forEach((key, i) => {
-            const isLast = i + 1 === Object.keys(metric.value).length;
-            const keyValue = isNaN(metric.value[key])
-              ? metric.value[key]
-              : metric.value[key].toFixed(2);
-            text = `${text} ${key}: ${keyValue} ${isLast ? '' : '|'}`;
-          });
-        } else {
-          const metricValue = isNaN(metric.value)
-            ? metric.value
-            : metric.value.toFixed(2);
-          text = `${text}${metricValue} ${metric.name} `;
-        }
-      });
-    } else if (linkData[id].externalSummary) {
-      if (linkData[id].externalSummary.throughput)
-        text += ` ${linkData[id].externalSummary.throughput} rpm`;
-      if (linkData[id].externalSummary.responseTimeAverage)
-        text += ` ${linkData[id].externalSummary.responseTimeAverage} ms`;
-    }
-  }
-
-  return text;
 };
 
 export const customAlertCalc = (valueOne, valueTwo, operator) => {
@@ -98,7 +64,7 @@ export const customAlertCalc = (valueOne, valueTwo, operator) => {
 };
 
 export const setCustomAlertDesign = (alert, alertData) => {
-  if (alertData[0].value) {
+  if (alertData[0].value || alertData[0].value === 0) {
     if (
       customAlertCalc(
         alertData[0].value,
@@ -106,7 +72,7 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertCriticalOperator
       )
     ) {
-      return { colorOne: 'red', colorTwo: 'red' };
+      return { colorOne: 'red', colorTwo: 'red', iconOne: 'notch' };
     }
     if (
       customAlertCalc(
@@ -115,7 +81,7 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertWarningOperator
       )
     ) {
-      return { colorOne: 'orange', colorTwo: 'orange' };
+      return { colorOne: 'orange', colorTwo: 'orange', iconOne: 'notch' };
     }
     if (
       customAlertCalc(
@@ -124,10 +90,10 @@ export const setCustomAlertDesign = (alert, alertData) => {
         alert.alertHealthyOperator
       )
     ) {
-      return { colorOne: 'green', colorTwo: 'green' };
+      return { colorOne: 'green', colorTwo: 'green', iconOne: 'outline' };
     }
   }
-  return { colorOne: 'grey', colorTwo: 'orange' };
+  return { colorOne: 'grey', colorTwo: 'grey', iconOne: 'notch' };
 };
 
 // chunking for batching nerdgraph calls
