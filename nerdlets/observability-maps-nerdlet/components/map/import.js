@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Modal,
-  Button,
-  Input,
-  TextArea,
-  Label,
-  Popup
-} from 'semantic-ui-react';
+import { Modal, Button, Form, TextArea, Label, Popup } from 'semantic-ui-react';
 import { writeUserDocument } from '../../lib/utils';
 import { DataConsumer } from '../../context/data';
+import { toast } from 'react-toastify';
 
 function isValidJson(json) {
   try {
@@ -27,45 +21,94 @@ export default class ImportMap extends React.PureComponent {
       mapName: '',
       importOpen: false
     };
-    this.saveMap = this.saveMap.bind(this);
   }
 
   handleOpen = () => this.setState({ importOpen: true });
   handleClose = () => this.setState({ importOpen: false });
 
-  async saveMap(dataFetcher) {
+  saveMap = async (dataFetcher, findMap, selectMap) => {
     const { mapName, mapImport } = this.state;
-    const jsonData = JSON.parse(mapImport);
 
-    // cleanse node data
-    const newNodeData = {};
-    Object.keys(jsonData.nodeData).forEach(node => {
-      newNodeData[node] = {
-        name: jsonData.nodeData[node].name,
-        domain: jsonData.nodeData[node].domain,
-        entityType: jsonData.nodeData[node].entityType,
-        guid: jsonData.nodeData[node].guid,
-        hoverType: jsonData.nodeData[node].hoverType,
-        iconSet: jsonData.nodeData[node].iconSet,
-        mainChart: jsonData.nodeData[node].mainChart,
-        customAlert: jsonData.nodeData[node].customAlert,
-        x: jsonData.nodeData[node].x,
-        y: jsonData.nodeData[node].y
-      };
+    this.toastImportMap = toast(`Importing Map: ${mapName}`, {
+      containerId: 'B'
     });
-    jsonData.nodeData = newNodeData;
 
-    await writeUserDocument('ObservabilityMaps', mapName, jsonData);
-    dataFetcher(['userMaps']);
-    this.setState({ mapImport: '', mapName: '' });
-  }
+    try {
+      const jsonData = JSON.parse(mapImport);
+
+      // cleanse node data
+      const newNodeData = {};
+      Object.keys(jsonData.nodeData).forEach(node => {
+        newNodeData[node] = {
+          name: jsonData.nodeData[node].name,
+          domain: jsonData.nodeData[node].domain,
+          entityType: jsonData.nodeData[node].entityType,
+          guid: jsonData.nodeData[node].guid,
+          hoverType: jsonData.nodeData[node].hoverType,
+          iconSet: jsonData.nodeData[node].iconSet,
+          mainChart: jsonData.nodeData[node].mainChart,
+          customAlert: jsonData.nodeData[node].customAlert,
+          x: jsonData.nodeData[node].x,
+          y: jsonData.nodeData[node].y
+        };
+      });
+      jsonData.nodeData = newNodeData;
+
+      await writeUserDocument('ObservabilityMaps', mapName, jsonData);
+      await dataFetcher(['userMaps']);
+    } catch (e) {
+      toast.update(this.toastImportMap, {
+        render: `Failed to import: ${mapName}`,
+        type: toast.TYPE.ERROR,
+        autoClose: 3000,
+        containerId: 'B'
+      });
+    } finally {
+      if (findMap(mapName)) {
+        toast.update(this.toastImportMap, {
+          render: `Import success: ${mapName}`,
+          type: toast.TYPE.SUCCESS,
+          autoClose: 3000,
+          containerId: 'B'
+        });
+        selectMap(mapName);
+        this.setState({ importOpen: false, mapImport: '', mapName: '' });
+      } else {
+        this.setState({ mapImport: '', mapName: '' });
+      }
+    }
+  };
 
   render() {
     const { mapImport, mapName, importOpen } = this.state;
 
     return (
       <DataConsumer>
-        {({ dataFetcher, updateDataContextState }) => {
+        {({
+          dataFetcher,
+          updateDataContextState,
+          availableMaps,
+          findMap,
+          selectMap
+        }) => {
+          let mapNameError = false;
+          const mapNameErrorContent = {
+            content: '',
+            pointing: 'above'
+          };
+          const existingMap = [...availableMaps].filter(
+            map => map.id.replace(/\+/g, ' ') === mapName || map.id === mapName
+          );
+          if (existingMap.length > 0) {
+            mapNameErrorContent.content = 'This map name already exists';
+            mapNameError = true;
+          } else if (mapName.length === 0) {
+            mapNameErrorContent.content = 'Please enter a map name';
+            mapNameError = true;
+          } else {
+            mapNameError = false;
+          }
+
           return (
             <Modal
               closeIcon
@@ -90,44 +133,47 @@ export default class ImportMap extends React.PureComponent {
             >
               <Modal.Header>Import Map</Modal.Header>
               <Modal.Content>
-                <Input
-                  placeholder="Enter Map Name..."
-                  value={mapName}
-                  onChange={e => this.setState({ mapName: e.target.value })}
-                  style={{ width: '100%' }}
-                />
-                <Label
-                  style={{ display: mapName === '' ? '' : 'none' }}
-                  color="red"
-                  pointing
-                >
-                  Please enter a map name
-                </Label>
+                <Form>
+                  <Form.Input
+                    error={mapNameError ? mapNameErrorContent : false}
+                    fluid
+                    value={mapName}
+                    onChange={e => this.setState({ mapName: e.target.value })}
+                    placeholder="Enter Map Name..."
+                    color="red"
+                  />
+                </Form>
                 <br />
                 <br />
-                <TextArea
-                  name="importMapConfig"
-                  style={{ width: '100%', height: '500px' }}
-                  value={mapImport}
-                  onChange={e => this.setState({ mapImport: e.target.value })}
-                  className="txtarea"
-                />
-                <Label
-                  style={{ display: isValidJson(mapImport) ? 'none' : '' }}
-                  color="red"
-                  pointing
-                >
-                  Please enter valid json map configuration
-                </Label>
+                <Form>
+                  <Form.Field>
+                    <TextArea
+                      name="importMapConfig"
+                      style={{ width: '100%', height: '500px' }}
+                      value={mapImport}
+                      onChange={e =>
+                        this.setState({ mapImport: e.target.value })
+                      }
+                      className="txtarea"
+                    />
+                    <Label
+                      style={{ display: isValidJson(mapImport) ? 'none' : '' }}
+                      pointing
+                      prompt
+                    >
+                      Please enter valid json map configuration
+                    </Label>
+                  </Form.Field>
+                </Form>
                 <br />
                 <br />
                 <Button
                   icon="download"
-                  disabled={isValidJson(mapImport) === false || mapName === ''}
+                  disabled={isValidJson(mapImport) === false || mapNameError}
                   positive
                   content="Save Map"
                   style={{ float: 'right' }}
-                  onClick={() => this.saveMap(dataFetcher)}
+                  onClick={() => this.saveMap(dataFetcher, findMap, selectMap)}
                 />
                 <br /> <br />
               </Modal.Content>

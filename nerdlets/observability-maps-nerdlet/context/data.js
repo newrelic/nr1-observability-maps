@@ -340,6 +340,17 @@ export class DataProvider extends Component {
     }
   };
 
+  findMap = name => {
+    const { availableMaps } = this.state;
+    for (let z = 0; z < availableMaps.length; z++) {
+      const mapId = availableMaps[z].id.replace(/\+/g, ' ');
+      if (mapId === name || availableMaps[z].id === name) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   // transforms mapConfig => mapData => d3 format & decorates
   handleMapData = () => {
     return new Promise(async resolve => {
@@ -607,7 +618,8 @@ export class DataProvider extends Component {
           ...this.state,
           updateDataContextState: this.updateDataContextState,
           dataFetcher: this.dataFetcher,
-          selectMap: this.selectMap
+          selectMap: this.selectMap,
+          findMap: this.findMap
         }}
       >
         <ToastContainer
