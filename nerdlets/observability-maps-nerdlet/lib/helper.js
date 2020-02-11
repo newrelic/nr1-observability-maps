@@ -104,7 +104,15 @@ export const chunk = (arr, size) =>
 
 // strip special domain tags added
 export const cleanNodeId = nodeId => {
-  ['[APM]', '[INFRA]', '[BROWSER]', '[SYNTH]', '[MOBILE]'].forEach(word => {
+  [
+    '[APM]',
+    '[INFRA]',
+    '[BROWSER]',
+    '[SYNTH]',
+    '[MOBILE]',
+    '[CUSTOM_NODE]',
+    '[CUSTOM_ACC]'
+  ].forEach(word => {
     nodeId = nodeId.replace(word, '');
   });
   return nodeId.trim();

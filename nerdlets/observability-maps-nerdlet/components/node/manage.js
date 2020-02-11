@@ -48,14 +48,16 @@ export default class ManageNodes extends React.PureComponent {
       case 'add':
         switch (selectedNodeType) {
           case 'custom':
-            mapConfig.nodeData[customNodeName] = { entityType: 'CUSTOM_NODE' };
+            mapConfig.nodeData[`${customNodeName} [CUSTOM_NODE]`] = {
+              entityType: 'CUSTOM_NODE'
+            };
             break;
           case 'account':
             // 0 == accountId, 1 == accountName
             const accountSplit = selectedAccount.split(/: (.+)/);
-            mapConfig.nodeData[accountSplit[1]] = {
+            mapConfig.nodeData[`${accountSplit[1]} [CUSTOM_ACC]`] = {
               accountId: accountSplit[0],
-              entityType: 'CUSTOM_ACCOUNT'
+              entityType: 'CUSTOM_ACC'
             };
             break;
           case 'entity':

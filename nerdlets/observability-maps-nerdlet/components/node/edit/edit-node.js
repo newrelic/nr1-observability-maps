@@ -5,6 +5,7 @@ import MainChart from './main-chart';
 import HoverMetrics from './hover-metrics';
 import IconSet from './icon-set';
 import CustomAlertSeverity from './custom-alert-severity';
+import Options from './options';
 
 export default class EditNode extends React.PureComponent {
   constructor(props) {
@@ -35,6 +36,8 @@ export default class EditNode extends React.PureComponent {
                 return <IconSet />;
               case 'customAlertSeverity':
                 return <CustomAlertSeverity />;
+              case 'options':
+                return <Options />;
               default:
                 return '';
             }
@@ -81,6 +84,18 @@ export default class EditNode extends React.PureComponent {
                       this.setState({
                         selectedEditOption: 'customAlertSeverity'
                       })
+                    }
+                  />
+                  <Menu.Item
+                    style={{
+                      display: selectedNode.includes('[CUSTOM_NODE]')
+                        ? ''
+                        : 'none'
+                    }}
+                    name="Options"
+                    active={selectedEditOption === 'options'}
+                    onClick={() =>
+                      this.setState({ selectedEditOption: 'options' })
                     }
                   />
                 </Menu>
