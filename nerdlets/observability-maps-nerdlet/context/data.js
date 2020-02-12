@@ -88,6 +88,10 @@ export class DataProvider extends Component {
   }
 
   async componentDidMount() {
+    this.toastInit = toast(`Initializing...`, {
+      autoClose: 10000,
+      containerId: 'B'
+    });
     await this.dataFetcher([
       'userConfig',
       'userMaps',
@@ -95,8 +99,18 @@ export class DataProvider extends Component {
       'accounts',
       'userIcons'
     ]);
-    this.handleDefaults();
-    this.refreshData();
+    if (this.state.accounts.length === 0) {
+      toast.update(this.toastInit, {
+        render: 'Unable to load accounts, please check your nerdpack uuid.',
+        type: toast.TYPE.ERROR,
+        autoClose: 10000,
+        containerId: 'B'
+      });
+    } else {
+      this.handleDefaults();
+      this.refreshData();
+      toast.dismiss(this.toastInit);
+    }
   }
 
   handleDefaults = async () => {
