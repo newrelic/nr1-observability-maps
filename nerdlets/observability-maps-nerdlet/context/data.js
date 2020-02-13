@@ -88,10 +88,6 @@ export class DataProvider extends Component {
   }
 
   async componentDidMount() {
-    this.toastInit = toast(`Initializing...`, {
-      autoClose: 10000,
-      containerId: 'B'
-    });
     await this.dataFetcher([
       'userConfig',
       'userMaps',
@@ -100,16 +96,13 @@ export class DataProvider extends Component {
       'userIcons'
     ]);
     if (this.state.accounts.length === 0) {
-      toast.update(this.toastInit, {
-        render: 'Unable to load accounts, please check your nerdpack uuid.',
-        type: toast.TYPE.ERROR,
+      toast.error('Unable to load accounts, please check your nerdpack uuid.', {
         autoClose: 10000,
         containerId: 'B'
       });
     } else {
       this.handleDefaults();
       this.refreshData();
-      toast.dismiss(this.toastInit);
     }
   }
 
@@ -309,8 +302,9 @@ export class DataProvider extends Component {
       }
       if (!this.state.isRefreshing) {
         if (this.state.selectedMap) {
-          this.toastRefresh = toast(`Refreshing...`, {
-            containerId: 'C'
+          this.toastRef = toast(`Refreshing...`, {
+            containerId: 'C',
+            autoClose: 10000
           });
 
           console.log(
@@ -318,7 +312,7 @@ export class DataProvider extends Component {
           );
           this.setState({ isRefreshing: true }, async () => {
             await this.handleMapData();
-            toast.dismiss(this.toastRefresh);
+            toast.dismiss(this.toastRef);
             this.setState({ isRefreshing: false });
           });
         }
