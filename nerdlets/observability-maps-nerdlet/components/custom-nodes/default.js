@@ -25,7 +25,7 @@ export default class CustomNode extends React.PureComponent {
     this.renderIcon = this.renderIcon.bind(this);
   }
 
-  renderIcon(userIcons, nodeData, nodeId, isOpen, icon, colorOne, colorTwo) {
+  renderIcon(userIcons, nodeData, nodeId, isOpen, icon, colorOne) {
     if (nodeData.iconSet) {
       const iconSet = userIcons.filter(set => set.id === nodeData.iconSet)[0];
       if (iconSet && iconSet.document) {
@@ -34,8 +34,8 @@ export default class CustomNode extends React.PureComponent {
           iconSet.document.orange ||
           iconSet.document.green;
 
-        if (iconSet.document[colorTwo]) {
-          iconSrc = iconSet.document[colorTwo];
+        if (iconSet.document[colorOne]) {
+          iconSrc = iconSet.document[colorOne];
         }
 
         if (iconSet) {
@@ -109,8 +109,7 @@ export default class CustomNode extends React.PureComponent {
             nodeId,
             isOpen,
             icon,
-            colorOne,
-            colorTwo
+            colorOne
           )}
           on="click"
           style={{ borderRadius: 0 }}
