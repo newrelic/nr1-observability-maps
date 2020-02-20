@@ -37,13 +37,15 @@ export default class MapSettings extends React.PureComponent {
     mapConfig.settings.backgroundColor =
       this.state.backgroundColor || backgroundColor;
 
-    if (backgroundImage) {
-      if (!backgroundImage.includes(`url("`)) {
-        mapConfig.settings.backgroundImage = `url("${backgroundImage}")`;
+    if (this.state.backgroundImage != null) {
+      if (!this.state.backgroundImage.includes(`url("`)) {
+        mapConfig.settings.backgroundImage = `url("${this.state.backgroundImage}")`;
       } else {
         mapConfig.settings.backgroundImage =
           this.state.backgroundImage || backgroundImage;
       }
+    } else if (backgroundImage) {
+      mapConfig.settings.backgroundImage = backgroundImage;
     }
 
     mapConfig.settings.backgroundPosition =
