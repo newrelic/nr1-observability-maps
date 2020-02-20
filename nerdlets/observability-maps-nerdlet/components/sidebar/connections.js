@@ -83,7 +83,7 @@ export default class SidebarConnections extends React.PureComponent {
                 {Object.keys(data).length > 0 ? (
                   <Menu pointing secondary style={{ fontSize: '12px' }}>
                     {Object.keys(data).map((domain, i) => {
-                      if (data[domain].length > 0) {
+                      if (data[domain] && data[domain].length > 0) {
                         return (
                           <Menu.Item
                             key={i}
@@ -115,60 +115,63 @@ export default class SidebarConnections extends React.PureComponent {
                       paddingLeft: '10px'
                     }}
                   >
-                    {data[activeMenuItem].map((conn, i) => {
-                      const name = conn[direction].entity.domain
-                        ? `${conn[direction].entity.name} [${conn[direction].entity.domain}]`
-                        : conn[direction].entity.name;
+                    {data[activeMenuItem]
+                      .filter(conn => conn[direction].entity)
+                      .map((conn, i) => {
+                        const name = conn[direction].entity.domain
+                          ? `${conn[direction].entity.name} [${conn[direction].entity.domain}]`
+                          : conn[direction].entity.name;
 
-                      const link =
-                        title === 'Incoming'
-                          ? `${name}:::${selectedNode}`
-                          : `${selectedNode}:::${name}`;
+                        const link =
+                          title === 'Incoming'
+                            ? `${name}:::${selectedNode}`
+                            : `${selectedNode}:::${name}`;
 
-                      // fallback
-                      const link2 =
-                        title === 'Incoming'
-                          ? `${conn[direction].entity.name}:::${selectedNode}`
-                          : `${selectedNode}:::${conn[direction].entity.name}`;
+                        // fallback
+                        const link2 =
+                          title === 'Incoming'
+                            ? `${conn[direction].entity.name}:::${selectedNode}`
+                            : `${selectedNode}:::${conn[direction].entity.name}`;
 
-                      const checked =
-                        mapConfig.linkData[link] != null ||
-                        mapConfig.linkData[link2] != null;
+                        const checked =
+                          mapConfig.linkData[link] != null ||
+                          mapConfig.linkData[link2] != null;
 
-                      return (
-                        <List.Item key={i}>
-                          <Icon
-                            style={{ float: 'left' }}
-                            color={
-                              setAlertDesign(
-                                conn[direction].entity.alertSeverity,
-                                conn[direction].entity.entityType
-                              ).colorOne
-                            }
-                            name={
-                              setEntityDesign(conn[direction].entity.entityType)
-                                .icon
-                            }
-                          />{' '}
-                          &nbsp;&nbsp;
-                          <Checkbox
-                            className="truncate-sidebar"
-                            checked={checked}
-                            onClick={() =>
-                              updateLink(
-                                checked,
-                                title.toLowerCase(),
-                                selectedNode,
-                                conn[direction].entity,
-                                mapConfig,
-                                updateDataContextState
-                              )
-                            }
-                            label={conn[direction].entity.name}
-                          />
-                        </List.Item>
-                      );
-                    })}
+                        return (
+                          <List.Item key={i}>
+                            <Icon
+                              style={{ float: 'left' }}
+                              color={
+                                setAlertDesign(
+                                  conn[direction].entity.alertSeverity,
+                                  conn[direction].entity.entityType
+                                ).colorOne
+                              }
+                              name={
+                                setEntityDesign(
+                                  conn[direction].entity.entityType
+                                ).icon
+                              }
+                            />{' '}
+                            &nbsp;&nbsp;
+                            <Checkbox
+                              className="truncate-sidebar"
+                              checked={checked}
+                              onClick={() =>
+                                updateLink(
+                                  checked,
+                                  title.toLowerCase(),
+                                  selectedNode,
+                                  conn[direction].entity,
+                                  mapConfig,
+                                  updateDataContextState
+                                )
+                              }
+                              label={conn[direction].entity.name}
+                            />
+                          </List.Item>
+                        );
+                      })}
                   </List>
                 ) : (
                   ''
