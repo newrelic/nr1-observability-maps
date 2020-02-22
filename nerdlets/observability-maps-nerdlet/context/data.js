@@ -19,6 +19,9 @@ import {
 } from '../lib/utils';
 import { chunk } from '../lib/helper';
 import { ToastContainer, toast } from 'react-toastify';
+import pkg from '../../../package.json';
+
+const semver = require('semver');
 
 toast.configure();
 
@@ -88,6 +91,7 @@ export class DataProvider extends Component {
   }
 
   async componentDidMount() {
+    this.checkVersion();
     await this.dataFetcher([
       'userConfig',
       'userMaps',
@@ -105,6 +109,35 @@ export class DataProvider extends Component {
       this.refreshData();
     }
   }
+
+  checkVersion = async () => {
+    fetch(
+      'https://raw.githubusercontent.com/newrelic/nr1-observability-maps/master/package.json'
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(repoPackage => {
+        if (pkg.version === repoPackage.version) {
+          console.log(`Running latest version: ${pkg.version}`);
+        } else if (semver.lt(pkg.version, repoPackage.version)) {
+          toast.warn(
+            <a
+              onClick={() =>
+                window.open(
+                  'https://github.com/newrelic/nr1-observability-maps/',
+                  '_blank'
+                )
+              }
+            >{`New version available: ${repoPackage.version}`}</a>,
+            {
+              autoClose: 5000,
+              containerId: 'C'
+            }
+          );
+        }
+      });
+  };
 
   handleDefaults = async () => {
     if (this.state.userConfig) {
