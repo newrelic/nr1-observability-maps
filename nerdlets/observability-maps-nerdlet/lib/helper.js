@@ -144,3 +144,12 @@ export const validateNRQL = (nrql, chart) => {
 
   return '';
 };
+
+export const niceMetricName = name => {
+  switch (name) {
+    case 'standarddeviation':
+      return 'STDDEV';
+    default:
+      return name;
+  }
+};
