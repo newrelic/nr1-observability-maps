@@ -37,7 +37,7 @@ export default class EditLink extends React.PureComponent {
           return (
             <Modal
               closeIcon
-              size="large"
+              size="fullscreen"
               open={editLinkOpen}
               onClose={() => updateDataContextState({ editLinkOpen: false })}
               onUnmount={() => updateDataContextState({ closeCharts: false })}

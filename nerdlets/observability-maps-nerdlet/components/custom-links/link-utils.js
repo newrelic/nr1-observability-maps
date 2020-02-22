@@ -4,7 +4,7 @@ export const setLinkData = (link, linkData) => {
 
   if (linkData[id]) {
     if (linkData[id].hoverData && linkData[id].hoverData.length > 0) {
-      linkData[id].hoverData.forEach(metric => {
+      linkData[id].hoverData.forEach((metric, z) => {
         // allows support for percentiles
         if (typeof metric.value === 'object' && metric.value !== null) {
           Object.keys(metric.value).forEach((key, i) => {
@@ -19,8 +19,10 @@ export const setLinkData = (link, linkData) => {
             metric.value && isNaN(metric.value)
               ? metric.value
               : (metric.value || 0).toFixed(2);
-
-          text = `${text}${metricValue} ${metric.name} `;
+          const metricLast = z + 1 === linkData[id].hoverData.length;
+          text = `${text}${metricValue} ${metric.name} ${
+            metricLast ? '' : '|'
+          } `;
         }
       });
     } else if (linkData[id].externalSummary) {
