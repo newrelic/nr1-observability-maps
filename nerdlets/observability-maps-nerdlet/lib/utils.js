@@ -530,6 +530,7 @@ export const InfraEntityBatchQuery = guids => {
             networkReceiveRate
             servicesCount
             networkTransmitRate
+            networkReceiveRate
           }
           name
         }

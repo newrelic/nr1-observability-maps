@@ -85,6 +85,37 @@ export const buildNodeMetrics = data => {
         unit: '',
         name: ''
       });
+  } else if (data.hostSummary) {
+    if (data.hostSummary.cpuUtilizationPercent)
+      metrics.push({
+        value: data.hostSummary.cpuUtilizationPercent,
+        unit: '%',
+        name: 'cpu'
+      });
+    if (data.hostSummary.memoryUsedPercent)
+      metrics.push({
+        value: data.hostSummary.memoryUsedPercent,
+        unit: '%',
+        name: 'mem'
+      });
+    if (data.hostSummary.diskUsedPercent)
+      metrics.push({
+        value: data.hostSummary.diskUsedPercent,
+        unit: '%',
+        name: 'disk'
+      });
+    if (data.hostSummary.networkTransmitRate)
+      metrics.push({
+        value: data.hostSummary.networkTransmitRate,
+        unit: 'bytes/s',
+        name: 'tx'
+      });
+    if (data.hostSummary.networkReceiveRate)
+      metrics.push({
+        value: data.hostSummary.networkReceiveRate,
+        unit: 'bytes/s',
+        name: 'rx'
+      });
   } else if (data.browserSummary) {
     // ajaxRequestThroughput: 49
     // ajaxResponseTimeAverage: 0.156681

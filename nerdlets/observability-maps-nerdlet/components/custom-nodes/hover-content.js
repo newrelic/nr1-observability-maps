@@ -28,7 +28,7 @@ export default class HoverContent extends React.PureComponent {
                         isLast ? '' : '|'
                       }`;
                     });
-                  } else if (metric.value) {
+                  } else if (metric.value || metric.value === 0) {
                     value = isNaN(metric.value)
                       ? metric.value
                       : parseFloat(metric.value)
