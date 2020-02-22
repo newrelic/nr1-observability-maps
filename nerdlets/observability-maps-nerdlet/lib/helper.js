@@ -117,3 +117,30 @@ export const cleanNodeId = nodeId => {
   });
   return nodeId.trim();
 };
+
+export const validateNRQL = (nrql, chart) => {
+  if (!nrql.includes('SELECT')) {
+    return 'SELECT not used';
+  }
+  if (!nrql.includes('FROM')) {
+    return 'FROM not used';
+  }
+
+  if (chart) {
+    if (
+      (chart === 'line' || chart === 'area') &&
+      !nrql.includes('TIMESERIES')
+    ) {
+      return 'TIMESERIES should be used for line or area charts';
+    }
+
+    if (
+      nrql.includes('TIMESERIES') &&
+      (chart === 'billboard' || chart === 'pie' || chart === 'table')
+    ) {
+      return `TIMESERIES cannot be used for ${chart} chart`;
+    }
+  }
+
+  return '';
+};

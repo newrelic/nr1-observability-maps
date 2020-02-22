@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Header, Form } from 'semantic-ui-react';
 import { DataConsumer } from '../../../context/data';
+import { validateNRQL } from '../../../lib/helper';
 
 export default class MainChart extends React.PureComponent {
   constructor(props) {
@@ -25,6 +26,17 @@ export default class MainChart extends React.PureComponent {
     await updateDataContextState({ mapConfig }, ['saveMap']);
   };
 
+  handleNrql = (e, i, nrql) => {
+    // reset chart type if required
+    if (
+      (nrql.includes('TIMESERIES') && !e.target.value.includes('TIMESERIES')) ||
+      (!nrql.includes('TIMESERIES') && e.target.value.includes('TIMESERIES'))
+    ) {
+      this.setState({ mc_1_TYPE: '' });
+    }
+    this.setState({ [`mc_${i + 1}_NRQL`]: e.target.value });
+  };
+
   render() {
     return (
       <DataConsumer>
@@ -34,14 +46,6 @@ export default class MainChart extends React.PureComponent {
             value: acc.id,
             text: acc.name
           }));
-
-          const chartOptions = [
-            { key: 'line', value: 'line', text: 'Line' },
-            { key: 'area', value: 'area', text: 'Area' },
-            { key: 'billboard', value: 'billboard', text: 'Billboard' },
-            { key: 'pie', value: 'pie', text: 'Pie' },
-            { key: 'table', value: 'table', text: 'Table' }
-          ];
 
           const tempState = {
             mc_1_NRQL: '',
@@ -65,6 +69,21 @@ export default class MainChart extends React.PureComponent {
             (this.state[name] != null ? this.state[name] : tempState[name]) ||
             '';
 
+          let chartOptions = [];
+
+          if ((value('mc_1_NRQL') || '').includes('TIMESERIES')) {
+            chartOptions = [
+              { key: 'line', value: 'line', text: 'Line' },
+              { key: 'area', value: 'area', text: 'Area' }
+            ];
+          } else {
+            chartOptions = [
+              { key: 'billboard', value: 'billboard', text: 'Billboard' },
+              { key: 'pie', value: 'pie', text: 'Pie' },
+              { key: 'table', value: 'table', text: 'Table' }
+            ];
+          }
+
           return (
             <>
               <Header as="h5">Set up to 1 Custom Chart</Header>
@@ -77,9 +96,15 @@ export default class MainChart extends React.PureComponent {
                       fluid
                       label={`Query ${i + 1}`}
                       placeholder={`SELECT average(duration) as 'ms' from Transaction TIMESERIES`}
+                      error={
+                        validateNRQL(
+                          value(`mc_${i + 1}_NRQL`),
+                          value(`mc_${i + 1}_TYPE`)
+                        ) || null
+                      }
                       value={value(`mc_${i + 1}_NRQL`)}
                       onChange={e =>
-                        this.setState({ [`mc_${i + 1}_NRQL`]: e.target.value })
+                        this.handleNrql(e, i, value(`mc_${i + 1}_NRQL`))
                       }
                     />
                     <Form.Select
@@ -112,6 +137,13 @@ export default class MainChart extends React.PureComponent {
               <Button
                 positive
                 style={{ float: 'right' }}
+                disabled={
+                  !value('mc_1_NRQL') ||
+                  !value('mc_1_ACC') ||
+                  !value('mc_1_TYPE') ||
+                  value('mc_1_TYPE') === '' ||
+                  validateNRQL(value('mc_1_NRQL'), value('mc_1_TYPE')) !== ''
+                }
                 onClick={() =>
                   this.saveNrql(
                     updateDataContextState,

@@ -1,5 +1,11 @@
 import React from 'react';
-import { LineChart, AreaChart, Billboard, PieChart, TableChart } from 'nr1';
+import {
+  LineChart,
+  AreaChart,
+  BillboardChart,
+  PieChart,
+  TableChart
+} from 'nr1';
 
 export default class MainChart extends React.PureComponent {
   render() {
@@ -24,29 +30,38 @@ export default class MainChart extends React.PureComponent {
             />
           );
         case 'billboard':
-          return (
-            <Billboard
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
+          if (!mainChart[1].nrql.includes('TIMESERIES')) {
+            return (
+              <BillboardChart
+                className="nr1-dashboards vz-theme-dark MosaicWidget"
+                accountId={mainChart[1].accountId}
+                query={mainChart[1].nrql}
+              />
+            );
+          }
+          return 'Misconfigured Chart';
         case 'pie':
-          return (
-            <PieChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
+          if (!mainChart[1].nrql.includes('TIMESERIES')) {
+            return (
+              <PieChart
+                className="nr1-dashboards vz-theme-dark MosaicWidget"
+                accountId={mainChart[1].accountId}
+                query={mainChart[1].nrql}
+              />
+            );
+          }
+          return 'Misconfigured Chart';
         case 'table':
-          return (
-            <TableChart
-              className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
-              query={mainChart[1].nrql}
-            />
-          );
+          if (!mainChart[1].nrql.includes('TIMESERIES')) {
+            return (
+              <TableChart
+                className="nr1-dashboards vz-theme-dark MosaicWidget"
+                accountId={mainChart[1].accountId}
+                query={mainChart[1].nrql}
+              />
+            );
+          }
+          return 'Misconfigured Chart';
         default:
           return 'No Chart Configured';
       }
