@@ -25,7 +25,7 @@ export const setEntityDesign = entityType => {
     case 'APM_EXTERNAL_SERVICE_ENTITY':
       return { icon: 'globe' };
     case 'APM_APPLICATION_ENTITY':
-      return { icon: 'box' };
+      return { icon: 'cube' };
     case 'INFRASTRUCTURE_HOST_ENTITY':
       return { icon: 'server' };
     case 'BROWSER_APPLICATION_ENTITY':
