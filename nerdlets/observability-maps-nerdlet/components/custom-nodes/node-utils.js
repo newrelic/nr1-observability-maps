@@ -27,6 +27,25 @@ export const buildNodeMetrics = data => {
         unit: '%',
         name: 'errors'
       });
+  } else if (data.monitorSummary) {
+    if (data.monitorSummary.successRate)
+      metrics.push({
+        value: data.monitorSummary.successRate,
+        unit: '%',
+        name: 'success rate'
+      });
+    if (data.monitorSummary.locationsFailing)
+      metrics.push({
+        value: data.monitorSummary.locationsFailing,
+        unit: '',
+        name: 'locations failing'
+      });
+    if (data.monitorSummary.locationsRunning)
+      metrics.push({
+        value: data.monitorSummary.locationsRunning,
+        unit: '',
+        name: 'locations running'
+      });
   } else if (data.mobileSummary) {
     if (data.mobileSummary.httpRequestRate)
       metrics.push({

@@ -15,6 +15,7 @@ import {
   nerdGraphQuery,
   singleNrql,
   ApmEntityBatchQuery,
+  InfraEntityBatchQuery,
   writeUserDocument
 } from '../lib/utils';
 import { chunk } from '../lib/helper';
@@ -609,12 +610,19 @@ export class DataProvider extends Component {
   fetchEntityData = async mapData => {
     return new Promise(async resolve => {
       const apmEntityGuids = [];
+      const infraEntityGuids = [];
       const otherEntityGuids = [];
+
       Object.keys((mapData || {}).nodeData || {}).forEach(node => {
         if (mapData.nodeData[node].entityType === 'APM_APPLICATION_ENTITY') {
           apmEntityGuids.push(mapData.nodeData[node].guid);
-        } else if (mapData.nodeData[node].guid)
+        } else if (
+          mapData.nodeData[node].entityType === 'INFRASTRUCTURE_HOST_ENTITY"'
+        ) {
+          infraEntityGuids.push(mapData.nodeData[node].guid);
+        } else if (mapData.nodeData[node].guid) {
           otherEntityGuids.push(mapData.nodeData[node].guid);
+        }
       });
 
       const entityChunks = chunk(otherEntityGuids, 25);
@@ -622,6 +630,23 @@ export class DataProvider extends Component {
         return new Promise(async resolve => {
           const guids = `"${chunk.join(`","`)}"`;
           const nerdGraphResult = await nerdGraphQuery(entityBatchQuery(guids));
+          if (!nerdGraphResult) {
+            console.log(`query failure: ${entityBatchQuery(guids)}`);
+          }
+          resolve(nerdGraphResult);
+        });
+      });
+
+      const infraEntityChunks = chunk(otherEntityGuids, 25);
+      const infraEntityPromises = infraEntityChunks.map(chunk => {
+        return new Promise(async resolve => {
+          const guids = `"${chunk.join(`","`)}"`;
+          const nerdGraphResult = await nerdGraphQuery(
+            InfraEntityBatchQuery(guids)
+          );
+          if (!nerdGraphResult) {
+            console.log(`query failure: ${InfraEntityBatchQuery(guids)}`);
+          }
           resolve(nerdGraphResult);
         });
       });
@@ -633,20 +658,25 @@ export class DataProvider extends Component {
           const nerdGraphResult = await nerdGraphQuery(
             ApmEntityBatchQuery(guids)
           );
+          if (!nerdGraphResult) {
+            console.log(`query failure: ${ApmEntityBatchQuery(guids)}`);
+          }
           resolve(nerdGraphResult);
         });
       });
 
-      await Promise.all([...entityPromises, ...apmEntityPromises]).then(
-        values => {
-          let entityData = [];
-          values.forEach(async value => {
-            const entitiesResult = ((value || {}).actor || {}).entities || [];
-            entityData = [...entityData, ...entitiesResult];
-          });
-          resolve(entityData);
-        }
-      );
+      await Promise.all([
+        ...entityPromises,
+        ...apmEntityPromises,
+        ...infraEntityPromises
+      ]).then(values => {
+        let entityData = [];
+        values.forEach(async value => {
+          const entitiesResult = ((value || {}).actor || {}).entities || [];
+          entityData = [...entityData, ...entitiesResult];
+        });
+        resolve(entityData);
+      });
     });
   };
 

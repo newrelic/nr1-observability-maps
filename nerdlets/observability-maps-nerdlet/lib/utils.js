@@ -123,13 +123,23 @@ export const entityBatchQuery = guids => {
   return `{
     actor {
       entities(guids: [${guids}]) {
-        ... on InfrastructureHostEntity {
-          account {
-            id
-            name
+        ... on SyntheticMonitorEntity {
+          guid
+          name
+          monitorSummary {
+            locationsRunning
+            successRate
+            locationsFailing
           }
-          domain
           alertSeverity
+          domain
+          entityType
+          account {
+            name
+            id
+          }
+          monitorType
+          monitoredUrl
           recentAlertViolations(count: 5) {
             agentUrl
             alertSeverity
@@ -140,43 +150,6 @@ export const entityBatchQuery = guids => {
             violationId
             violationUrl
           }
-          relationships {
-            source {
-              entity {
-                account {
-                  id
-                  name
-                }
-                domain
-                guid
-                entityType
-                name
-              }
-            }
-            target {
-              entity {
-                account {
-                  id
-                  name
-                }
-                domain
-                guid
-                entityType
-                name
-              }
-            }
-          }
-          entityType
-          guid
-          hostSummary {
-            cpuUtilizationPercent
-            diskUsedPercent
-            memoryUsedPercent
-            networkReceiveRate
-            servicesCount
-            networkTransmitRate
-          }
-          name
         }
         ... on MobileApplicationEntity {
           name
@@ -483,4 +456,68 @@ export const ApmEntityBatchQuery = guids => {
     }
   }
 }`;
+};
+
+export const InfraEntityBatchQuery = guids => {
+  return `{
+    actor {
+      entities(guids: [${guids}]) {
+        ... on InfrastructureHostEntity {
+          account {
+            id
+            name
+          }
+          domain
+          alertSeverity
+          recentAlertViolations(count: 5) {
+            agentUrl
+            alertSeverity
+            closedAt
+            label
+            level
+            openedAt
+            violationId
+            violationUrl
+          }
+          relationships {
+            source {
+              entity {
+                account {
+                  id
+                  name
+                }
+                domain
+                guid
+                entityType
+                name
+              }
+            }
+            target {
+              entity {
+                account {
+                  id
+                  name
+                }
+                domain
+                guid
+                entityType
+                name
+              }
+            }
+          }
+          entityType
+          guid
+          hostSummary {
+            cpuUtilizationPercent
+            diskUsedPercent
+            memoryUsedPercent
+            networkReceiveRate
+            servicesCount
+            networkTransmitRate
+          }
+          name
+        }
+      }
+    }
+  }`;
 };
