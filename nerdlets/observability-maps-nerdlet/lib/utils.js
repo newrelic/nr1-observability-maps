@@ -425,6 +425,14 @@ export const ApmEntityBatchQuery = guids => {
                 }
                 name
               }
+              ... on ApmDatabaseInstanceEntityOutline {
+                guid
+                entityType
+                name
+                host
+                vendor
+                portOrPath
+              }
             }
           }
           target {
@@ -448,6 +456,14 @@ export const ApmEntityBatchQuery = guids => {
                   throughput
                 }
                 name
+              }
+              ... on ApmDatabaseInstanceEntityOutline {
+                guid
+                entityType
+                name
+                host
+                vendor
+                portOrPath
               }
             }
           }

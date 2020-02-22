@@ -78,6 +78,13 @@ export const buildNodeMetrics = data => {
         unit: 'ms',
         name: 'latency'
       });
+  } else if (data.dbSummary) {
+    if (data.dbSummary.host)
+      metrics.push({
+        value: data.dbSummary.host,
+        unit: '',
+        name: ''
+      });
   } else if (data.browserSummary) {
     // ajaxRequestThroughput: 49
     // ajaxResponseTimeAverage: 0.156681

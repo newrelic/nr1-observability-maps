@@ -488,6 +488,32 @@ export class DataProvider extends Component {
                       }
                     }
                   }
+
+                  if (sourceEntityType === 'APM_DATABASE_INSTANCE_ENTITY') {
+                    if (mapData.nodeData[conn.source.entity.name]) {
+                      if (mapData.nodeData[conn.source.entity.name]) {
+                        mapData.nodeData[conn.source.entity.name].dbSummary = {
+                          name: conn.source.entity.name,
+                          host: `${conn.source.entity.host}:${conn.source.entity.portOrPath}`,
+                          portOrPath: conn.source.entity.portOrPath,
+                          vendor: conn.source.entity.vendor
+                        };
+                      }
+                    }
+                  }
+
+                  if (targetEntityType === 'APM_DATABASE_INSTANCE_ENTITY') {
+                    if (mapData.nodeData[conn.target.entity.name]) {
+                      if (mapData.nodeData[conn.target.entity.name]) {
+                        mapData.nodeData[conn.target.entity.name].dbSummary = {
+                          name: conn.target.entity.name,
+                          host: `${conn.target.entity.host}:${conn.target.entity.portOrPath}`,
+                          portOrPath: conn.target.entity.portOrPath,
+                          vendor: conn.target.entity.vendor
+                        };
+                      }
+                    }
+                  }
                 });
               }
               break;
