@@ -9,10 +9,9 @@ export const setLinkData = (link, linkData) => {
         if (typeof metric.value === 'object' && metric.value !== null) {
           Object.keys(metric.value).forEach((key, i) => {
             const isLast = i + 1 === Object.keys(metric.value).length;
-            const keyValue =
-              metric.value[key] && isNaN(metric.value[key])
-                ? metric.value[key]
-                : (metric.value[key] || 0).toFixed(4);
+            const keyValue = isNaN(metric.value[key])
+              ? metric.value[key]
+              : (metric.value[key] || 0).toFixed(4);
             text = `${text} ${key}: ${keyValue} ${isLast ? '' : '|'}`;
           });
         } else {

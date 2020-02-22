@@ -16,10 +16,9 @@ export default class HoverContent extends React.PureComponent {
                 if (typeof metric.value === 'object' && metric.value !== null) {
                   Object.keys(metric.value).forEach((key, i) => {
                     const isLast = i + 1 === Object.keys(metric.value).length;
-                    const keyValue =
-                      metric.value[key] && isNaN(metric.value[key])
-                        ? metric.value[key]
-                        : metric.value[key].toFixed(4);
+                    const keyValue = isNaN(metric.value[key])
+                      ? metric.value[key]
+                      : metric.value[key].toFixed(4);
                     value = `${value} ${key}: ${keyValue} ${isLast ? '' : '|'}`;
                   });
                 } else if (metric.value) {
