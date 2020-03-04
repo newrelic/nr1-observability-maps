@@ -1,4 +1,4 @@
-/* eslint 
+/* eslint
 no-console: 0,
 */
 import React from 'react';

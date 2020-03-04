@@ -538,3 +538,20 @@ export const InfraEntityBatchQuery = guids => {
     }
   }`;
 };
+
+export const DashboardQuery = accountId => {
+  return `{
+  actor {
+    entitySearch(query: "accountId=${accountId} and type='DASHBOARD'") {
+      results {
+        entities {
+          accountId
+          guid
+          name
+          type
+        }
+      }
+    }
+  }
+}`
+};
