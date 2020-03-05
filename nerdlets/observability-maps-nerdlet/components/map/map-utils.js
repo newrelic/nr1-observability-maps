@@ -56,9 +56,9 @@ export const buildContextOptions = (
       });
 
       contextOptions.push({
-        name: 'View Drilldown Dashboard',
+        name: 'View Dashboard',
         action: 'viewDashboard'
-      })
+      });
     } else if (rightClickType === 'link') {
       contextOptions.push({ name: 'Edit', action: 'editLink' });
     }
@@ -217,12 +217,15 @@ export const rightClick = (
       navigation.openStackedNerdlet(logs);
       break;
     case 'viewDashboard':
-      const dash = mapConfig.nodeData[rightClickedNodeId].dashboard
+      const dash = mapConfig.nodeData[rightClickedNodeId].dashboard;
       if (dash === undefined) {
-        toast.error('No drilldown dashboard configured. To add one, go to Edit -> Drilldown Dashboard', {
-          autoClose: 5000,
-          containerId: 'B'
-        });
+        toast.error(
+          'Dashboard not configured. To add, go to Edit -> Dashboard',
+          {
+            autoClose: 5000,
+            containerId: 'B'
+          }
+        );
       } else {
         navigation.openStackedEntity(dash);
       }

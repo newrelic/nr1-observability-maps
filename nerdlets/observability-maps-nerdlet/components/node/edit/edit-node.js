@@ -102,7 +102,7 @@ export default class EditNode extends React.PureComponent {
                     }
                   />
                   <Menu.Item
-                    name="Drilldown Dashboard"
+                    name="Dashboard"
                     active={selectedEditOption === 'dash'}
                     onClick={() =>
                       this.setState({

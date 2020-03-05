@@ -553,5 +553,5 @@ export const DashboardQuery = accountId => {
       }
     }
   }
-}`
+}`;
 };

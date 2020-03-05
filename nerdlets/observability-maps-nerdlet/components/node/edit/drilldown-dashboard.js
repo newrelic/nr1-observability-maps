@@ -1,5 +1,9 @@
+/* eslint
+no-console: 0
+*/
+
 import React from 'react';
-import { Button, Form, Table, Header, Radio, Input } from 'semantic-ui-react';
+import { Button, Form, Table, Radio, Input } from 'semantic-ui-react';
 import { DataConsumer } from '../../../context/data';
 import { nerdGraphQuery, DashboardQuery } from '../../../lib/utils';
 import { Spinner } from 'nr1';
@@ -30,7 +34,10 @@ export default class DrilldownDashboard extends React.PureComponent {
       (((nerdGraphResult || {}).actor || {}).entitySearch || {}).results || {};
     // let foundGuids = ((entitySearchResults || {}).entities || []).map((result)=>result.guid)
 
-    searchedDashboards = [...searchedDashboards, ...dashboardSearchResults.entities];
+    searchedDashboards = [
+      ...searchedDashboards,
+      ...dashboardSearchResults.entities
+    ];
     this.setState({ searchedDashboards }, () => {
       if (dashboardSearchResults.nextCursor) {
         console.log(
@@ -45,53 +52,64 @@ export default class DrilldownDashboard extends React.PureComponent {
     });
   };
 
-  saveDashboard = async (updateDataContextState, mapConfig, nodeId) => {
-    mapConfig.nodeData[nodeId].dashboard = this.state.selectedDash;
-
+  updateDashboard = async (
+    updateDataContextState,
+    mapConfig,
+    nodeId,
+    action
+  ) => {
+    if (action === 'save') {
+      mapConfig.nodeData[nodeId].dashboard = this.state.selectedDash;
+    } else if (action === 'delete') {
+      delete mapConfig.nodeData[nodeId].dashboard;
+    }
     await updateDataContextState({ mapConfig }, ['saveMap']);
   };
 
-
-
   render() {
-    const { selectedAccount, searchedDashboards, showSearchMsg, selectedDash, searchText } = this.state;
+    const {
+      selectedAccount,
+      searchedDashboards,
+      showSearchMsg,
+      selectedDash,
+      searchText
+    } = this.state;
 
     return (
-        <DataConsumer>
-          {({ accounts, mapConfig, selectedNode, updateDataContextState }) => {
-            const accountOptions = accounts.map(acc => ({
-              key: acc.id,
-              value: acc.id,
-              text: acc.name
-            }));
+      <DataConsumer>
+        {({ accounts, mapConfig, selectedNode, updateDataContextState }) => {
+          const accountOptions = accounts.map(acc => ({
+            key: acc.id,
+            value: acc.id,
+            text: acc.name
+          }));
 
-            const addDisabled =
-              selectedAccount === null ||
-              selectedDash === null
+          const currentMap = mapConfig.nodeData[selectedNode].dashboard;
+          const addDisabled = selectedAccount === null || selectedDash === null;
 
-            if (accountOptions) {
-              return (
+          if (accountOptions) {
+            return (
               <>
                 <Form.Group widths={8}>
-                <Form.Select
-                  width={4}
-                  search
-                  label="Account"
-                  options={accountOptions}
-                  placeholder="Select Account..."
-                  onChange={(e, d) =>
-                    this.setState({ selectedAccount: d.value })
-                  }
-                />
-                <Form.Button
-                  disabled={!selectedAccount}
-                  label="&nbsp;"
-                  width="3"
-                  content="Fetch Dashboards"
-                  onClick={() => {
-                    this.fetchDashboards();
-                  }}
-                />
+                  <Form.Select
+                    width={4}
+                    search
+                    label="Account"
+                    options={accountOptions}
+                    placeholder="Select Account..."
+                    onChange={(e, d) =>
+                      this.setState({ selectedAccount: d.value })
+                    }
+                  />
+                  <Form.Button
+                    disabled={!selectedAccount}
+                    label="&nbsp;"
+                    width={4}
+                    content="Fetch Dashboards"
+                    onClick={() => {
+                      this.fetchDashboards();
+                    }}
+                  />
                 </Form.Group>
                 <Form.Group
                   style={{
@@ -145,43 +163,59 @@ export default class DrilldownDashboard extends React.PureComponent {
                                 <Radio
                                   value={dash.guid}
                                   checked={selectedDash === dash.guid}
-                                  onChange={(e, d) =>
-                                    this.setState({ selectedDash: dash.guid})
+                                  onChange={() =>
+                                    this.setState({ selectedDash: dash.guid })
                                   }
                                 />
                               </Table.Cell>
                             </Table.Row>
                           );
-                        })
-                      }
+                        })}
                     </Table.Body>
                   </Table>
                 </div>
                 <br />
+
                 <Button
-                  style={{float: 'right'}}
+                  style={{ float: 'right' }}
+                  disabled={!currentMap}
+                  negative
+                  onClick={() => {
+                    this.updateDashboard(
+                      updateDataContextState,
+                      mapConfig,
+                      selectedNode,
+                      'delete'
+                    );
+                  }}
+                >
+                  Clear
+                </Button>
+
+                <Button
+                  style={{ float: 'right' }}
                   disabled={addDisabled}
                   positive
                   onClick={() => {
-                    this.saveDashboard(
+                    this.updateDashboard(
                       updateDataContextState,
                       mapConfig,
-                      selectedNode
-                    )
+                      selectedNode,
+                      'save'
+                    );
                   }}
                 >
                   Save
                 </Button>
+
                 <br />
               </>
-            )
-            } else {
-              return (
-                <Spinner />
-              )
-            }
-          }}
-        </DataConsumer>
+            );
+          } else {
+            return <Spinner />;
+          }
+        }}
+      </DataConsumer>
     );
   }
 }
