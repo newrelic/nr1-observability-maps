@@ -1,4 +1,5 @@
 {
+  "tagline": "Create an observability map based on any of the data available in New Relic.",
   "repository": "https://github.com/newrelic/nr1-observability-maps.git",
   "details": "Create an observability map based on any of the data available in New Relic.",
   "support": {
@@ -8,7 +9,7 @@
     "email": {
       "address": "opensource+nr1-observability-maps@newrelic.com"
     },
-    "website": {
+    "community": {
       "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
     }
   },
