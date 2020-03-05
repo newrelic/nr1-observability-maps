@@ -13,10 +13,7 @@
       "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
     }
   },
-  "whatsNew": [
-    "Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) - dashboards are retrieved and selectable based upon user input in the Edit menu.",
-    "Add infra hover metrics",
-    "Show db connection on hover",
-    "Add synthetics summary support",
-  ]
+  "whatsNew": 
+    "- Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) - dashboards are retrieved and selectable based upon user input in the Edit menu. \n - Add infra hover metrics \n - Show db connection on hover \n - Add synthetics summary support"
+  
 }
