@@ -10,7 +10,7 @@ Observability Maps allows you to create a view beyond a traditional service map.
 
 Using Observability Maps you can make connections between different types of entities, not limited to services. You can also create your own connection points based on data available in New Relic.
 
-![Screenshot](https://github.com/newrelic/nr1-observability-maps/blob/master/screenshots/screenshot1.png)
+![Screenshot](https://github.com/newrelic/nr1-observability-maps/blob/master/catalog/screenshots/nr1-observability-maps-1.png)
 
 ## Open source license
 
