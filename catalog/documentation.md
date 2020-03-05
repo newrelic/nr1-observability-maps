@@ -8,11 +8,11 @@ Observability Maps allows you to create a view beyond a traditional service map.
 
 Using Observability Maps you can make connections between different types of entities, not limited to services. You can also create your own connection points based on data available in New Relic.
 
-![Screenshot](screenshots/nr1-observability-maps-1.png)
+![Screenshot](https://github.com/newrelic/nr1-observability-maps/blob/master/screenshots/screenshot1.png)
 
 ## Open source license
 
-This project is distributed under the [Apache 2 license](/LICENSE).
+This project is distributed under the [Apache 2 license](https://github.com/newrelic/nr1-observability-maps/blob/master/LICENSE).
 
 ## Dependencies
 
@@ -71,6 +71,6 @@ Issues and enhancement requests can be submitted in the [Issues tab of this repo
 
 ## Contributing
 
-Contributions are welcome (and if you submit a enhancement request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](/CONTRIBUTING.md).
+Contributions are welcome (and if you submit a enhancement request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](https://github.com/newrelic/nr1-observability-maps/blob/master/CONTRIBUTING.md).
 
 Keep in mind that when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. If you'd like to execute our corporate CLA, or if you have any questions, please drop us an email at opensource@newrelic.com.
