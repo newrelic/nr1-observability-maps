@@ -1,8 +1,9 @@
-/* eslint 
+/* eslint
 no-console: 0,
 */
 
 import { navigation } from 'nr1';
+import { toast } from 'react-toastify';
 import { cleanNodeId } from '../../lib/helper';
 
 export const buildContextOptions = (
@@ -53,6 +54,11 @@ export const buildContextOptions = (
         name: 'View Logs',
         action: 'viewLogs'
       });
+
+      contextOptions.push({
+        name: 'View Dashboard',
+        action: 'viewDashboard'
+      });
     } else if (rightClickType === 'link') {
       contextOptions.push({ name: 'Edit', action: 'editLink' });
     }
@@ -73,6 +79,7 @@ export const rightClick = (
   mapData,
   mapConfig
 ) => {
+  toast.configure();
   switch (item.action) {
     case 'openStackedEntity':
       navigation.openStackedEntity(item.value);
@@ -208,6 +215,20 @@ export const rightClick = (
         }
       };
       navigation.openStackedNerdlet(logs);
+      break;
+    case 'viewDashboard':
+      const dash = mapConfig.nodeData[rightClickedNodeId].dashboard;
+      if (dash === undefined) {
+        toast.error(
+          'Dashboard not configured. To add, go to Edit -> Dashboard',
+          {
+            autoClose: 5000,
+            containerId: 'B'
+          }
+        );
+      } else {
+        navigation.openStackedEntity(dash);
+      }
       break;
     case 'editNode':
       updateDataContextState({ editNodeOpen: true });
