@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/newrelic/nr1-observability-maps.git",
+  "details": "Create an observability map based on any of the data available in New Relic.",
+  "support": {
+    "issues": {
+      "url": "https://github.com/newrelic/nr1-observability-maps/issues"
+    },
+    "email": {
+      "address": "opensource+nr1-observability-maps@newrelic.com"
+    },
+    "website": {
+      "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
+    }
+  },
+  "whatsNew": [
+    "Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) - dashboards are retrieved and selectable based upon user input in the Edit menu.",
+    "Add infra hover metrics",
+    "Show db connection on hover",
+    "Add synthetics summary support",
+  ]
+}
