@@ -1,0 +1,19 @@
+{
+  "tagline": "Create an observability map based on any of the data available in New Relic.",
+  "repository": "https://github.com/newrelic/nr1-observability-maps.git",
+  "details": "Observability Maps allows you to create a view beyond a traditional service map. \n Using Observability Maps you can make connections between different types of entities, not limited to services. You can also create your own connection points based on data available in New Relic.",
+  "support": {
+    "issues": {
+      "url": "https://github.com/newrelic/nr1-observability-maps/issues"
+    },
+    "email": {
+      "address": "opensource+nr1-observability-maps@newrelic.com"
+    },
+    "community": {
+      "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
+    }
+  },
+  "whatsNew": 
+    "- Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) \n - dashboards are retrieved and selectable based upon user input in the Edit menu. \n - Add infra hover metrics \n - Show db connection on hover \n - Add synthetics summary support"
+  
+}
