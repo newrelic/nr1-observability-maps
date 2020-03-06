@@ -6,6 +6,7 @@ import HoverMetrics from './hover-metrics';
 import IconSet from './icon-set';
 import CustomAlertSeverity from './custom-alert-severity';
 import Options from './options';
+import DrilldownDashboard from './drilldown-dashboard';
 
 export default class EditNode extends React.PureComponent {
   constructor(props) {
@@ -38,6 +39,8 @@ export default class EditNode extends React.PureComponent {
                 return <CustomAlertSeverity />;
               case 'options':
                 return <Options />;
+              case 'dash':
+                return <DrilldownDashboard />;
               default:
                 return '';
             }
@@ -96,6 +99,15 @@ export default class EditNode extends React.PureComponent {
                     active={selectedEditOption === 'options'}
                     onClick={() =>
                       this.setState({ selectedEditOption: 'options' })
+                    }
+                  />
+                  <Menu.Item
+                    name="Dashboard"
+                    active={selectedEditOption === 'dash'}
+                    onClick={() =>
+                      this.setState({
+                        selectedEditOption: 'dash'
+                      })
                     }
                   />
                 </Menu>

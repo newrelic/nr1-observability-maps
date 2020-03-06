@@ -35,7 +35,7 @@ Requires data in NRDB from any or all of the New Relic products.
 
    ```bash
    nr1 nerdpack:clone -r https://github.com/newrelic/nr1-observability-maps.git
-   cd nr1-igor
+   cd nr1-observability-maps
    nr1 nerdpack:serve
    ```
 

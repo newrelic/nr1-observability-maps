@@ -1,4 +1,4 @@
-/* eslint 
+/* eslint
 no-console: 0,
 no-async-promise-executor: 0,
 no-func-assign: 0,
