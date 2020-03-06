@@ -14,6 +14,6 @@
     }
   },
   "whatsNew": 
-    "- Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) - dashboards are retrieved and selectable based upon user input in the Edit menu. \n - Add infra hover metrics \n - Show db connection on hover \n - Add synthetics summary support"
+    "- Drilldown dashboards: Ability to open any specified dashboard for a given node (right click option) \n - dashboards are retrieved and selectable based upon user input in the Edit menu. \n - Add infra hover metrics \n - Show db connection on hover \n - Add synthetics summary support"
   
 }
