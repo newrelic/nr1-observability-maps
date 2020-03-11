@@ -1,6 +1,6 @@
-[![New Relic One Catalog Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/New_Relic_One_Catalog_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#nr1-catalog)
+# Documentation
 
-# Observability Maps (nr1-observability-maps)
+[![New Relic One Catalog Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/New_Relic_One_Catalog_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#nr1-catalog)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github/newrelic/nr1-observability-maps)
 
@@ -10,11 +10,11 @@ Observability Maps allows you to create a view beyond a traditional service map.
 
 Using Observability Maps you can make connections between different types of entities, not limited to services. You can also create your own connection points based on data available in New Relic.
 
-![Screenshot](./catalog/screenshots/nr1-observability-maps-1.png)
+![Screenshot](https://github.com/newrelic/nr1-observability-maps/blob/master/catalog/screenshots/nr1-observability-maps-1.png)
 
 ## Open source license
 
-This project is distributed under the [Apache 2 license](LICENSE).
+This project is distributed under the [Apache 2 license](https://github.com/newrelic/nr1-observability-maps/blob/master/LICENSE).
 
 ## Dependencies
 
@@ -35,7 +35,7 @@ Requires data in NRDB from any or all of the New Relic products.
 
    ```bash
    nr1 nerdpack:clone -r https://github.com/newrelic/nr1-observability-maps.git
-   cd nr1-observability-maps
+   cd nr1-igor
    nr1 nerdpack:serve
    ```
 
@@ -65,14 +65,14 @@ New Relic hosts and moderates an online forum where you can interact with New Re
 
 [https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091](https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091)
 
-Please do not report issues with Observability Maps to New Relic Global Technical Support. Instead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
+Please do not report issues with Observability Maps to New Relic Global Technical Support. Inhttps://github.com/newrelic/nr1-observability-maps/issuestead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
 
 ## Issues / enhancement requests
 
-Issues and enhancement requests can be submitted in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
+Issues and enhancement requests can be submitted in the [Issues tab of this repository](https://github.com/newrelic/nr1-observability-maps/issues). Please search for and review the existing open issues before submitting a new issue.
 
 ## Contributing
 
-Contributions are welcome (and if you submit a enhancement request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](CONTRIBUTING.md).
+Contributions are welcome (and if you submit a enhancement request, expect to be invited to contribute it yourself :grin:). Please review our [Contributors Guide](https://github.com/newrelic/nr1-observability-maps/blob/master/CONTRIBUTING.md).
 
 Keep in mind that when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. If you'd like to execute our corporate CLA, or if you have any questions, please drop us an email at opensource@newrelic.com.
