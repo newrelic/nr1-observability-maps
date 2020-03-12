@@ -48,6 +48,7 @@ export default class ImportMap extends React.PureComponent {
           iconSet: jsonData.nodeData[node].iconSet,
           mainChart: jsonData.nodeData[node].mainChart,
           customAlert: jsonData.nodeData[node].customAlert,
+          dashboard: jsonData.nodeData[node].dashboard,
           x: jsonData.nodeData[node].x,
           y: jsonData.nodeData[node].y
         };
