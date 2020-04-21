@@ -6,6 +6,8 @@ Observability Maps allows you to create a view beyond a traditional service map.
 
 Using Observability Maps you can make connections between different types of entities, not limited to services. You can also create your own connection points based on data available in New Relic.
 
+Right click on nodes and links for further configuration options and shortcuts.
+
 ## Dependencies
 
 Requires usage of any New Relic product to make data available via NerdGraph or NRDB. The more the better.
