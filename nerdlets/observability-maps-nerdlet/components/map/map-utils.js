@@ -211,7 +211,8 @@ export const rightClick = (
       const logs = {
         id: 'logger.log-tailer',
         urlState: {
-          query: `"${cleanNodeId(rightClickedNodeId)}"`
+          query: `"${cleanNodeId(rightClickedNodeId)}"`,
+          accountId: mapData.nodeData[rightClickedNodeId].account.id || ''
         }
       };
       navigation.openStackedNerdlet(logs);
