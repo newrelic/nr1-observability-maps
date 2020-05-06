@@ -63,7 +63,7 @@ export default class ObservabilityMaps extends React.Component {
       <DataConsumer>
         {({ mapConfig }) => {
           const mainGridStyle = {
-            height: this.props.height - 60,
+            height: this.props.height - 46,
             backgroundColor: 'black',
             marginTop: '0px'
           };
@@ -78,7 +78,7 @@ export default class ObservabilityMaps extends React.Component {
           }
 
           return (
-            <div>
+            <div style={{ overflowY: 'hidden', overflowX: 'hidden' }}>
               <MenuBar />
 
               <Grid columns={16} style={mainGridStyle}>
