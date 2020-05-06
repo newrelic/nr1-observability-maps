@@ -211,7 +211,9 @@ export const rightClick = (
       const logs = {
         id: 'logger.log-tailer',
         urlState: {
-          query: `"${cleanNodeId(rightClickedNodeId)}"`,
+          query: `"${cleanNodeId(
+            rightClickedNodeId
+          )}" or service_name:"${cleanNodeId(rightClickedNodeId)}"`,
           accountId: mapData.nodeData[rightClickedNodeId].account.id || ''
         }
       };
