@@ -16,7 +16,8 @@ import {
   singleNrql,
   ApmEntityBatchQuery,
   InfraEntityBatchQuery,
-  writeUserDocument
+  writeUserDocument,
+  writeAccountDocument
 } from '../lib/utils';
 import { chunk } from '../lib/helper';
 import { ToastContainer, toast } from 'react-toastify';
@@ -75,6 +76,13 @@ export class DataProvider extends Component {
       },
       userIcons: [],
       storeLocation: 'user',
+      storageLocation: {
+        key: 'User',
+        label: 'User (Personal)',
+        value: 'user',
+        type: 'user'
+      },
+      selectedAccountId: null,
       accountMaps: null,
       userMaps: null,
       availableMaps: [],
@@ -170,16 +178,15 @@ export class DataProvider extends Component {
                       containerId: 'B'
                     }
                   );
-                  switch (stateData.selectedMap.type) {
-                    case 'user':
-                      await this.pluckMap(stateData.selectedMap.value);
-                      await this.handleMapData();
-                      toast.dismiss(this.toastLoad);
-                      break;
-                  }
+
+                  await this.pluckMap(stateData.selectedMap.value);
+                  await this.handleMapData();
+                  toast.dismiss(this.toastLoad);
                 } else {
                   this.toastDeleteMap = toast(
-                    `Map deleted, please select another`,
+                    stateData.menuSwitch
+                      ? `Storage location changed`
+                      : `Map deleted, please select another`,
                     {
                       containerId: 'B'
                     }
@@ -189,7 +196,8 @@ export class DataProvider extends Component {
                       mapConfig: {
                         nodeData: { ...defaultNodeData },
                         linkData: {}
-                      }
+                      },
+                      menuSwitch: null
                     },
                     async () => {
                       await this.handleMapData();
@@ -198,37 +206,39 @@ export class DataProvider extends Component {
                 }
                 break;
               case 'saveMap':
-                const { storeLocation, selectedMap } = this.state;
+                const { selectedMap, storageLocation } = this.state;
                 this.toastSaveMap = toast(
                   `Saving Map: ${cleanName(selectedMap.value)}`,
                   {
                     containerId: 'B'
                   }
                 );
-                switch (storeLocation) {
-                  case 'account':
-                    // not implemented yet
-                    // writeAccountDocument("ObservabilityMaps", mapName, payload)
-                    // dataFetcher(["accountMaps"])
-                    break;
-                  case 'user':
-                    if (stateData.mapConfig) {
-                      const mapConfig = JSON.parse(
-                        JSON.stringify(stateData.mapConfig)
-                      );
-                      console.log('savingMap', mapConfig);
-                      await writeUserDocument(
-                        'ObservabilityMaps',
-                        selectedMap.value,
-                        mapConfig
-                      );
-                      await this.dataFetcher(['userMaps']);
-                      await this.handleMapData();
-                      toast.dismiss(this.toastSaveMap);
-                    }
-                    break;
-                  default:
-                    toast.dismiss(this.toastSaveMap);
+
+                if (stateData.mapConfig) {
+                  const mapConfig = JSON.parse(
+                    JSON.stringify(stateData.mapConfig)
+                  );
+                  console.log('savingMap', mapConfig);
+                  if (storageLocation.type === 'user') {
+                    await writeUserDocument(
+                      'ObservabilityMaps',
+                      selectedMap.value,
+                      mapConfig
+                    );
+                  } else if (storageLocation.type === 'account') {
+                    await writeAccountDocument(
+                      storageLocation.value,
+                      'ObservabilityMaps',
+                      selectedMap.value,
+                      mapConfig
+                    );
+                  }
+
+                  await this.dataFetcher(['userMaps']);
+                  await this.handleMapData();
+                  toast.dismiss(this.toastSaveMap);
+                } else {
+                  toast.dismiss(this.toastSaveMap);
                 }
                 break;
             }
@@ -241,12 +251,19 @@ export class DataProvider extends Component {
 
   pluckMap = map => {
     return new Promise(async resolve => {
-      const { userMaps } = this.state;
+      const { userMaps, accountMaps, storageLocation } = this.state;
+      let maps = [];
+      if (storageLocation.type === 'user') {
+        maps = userMaps;
+      } else if (storageLocation.type === 'account') {
+        maps = accountMaps;
+      }
+
       let found = false;
-      for (let i = 0; i < userMaps.length; i++) {
-        if (userMaps[i].id === map) {
+      for (let i = 0; i < maps.length; i++) {
+        if (maps[i].id === map) {
           found = true;
-          const mapConfig = JSON.parse(JSON.stringify(userMaps[i].document));
+          const mapConfig = JSON.parse(JSON.stringify(maps[i].document));
           this.setState({ mapConfig }, resolve(found));
         }
       }
@@ -272,8 +289,11 @@ export class DataProvider extends Component {
             dataPromises.push(getUserCollection(iconCollection));
             break;
           case 'accountMaps':
+            const { storageLocation } = this.state;
             content.push(action);
-            dataPromises.push(getAccountCollection(collectionName));
+            dataPromises.push(
+              getAccountCollection(storageLocation.value, collectionName)
+            );
             break;
           case 'userConfig':
             content.push(action);
@@ -358,13 +378,27 @@ export class DataProvider extends Component {
     }
   };
 
-  selectMap = selectedMap => {
+  selectMap = (selectedMap, menuSwitch) => {
     if (typeof selectedMap === 'string' || selectedMap instanceof String) {
-      const map = this.state.availableMaps.filter(
-        map => map.id === selectedMap.replace(/ /g, '+')
-      );
+      const { storageLocation, userMaps, accountMaps } = this.state;
+      let maps = [];
+      if (storageLocation.type === 'user') {
+        maps = userMaps;
+      } else if (storageLocation.type === 'account') {
+        maps = accountMaps;
+      }
+
+      const map = maps.filter(map => map.id === selectedMap.replace(/ /g, '+'));
+      console.log(map);
+
       if (map.length === 1) {
-        const selected = { value: map[0].id, label: map[0].id, type: 'user' };
+        const selected = {
+          value: map[0].id,
+          label: map[0].id,
+          type: storageLocation.type,
+          accountId:
+            storageLocation.type === 'account' ? storageLocation.value : null
+        };
         this.setState({ selectedMap: selected });
         this.updateDataContextState({ selectedMap: selected }, ['loadMap']);
         console.log(`Map selected:`, selected);
@@ -376,7 +410,9 @@ export class DataProvider extends Component {
       });
     } else if (!selectedMap) {
       this.setState({ selectedMap }, () => {
-        this.updateDataContextState({ selectedMap: null }, ['loadMap']);
+        this.updateDataContextState({ selectedMap: null, menuSwitch }, [
+          'loadMap'
+        ]);
         console.log(`Map deselected`);
       });
     }

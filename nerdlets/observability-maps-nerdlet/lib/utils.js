@@ -25,8 +25,12 @@ export const getUserCollection = async (collection, documentId) => {
   return collectionResult;
 };
 
-export const getAccountCollection = async (collection, documentId) => {
-  const payload = { collection };
+export const getAccountCollection = async (
+  accountId,
+  collection,
+  documentId
+) => {
+  const payload = { accountId, collection };
   if (documentId) payload.documentId = documentId;
   const result = await AccountStorageQuery.query(payload);
   const collectionResult = (result || {}).data || [];
@@ -43,8 +47,14 @@ export const writeUserDocument = async (collection, documentId, payload) => {
   return result;
 };
 
-export const writeAccountDocument = async (collection, documentId, payload) => {
+export const writeAccountDocument = async (
+  accountId,
+  collection,
+  documentId,
+  payload
+) => {
   const result = await AccountStorageMutation.mutate({
+    accountId,
     actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
     collection,
     documentId,
@@ -62,8 +72,13 @@ export const deleteUserDocument = async (collection, documentId) => {
   return result;
 };
 
-export const deleteAccountDocument = async (collection, documentId) => {
+export const deleteAccountDocument = async (
+  accountId,
+  collection,
+  documentId
+) => {
   const result = await AccountStorageMutation.mutate({
+    accountId,
     actionType: AccountStorageMutation.ACTION_TYPE.DELETE_DOCUMENT,
     collection,
     documentId

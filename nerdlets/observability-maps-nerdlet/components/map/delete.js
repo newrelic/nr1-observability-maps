@@ -13,13 +13,17 @@ export default class DeleteMap extends React.PureComponent {
   handleOpen = () => this.setState({ deleteOpen: true });
   handleClose = () => this.setState({ deleteOpen: false });
 
-  save = (map, dataFetcher, selectMap) => {
+  save = (map, dataFetcher, selectMap, storageLocation) => {
     this.setState({ deleteOpen: false });
     switch (map.type) {
       case 'account':
-        deleteAccountDocument('ObservabilityMaps', map.value);
-        // dataFetcher(["accountMaps"])
-        // handleMapMenuChange(null)
+        deleteAccountDocument(
+          storageLocation.value,
+          'ObservabilityMaps',
+          map.value
+        );
+        dataFetcher(['accountMaps']);
+        selectMap(null);
         break;
       case 'user':
         deleteUserDocument('ObservabilityMaps', map.value);
@@ -33,7 +37,13 @@ export default class DeleteMap extends React.PureComponent {
     const { deleteOpen } = this.state;
     return (
       <DataConsumer>
-        {({ selectMap, selectedMap, dataFetcher, updateDataContextState }) => {
+        {({
+          selectMap,
+          selectedMap,
+          dataFetcher,
+          updateDataContextState,
+          storageLocation
+        }) => {
           return (
             <Modal
               onUnmount={() => updateDataContextState({ closeCharts: false })}
@@ -81,7 +91,14 @@ export default class DeleteMap extends React.PureComponent {
 
                 <Button
                   negative
-                  onClick={() => this.save(selectedMap, dataFetcher, selectMap)}
+                  onClick={() =>
+                    this.save(
+                      selectedMap,
+                      dataFetcher,
+                      selectMap,
+                      storageLocation
+                    )
+                  }
                 >
                   Delete!
                 </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form, TextArea, Label, Popup } from 'semantic-ui-react';
-import { writeUserDocument } from '../../lib/utils';
+import { writeUserDocument, writeAccountDocument } from '../../lib/utils';
 import { DataConsumer } from '../../context/data';
 import { toast } from 'react-toastify';
 
@@ -26,7 +26,7 @@ export default class ImportMap extends React.PureComponent {
   handleOpen = () => this.setState({ importOpen: true });
   handleClose = () => this.setState({ importOpen: false });
 
-  saveMap = async (dataFetcher, findMap, selectMap) => {
+  saveMap = async (dataFetcher, findMap, selectMap, storageLocation) => {
     const { mapName, mapImport } = this.state;
 
     this.toastImportMap = toast(`Importing Map: ${mapName}`, {
@@ -55,7 +55,17 @@ export default class ImportMap extends React.PureComponent {
       });
       jsonData.nodeData = newNodeData;
 
-      await writeUserDocument('ObservabilityMaps', mapName, jsonData);
+      if (storageLocation.type === 'user') {
+        await writeUserDocument('ObservabilityMaps', mapName, jsonData);
+      } else if (storageLocation.type === 'account') {
+        await writeAccountDocument(
+          storageLocation.value,
+          'ObservabilityMaps',
+          mapName,
+          jsonData
+        );
+      }
+
       await dataFetcher(['userMaps']);
     } catch (e) {
       toast.update(this.toastImportMap, {
@@ -90,7 +100,8 @@ export default class ImportMap extends React.PureComponent {
           updateDataContextState,
           availableMaps,
           findMap,
-          selectMap
+          selectMap,
+          storageLocation
         }) => {
           let mapNameError = false;
           const mapNameErrorContent = {
@@ -174,7 +185,14 @@ export default class ImportMap extends React.PureComponent {
                   positive
                   content="Save Map"
                   style={{ float: 'right' }}
-                  onClick={() => this.saveMap(dataFetcher, findMap, selectMap)}
+                  onClick={() =>
+                    this.saveMap(
+                      dataFetcher,
+                      findMap,
+                      selectMap,
+                      storageLocation
+                    )
+                  }
                 />
                 <br /> <br />
               </Modal.Content>

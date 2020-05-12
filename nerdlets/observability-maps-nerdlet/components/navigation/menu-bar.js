@@ -40,29 +40,58 @@ export default class MenuBar extends React.PureComponent {
     return (
       <DataConsumer>
         {({
+          accounts,
           selectedMap,
           userMaps,
           accountMaps,
           updateDataContextState,
-          timelineOpen
+          timelineOpen,
+          storageLocation,
+          dataFetcher,
+          selectMap
         }) => {
+          const storageOptions = accounts.map(acc => ({
+            key: acc.id,
+            label: acc.name,
+            value: acc.id,
+            type: 'account'
+          }));
+
+          storageOptions.sort((a, b) => {
+            if (a.label < b.label) {
+              return -1;
+            }
+            if (a.label > b.label) {
+              return 1;
+            }
+            return 0;
+          });
+
+          storageOptions.unshift({
+            key: 'User',
+            label: 'User (Personal)',
+            value: 'user',
+            type: 'user'
+          });
+
           let availableMaps = [];
 
-          if (accountMaps) {
+          if (accountMaps && storageLocation.type === 'account') {
             accountMaps = accountMaps.map(map => ({
               value: map.id,
-              label: map.id.replace(/\+/g, ' '),
+              label: (map.id || '').replace(/\+/g, ' '),
               type: 'account'
             }));
-            availableMaps = [...availableMaps, ...accountMaps];
+            availableMaps = [...accountMaps];
           }
-          if (userMaps) {
+
+          if (userMaps && storageLocation.type === 'user') {
             userMaps = userMaps.map(map => ({
               value: map.id,
               label: map.id.replace(/\+/g, ' '),
               type: 'user'
             }));
-            availableMaps = [...availableMaps, ...userMaps];
+            availableMaps = [...userMaps];
           }
 
           if (selectedMap)
@@ -72,7 +101,22 @@ export default class MenuBar extends React.PureComponent {
             <div>
               <div className="utility-bar">
                 <div className="react-select-input-group">
-                  <label>Select Map</label>
+                  <label>Map Storage</label>
+                  <Select
+                    options={storageOptions}
+                    onChange={async d => {
+                      await updateDataContextState({
+                        storageLocation: d
+                      });
+                      selectMap(null, true);
+                      dataFetcher(['accountMaps']);
+                    }}
+                    value={storageLocation}
+                    classNamePrefix="react-select"
+                  />
+                </div>
+                <div className="react-select-input-group">
+                  <label>Available Maps</label>
                   <Select
                     options={availableMaps}
                     onChange={map =>
@@ -93,7 +137,7 @@ export default class MenuBar extends React.PureComponent {
 
                 {selectedMap ? <DeleteMap /> : ''}
 
-                <CreateMap accountMaps={accountMaps} userMaps={userMaps} />
+                <CreateMap />
 
                 <ImportMap />
 
