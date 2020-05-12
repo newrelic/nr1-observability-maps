@@ -64,6 +64,18 @@ export const customAlertCalc = (valueOne, valueTwo, operator) => {
 };
 
 export const setCustomAlertDesign = (alert, alertData) => {
+  // apdex check
+  let isApdex = false;
+  let apdexScore = 0;
+  for (let z = 0; z < alertData.length; z++) {
+    if (alertData[z].name === 'score') {
+      apdexScore = alertData[z].value;
+    } else if (alertData[z].name.includes('apdex')) {
+      isApdex = true;
+    }
+  }
+  if (isApdex) alertData[0].value = apdexScore;
+
   if (alertData[0].value || alertData[0].value === 0) {
     if (
       customAlertCalc(
