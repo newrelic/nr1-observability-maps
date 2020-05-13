@@ -84,7 +84,7 @@ export default class DrilldownDashboard extends React.PureComponent {
             text: acc.name
           }));
 
-          const currentMap = mapConfig.nodeData[selectedNode].dashboard;
+          const currentDash = mapConfig.nodeData[selectedNode].dashboard;
           const addDisabled = selectedAccount === null || selectedDash === null;
 
           if (accountOptions) {
@@ -162,7 +162,9 @@ export default class DrilldownDashboard extends React.PureComponent {
                               <Table.Cell>
                                 <Radio
                                   value={dash.guid}
-                                  checked={selectedDash === dash.guid}
+                                  checked={
+                                    (selectedDash || currentDash) === dash.guid
+                                  }
                                   onChange={() =>
                                     this.setState({ selectedDash: dash.guid })
                                   }
@@ -178,7 +180,7 @@ export default class DrilldownDashboard extends React.PureComponent {
 
                 <Button
                   style={{ float: 'right' }}
-                  disabled={!currentMap}
+                  disabled={!currentDash}
                   negative
                   onClick={() => {
                     this.updateDashboard(

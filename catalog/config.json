@@ -13,5 +13,5 @@
       "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
     }
   },
-  "whatsNew": "- Custom Alerts: Allow apdex score functionality \n- Map Storage: Allow maps to be saved across accounts."
+  "whatsNew": "- Custom Alerts: Allow percentile & apdex score functionality \n- Map Storage: Allow maps to be saved across accounts. \n- UX: Show last saved dashboard"
 }
