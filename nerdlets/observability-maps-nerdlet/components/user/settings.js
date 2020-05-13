@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Button, Form, Popup } from 'semantic-ui-react';
-import { writeUserDocument } from '../../lib/utils';
+import { Modal, Button, Form, Popup, Header } from 'semantic-ui-react';
+import { writeUserDocument, getAccountCollection } from '../../lib/utils';
 import { DataConsumer } from '../../context/data';
 import { toast } from 'react-toastify';
 
@@ -9,49 +9,95 @@ export default class UserSettings extends React.PureComponent {
     super(props);
     this.state = {
       settingsOpen: false,
-      defaultMap: null
+      mapStore: null,
+      loadingMaps: false,
+      defaultMap: null,
+      accountMaps: [],
+      saving: false
     };
   }
 
   handleOpen = () => this.setState({ settingsOpen: true });
-  handleClose = () => this.setState({ settingsOpen: false });
-  handleChange = (e, { value }, formType) =>
-    this.setState({ [formType]: value });
+  handleClose = () =>
+    this.setState({ settingsOpen: false, mapStore: null, defaultMap: null });
 
-  handleSave = async (tempState, dataFetcher, existingUserConfig) => {
-    const { defaultMap } = tempState;
-
-    let userConfig = {};
-    if (existingUserConfig) {
-      userConfig = { ...existingUserConfig };
+  handleChange = async (e, { value }, formType) => {
+    if (formType === 'mapStore') {
+      if (value !== 'user') {
+        this.setState({ loadingMaps: true }, async () => {
+          const accountMaps = await getAccountCollection(
+            value,
+            'ObservabilityMaps'
+          );
+          this.setState({
+            accountMaps,
+            [formType]: value,
+            defaultMap: null,
+            loadingMaps: false
+          });
+        });
+      } else {
+        this.setState({ [formType]: value, defaultMap: null });
+      }
+    } else {
+      this.setState({ [formType]: value });
     }
+  };
 
-    userConfig = {
-      defaultMap:
-        this.state.defaultMap === 'Reset'
-          ? null
-          : this.state.defaultMap || defaultMap
-    };
+  handleSave = (tempState, dataFetcher, existingUserConfig) => {
+    this.setState({ saving: true }, async () => {
+      const { defaultMap, mapStore } = tempState;
 
-    this.toastUserConfig = toast(`Saving user config`, {
-      containerId: 'B'
+      let userConfig = {};
+      if (existingUserConfig) {
+        userConfig = { ...existingUserConfig };
+      }
+
+      userConfig = {
+        defaultMap:
+          this.state.defaultMap === 'Reset'
+            ? null
+            : this.state.defaultMap || defaultMap,
+        mapStore:
+          this.state.defaultMap === 'Reset'
+            ? null
+            : this.state.mapStore || mapStore
+      };
+
+      this.toastUserConfig = toast(`Saving user config`, {
+        containerId: 'B'
+      });
+
+      await writeUserDocument('ObservabilityUserConfig', 'v1', userConfig);
+      await dataFetcher(['userConfig']);
+
+      toast.dismiss(this.toastUserConfig);
+
+      if (this.state.defaultMap === 'Reset') {
+        this.setState({ saving: false, mapStore: null, defaultMap: null });
+      } else {
+        this.setState({ saving: false });
+      }
     });
-
-    await writeUserDocument('ObservabilityUserConfig', 'v1', userConfig);
-    await dataFetcher(['userConfig']);
-
-    toast.dismiss(this.toastUserConfig);
   };
 
   onUnmount = updateDataContextState => {
     updateDataContextState({ closeCharts: false });
     this.setState({
-      defaultMap: null
+      defaultMap: null,
+      mapStore: null
     });
   };
 
+  onMount = async updateDataContextState => {
+    this.setState({ mapStore: null }, () =>
+      updateDataContextState({ closeCharts: true })
+    );
+  };
+
   render() {
-    const { settingsOpen } = this.state;
+    const { settingsOpen, mapStore, saving, loadingMaps } = this.state;
+    let { accountMaps } = this.state;
 
     return (
       <DataConsumer>
@@ -60,27 +106,54 @@ export default class UserSettings extends React.PureComponent {
           dataFetcher,
           userConfig,
           userMaps,
-          accountMaps
+          accounts
         }) => {
+          const storageOptions = accounts.map(acc => ({
+            key: acc.id,
+            text: acc.name,
+            value: acc.id,
+            type: 'account'
+          }));
+
+          storageOptions.sort((a, b) => {
+            if (a.label < b.label) {
+              return -1;
+            }
+            if (a.label > b.label) {
+              return 1;
+            }
+            return 0;
+          });
+
+          storageOptions.unshift({
+            key: 'User',
+            text: 'User (Personal)',
+            value: 'user',
+            type: 'user'
+          });
+
           let availableMaps = [];
 
-          if (accountMaps) {
-            accountMaps = accountMaps.map(map => ({
-              key: map.id,
-              value: map.id,
-              text: map.id.replace(/\+/g, ' '),
-              type: 'account'
-            }));
-            availableMaps = [...availableMaps, ...accountMaps];
+          if (accountMaps && mapStore !== 'user') {
+            accountMaps = accountMaps
+              .filter(map => map.id)
+              .map(map => ({
+                key: map.id,
+                value: map.id,
+                text: (map.id || '').replace(/\+/g, ' '),
+                type: 'account'
+              }));
+            availableMaps = [...accountMaps];
           }
-          if (userMaps) {
+
+          if (userMaps && mapStore === 'user') {
             userMaps = userMaps.map(map => ({
               key: map.id,
               value: map.id,
               text: map.id.replace(/\+/g, ' '),
               type: 'user'
             }));
-            availableMaps = [...availableMaps, ...userMaps];
+            availableMaps = [...userMaps];
           }
 
           availableMaps.unshift({
@@ -91,12 +164,17 @@ export default class UserSettings extends React.PureComponent {
           });
 
           const tempState = {
-            defaultMap: null
+            defaultMap: null,
+            mapStore: null
           };
 
           if (userConfig) {
-            if (userConfig.defaultMap)
+            if (userConfig.defaultMap) {
               tempState.defaultMap = userConfig.defaultMap;
+            }
+            if (userConfig.mapStore) {
+              tempState.mapStore = userConfig.mapStore;
+            }
           }
 
           const value = name =>
@@ -110,7 +188,7 @@ export default class UserSettings extends React.PureComponent {
               open={settingsOpen}
               onClose={this.handleClose}
               onUnmount={() => this.onUnmount(updateDataContextState)}
-              onMount={() => updateDataContextState({ closeCharts: true })}
+              onMount={() => this.onMount(updateDataContextState)}
               trigger={
                 <Popup
                   content="User Settings"
@@ -128,14 +206,53 @@ export default class UserSettings extends React.PureComponent {
               <Modal.Header>User Settings</Modal.Header>
               <Modal.Content>
                 <Form>
+                  <Header
+                    style={{ marginBottom: '3px' }}
+                    as="h3"
+                    content="Default Map Selection"
+                  />
+
+                  {value('defaultMap') ? (
+                    <Header as="h5" style={{ marginTop: '3px' }}>
+                      Current: {value('defaultMap').replace(/\+/g, ' ')}
+                    </Header>
+                  ) : (
+                    ``
+                  )}
                   <Form.Group>
                     <Form.Select
                       fluid
-                      label="Default Map"
-                      width="16"
+                      label="Storage Location"
+                      width="6"
+                      value={value('mapStore')}
+                      options={storageOptions}
+                      onChange={(e, d) => this.handleChange(e, d, 'mapStore')}
+                    />
+                    <Form.Select
+                      fluid
+                      label="Select Map"
+                      width="10"
                       value={value('defaultMap')}
                       options={availableMaps}
+                      loading={loadingMaps}
                       onChange={(e, d) => this.handleChange(e, d, 'defaultMap')}
+                      onClick={() => {
+                        if (
+                          availableMaps.length === 1 &&
+                          !isNaN(value('mapStore'))
+                        ) {
+                          this.setState({ loadingMaps: true }, async () => {
+                            const accountMaps = await getAccountCollection(
+                              value('mapStore'),
+                              'ObservabilityMaps'
+                            );
+                            this.setState({
+                              accountMaps,
+                              loadingMaps: false
+                            });
+                          });
+                        }
+                      }}
                     />
                   </Form.Group>
                 </Form>
@@ -143,6 +260,7 @@ export default class UserSettings extends React.PureComponent {
                   positive
                   content="Save"
                   style={{ float: 'right' }}
+                  loading={saving}
                   onClick={() =>
                     this.handleSave(tempState, dataFetcher, userConfig)
                   }

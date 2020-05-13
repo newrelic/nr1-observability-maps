@@ -150,16 +150,45 @@ export class DataProvider extends Component {
 
   handleDefaults = async () => {
     if (this.state.userConfig) {
-      const { availableMaps, userConfig } = this.state;
+      const { userMaps, userConfig, accounts } = this.state;
       const { defaultMap } = userConfig;
+
       let found = false;
-      for (let z = 0; z < availableMaps.length; z++) {
-        if (defaultMap === availableMaps[z].id) {
-          await this.selectMap(defaultMap);
-          found = true;
-          break;
+
+      if (!isNaN(userConfig.mapStore)) {
+        const account = accounts.filter(
+          acc => acc.id === userConfig.mapStore
+        )[0];
+        this.setState(
+          {
+            storageLocation: {
+              type: 'account',
+              value: userConfig.mapStore,
+              key: userConfig.mapStore,
+              label: account.name
+            }
+          },
+          async () => {
+            await this.dataFetcher(['accountMaps']);
+            for (let z = 0; z < this.state.accountMaps.length; z++) {
+              if (defaultMap === this.state.accountMaps[z].id) {
+                await this.selectMap(defaultMap);
+                found = true;
+                break;
+              }
+            }
+          }
+        );
+      } else {
+        for (let z = 0; z < userMaps.length; z++) {
+          if (defaultMap === userMaps[z].id) {
+            await this.selectMap(defaultMap);
+            found = true;
+            break;
+          }
         }
       }
+
       if (!found) await this.handleMapData();
     }
   };
