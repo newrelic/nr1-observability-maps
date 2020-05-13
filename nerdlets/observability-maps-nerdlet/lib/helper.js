@@ -67,14 +67,25 @@ export const setCustomAlertDesign = (alert, alertData) => {
   // apdex check
   let isApdex = false;
   let apdexScore = 0;
+  let isPercentile = false;
   for (let z = 0; z < alertData.length; z++) {
     if (alertData[z].name === 'score') {
       apdexScore = alertData[z].value;
     } else if (alertData[z].name.includes('apdex')) {
       isApdex = true;
+    } else if (alertData[z].name.includes('percentile')) {
+      isPercentile = true;
     }
   }
   if (isApdex) alertData[0].value = apdexScore;
+  if (isPercentile) {
+    // allow only first percentile
+    const firstKey = Object.keys(alertData[0].value)[0];
+    const data = alertData[0].value[firstKey];
+    if (data) {
+      alertData[0].value = data;
+    }
+  }
 
   if (alertData[0].value || alertData[0].value === 0) {
     if (
