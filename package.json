@@ -18,7 +18,7 @@
     "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.2",
     "react-dom": "^16.6.3",
     "react-event-timeline": "^1.6.3",
-    "react-select": "^3.0.8",
+    "react-select": "^3.1.0",
     "react-toastify": "^5.5.0",
     "semantic-ui-react": "^0.88.1",
     "semver": "^7.1.3"
