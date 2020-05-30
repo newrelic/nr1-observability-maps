@@ -1,4 +1,27 @@
 // shared helper utilities
+/* eslint
+no-console: 0,
+*/
+
+export const validateMapData = mapData => {
+  // validate the links have valid source and target nodes
+  // if one of the nodes don't exist delete the link
+  Object.keys(mapData.linkData).forEach(link => {
+    const linkSplit = link.split(':::');
+
+    if (
+      !mapData.nodeData[linkSplit[0]] ||
+      !mapData.nodeData[linkSplit[1]] ||
+      (mapData.nodeData[linkSplit[0]] &&
+        mapData.nodeData[linkSplit[0]].id !== linkSplit[0]) ||
+      (mapData.nodeData[linkSplit[1]] &&
+        mapData.nodeData[linkSplit[1]].id !== linkSplit[1])
+    ) {
+      console.log(`removing invalid link ${link}`);
+      delete mapData.linkData[link];
+    }
+  });
+};
 
 export const setAlertDesign = (alertSeverity, entityType) => {
   switch (entityType) {

@@ -216,6 +216,13 @@ export default class ManageNodes extends React.PureComponent {
             ) {
               customNodeError.content = 'Please enter a unique node name';
             }
+
+            const nodes = Object.keys(mapConfig.nodeData);
+            for (let z = 0; z < nodes.length; z++) {
+              if (nodes[z] === `${customNodeName} [CUSTOM_NODE]`) {
+                customNodeError.content = 'Node name already exists';
+              }
+            }
           }
 
           const createDisabled =
@@ -428,6 +435,9 @@ export default class ManageNodes extends React.PureComponent {
               </Modal.Content>
               <Modal.Actions>
                 <Button
+                  style={{
+                    display: activeNodeItem === 'Add Node' ? '' : 'none'
+                  }}
                   disabled={createDisabled}
                   positive
                   onClick={() =>

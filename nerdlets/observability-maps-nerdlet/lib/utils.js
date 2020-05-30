@@ -554,8 +554,7 @@ export const InfraEntityBatchQuery = guids => {
   }`;
 };
 
-export const DashboardQuery = accountId => {
-  return `{
+export const DashboardQuery = accountId => `{
   actor {
     entitySearch(query: "accountId=${accountId} and type='DASHBOARD'") {
       results {
@@ -569,4 +568,3 @@ export const DashboardQuery = accountId => {
     }
   }
 }`;
-};

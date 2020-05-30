@@ -19,7 +19,7 @@ import {
   writeUserDocument,
   writeAccountDocument
 } from '../lib/utils';
-import { chunk } from '../lib/helper';
+import { chunk, validateMapData } from '../lib/helper';
 import { ToastContainer, toast } from 'react-toastify';
 import pkg from '../../../package.json';
 
@@ -466,6 +466,7 @@ export class DataProvider extends Component {
       // avoid nested references in mapConfig using parse & stringify
       const { mapConfig } = this.state;
       const mapData = JSON.parse(JSON.stringify(mapConfig));
+      validateMapData(mapData);
 
       const nodePromises = Object.keys(mapData.nodeData).map(nodeId => {
         return new Promise(async resolve => {

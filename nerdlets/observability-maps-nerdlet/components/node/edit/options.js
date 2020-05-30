@@ -24,6 +24,7 @@ export default class Options extends React.PureComponent {
     mapConfig.nodeData[newName] = {
       ...mapConfig.nodeData[selectedNode]
     };
+    mapConfig.nodeData[newName].id = newName;
 
     // recurse links, to create new ones
     Object.keys(mapConfig.linkData).forEach(link => {
@@ -65,6 +66,17 @@ export default class Options extends React.PureComponent {
             (this.state[name] != null ? this.state[name] : tempState[name]) ||
             '';
 
+          let renameNodeError = false;
+          const renameNodeErrorContent = { content: '', pointing: 'above' };
+          const nodes = Object.keys(mapConfig.nodeData);
+
+          for (let z = 0; z < nodes.length; z++) {
+            if (nodes[z] === `${value('editName')} [CUSTOM_NODE]`) {
+              renameNodeErrorContent.content = 'Node name already exists';
+              renameNodeError = true;
+            }
+          }
+
           return (
             <>
               <Form.Group widths={16}>
@@ -74,6 +86,7 @@ export default class Options extends React.PureComponent {
                   label="Rename"
                   placeholder="New Node Name"
                   value={value('editName')}
+                  error={renameNodeError ? renameNodeErrorContent : false}
                   onChange={e => this.setState({ editName: e.target.value })}
                 />
               </Form.Group>
@@ -81,6 +94,7 @@ export default class Options extends React.PureComponent {
               <Button
                 positive
                 style={{ float: 'right' }}
+                disabled={renameNodeError}
                 onClick={() =>
                   this.saveNrql(
                     updateDataContextState,
