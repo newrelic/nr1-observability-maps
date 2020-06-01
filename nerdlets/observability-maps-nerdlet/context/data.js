@@ -627,8 +627,8 @@ export class DataProvider extends Component {
       links = [...links, ...mapLinks];
       const data = { nodes, links };
 
-      console.log('decorated mapData', mapData);
       validateMapData(mapData);
+      console.log('decorated mapData', mapData);
       this.setState({ data, mapData }, resolve());
     });
   };
