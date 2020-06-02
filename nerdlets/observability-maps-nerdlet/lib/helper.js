@@ -9,14 +9,24 @@ export const validateMapData = mapData => {
   Object.keys(mapData.linkData).forEach(link => {
     const linkSplit = link.split(':::');
 
-    if (
-      !mapData.nodeData[linkSplit[0]] ||
-      !mapData.nodeData[linkSplit[1]] ||
-      (mapData.nodeData[linkSplit[0]] &&
-        mapData.nodeData[linkSplit[0]].id !== linkSplit[0]) ||
-      (mapData.nodeData[linkSplit[1]] &&
-        mapData.nodeData[linkSplit[1]].id !== linkSplit[1])
+    let removeLink = false;
+    if (!mapData.nodeData[linkSplit[0]] || !mapData.nodeData[linkSplit[1]]) {
+      removeLink = true;
+    } else if (
+      mapData.nodeData[linkSplit[0]] &&
+      mapData.nodeData[linkSplit[0]].id &&
+      mapData.nodeData[linkSplit[0]].id !== linkSplit[0]
     ) {
+      removeLink = true;
+    } else if (
+      mapData.nodeData[linkSplit[1]] &&
+      mapData.nodeData[linkSplit[1]].id &&
+      mapData.nodeData[linkSplit[1]].id !== linkSplit[1]
+    ) {
+      removeLink = true;
+    }
+
+    if (removeLink) {
       console.log(`removing invalid link ${link}`);
       delete mapData.linkData[link];
     }
