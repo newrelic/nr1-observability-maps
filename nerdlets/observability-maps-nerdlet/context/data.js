@@ -97,7 +97,10 @@ export class DataProvider extends Component {
       editLinkOpen: false,
       isRefreshing: false,
       closeCharts: false,
-      showContextMenu: false
+      showContextMenu: false,
+      hasError: false,
+      err: null,
+      errInfo: null
     };
   }
 
@@ -119,6 +122,10 @@ export class DataProvider extends Component {
       this.handleDefaults();
       this.refreshData();
     }
+  }
+
+  componentDidCatch(err, errInfo) {
+    this.setState({ hasError: true, err, errInfo });
   }
 
   checkVersion = async () => {
@@ -594,6 +601,10 @@ export class DataProvider extends Component {
 
       await Promise.all(entityPromises);
 
+      // validate map data before its reconstructed
+      validateMapData(mapData);
+
+      // -------------------------------------------
       let links = [];
       // reconstruct node data for graph
       let nodes = Object.keys((mapData || {}).nodeData || {}).map(node => {
@@ -629,7 +640,6 @@ export class DataProvider extends Component {
       links = [...links, ...mapLinks];
       const data = { nodes, links };
 
-      validateMapData(mapData);
       console.log('decorated mapData', mapData);
       this.setState({ data, mapData }, resolve());
     });

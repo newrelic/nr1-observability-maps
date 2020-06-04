@@ -3,7 +3,7 @@ no-console: 0,
 */
 import React from 'react';
 import { Graph } from 'react-d3-graph';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Header, Divider, Button } from 'semantic-ui-react';
 import { DataConsumer } from '../../context/data';
 import { buildContextOptions, rightClick } from './map-utils';
 // graph event callbacks
@@ -173,7 +173,10 @@ export default class Map extends React.PureComponent {
           data,
           mapData,
           mapConfig,
-          showContextMenu
+          showContextMenu,
+          hasError,
+          err,
+          errInfo
         }) => {
           const contextOptions = buildContextOptions(
             mapData,
@@ -225,42 +228,129 @@ export default class Map extends React.PureComponent {
               ) : (
                 ''
               )}
-              <Graph
-                id="graphid" // id is mandatory, if no id is defined rd3g will throw an error
-                // ref="graph"
-                data={data}
-                config={d3MapConfig}
-                onClickNode={(n, x, y) =>
-                  this.onClickNode(n, x, y, updateDataContextState)
-                }
-                onRightClickNode={(e, n) =>
-                  this.onRightClickNode(e, n, mapConfig, updateDataContextState)
-                }
-                onClickGraph={() => this.onClickGraph(updateDataContextState)}
-                onClickLink={this.onClickLink}
-                onRightClickLink={(e, s, t) =>
-                  this.onRightClickLink(
-                    e,
-                    s,
-                    t,
-                    mapConfig,
-                    updateDataContextState
-                  )
-                }
-                // onMouseOverNode={onMouseOverNode}
-                // onMouseOutNode={onMouseOutNode}
-                // onMouseOverLink={onMouseOverLink}
-                // onMouseOutLink={onMouseOutLink}
-                onNodePositionChange={(nodeId, x, y) =>
-                  this.onNodePositionChange(
-                    nodeId,
-                    safeCoordinate(x),
-                    safeCoordinate(y),
-                    mapConfig,
-                    updateDataContextState
-                  )
-                }
-              />
+              {hasError ? (
+                <div style={{ padding: '15px' }}>
+                  <Header
+                    as="h3"
+                    content="Something went wrong :("
+                    style={{ color: 'white' }}
+                  />
+                  <Button
+                    color="blue"
+                    content="Clear Error"
+                    icon="info"
+                    size="large"
+                    onClick={
+                      () => window.location.reload()
+                      // updateDataContextState({
+                      //   selectedMap: null,
+                      //   hasError: false,
+                      //   err: null,
+                      //   errInfo: null,
+                      //   mapConfig: { nodeData: {}, linkData: {} },
+                      //   mapData: {
+                      //     nodeData: {},
+                      //     linkData: {}
+                      //   }
+                      // })
+                    }
+                  />
+                  <Divider />
+
+                  <Header
+                    as="h5"
+                    content="Error:"
+                    style={{
+                      color: 'white',
+                      paddingBottom: '0px',
+                      paddingTop: '0px'
+                    }}
+                  />
+                  <textarea
+                    style={{
+                      color: 'white',
+                      height: d3MapConfig.height / 6
+                    }}
+                    value={err}
+                    readOnly
+                  />
+
+                  <Header
+                    as="h5"
+                    content="Error Info:"
+                    style={{
+                      color: 'white',
+                      paddingBottom: '0px',
+                      paddingTop: '0px'
+                    }}
+                  />
+                  <textarea
+                    style={{
+                      color: 'white',
+                      height: d3MapConfig.height / 6
+                    }}
+                    value={JSON.stringify(errInfo)}
+                    readOnly
+                  />
+                  <Header
+                    as="h5"
+                    content="Map Config:"
+                    color="white"
+                    style={{
+                      color: 'white',
+                      paddingBottom: '0px',
+                      paddingTop: '0px'
+                    }}
+                  />
+                  <textarea
+                    style={{ height: d3MapConfig.height / 2.5, color: 'white' }}
+                    value={JSON.stringify(mapConfig)}
+                    readOnly
+                  />
+                </div>
+              ) : (
+                <Graph
+                  id="graphid" // id is mandatory, if no id is defined rd3g will throw an error
+                  // ref="graph"
+                  data={data}
+                  config={d3MapConfig}
+                  onClickNode={(n, x, y) =>
+                    this.onClickNode(n, x, y, updateDataContextState)
+                  }
+                  onRightClickNode={(e, n) =>
+                    this.onRightClickNode(
+                      e,
+                      n,
+                      mapConfig,
+                      updateDataContextState
+                    )
+                  }
+                  onClickGraph={() => this.onClickGraph(updateDataContextState)}
+                  onClickLink={this.onClickLink}
+                  onRightClickLink={(e, s, t) =>
+                    this.onRightClickLink(
+                      e,
+                      s,
+                      t,
+                      mapConfig,
+                      updateDataContextState
+                    )
+                  }
+                  // onMouseOverNode={onMouseOverNode}
+                  // onMouseOutNode={onMouseOutNode}
+                  // onMouseOverLink={onMouseOverLink}
+                  // onMouseOutLink={onMouseOutLink}
+                  onNodePositionChange={(nodeId, x, y) =>
+                    this.onNodePositionChange(
+                      nodeId,
+                      safeCoordinate(x),
+                      safeCoordinate(y),
+                      mapConfig,
+                      updateDataContextState
+                    )
+                  }
+                />
+              )}
             </>
           );
         }}

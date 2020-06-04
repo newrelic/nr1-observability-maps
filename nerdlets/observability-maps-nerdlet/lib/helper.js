@@ -24,6 +24,16 @@ export const validateMapData = mapData => {
       mapData.nodeData[linkSplit[1]].id !== linkSplit[1]
     ) {
       removeLink = true;
+    } else if (
+      mapData.linkData[link].source &&
+      !mapData.nodeData[mapData.linkData[link].source]
+    ) {
+      removeLink = true;
+    } else if (
+      mapData.linkData[link].target &&
+      !mapData.nodeData[mapData.linkData[link].target]
+    ) {
+      removeLink = true;
     }
 
     if (removeLink) {
