@@ -1,6 +1,14 @@
+/* eslint 
+no-unused-vars: 0
+*/
 import React from 'react';
 import { Button, Header, Form, Icon } from 'semantic-ui-react';
 import { DataConsumer } from '../../../context/data';
+
+import AceEditor from 'react-ace';
+import CustomNrqlMode from '../../../lib/customNrqlMode';
+
+import 'ace-builds/src-noconflict/theme-monokai';
 
 const hoverOptions = [
   { key: 'd', text: 'Default', value: 'default' },
@@ -21,7 +29,19 @@ export default class HoverMetrics extends React.PureComponent {
     };
   }
 
-  saveNrql = async (updateDataContextState, mapConfig, linkId, tempState) => {
+  componentDidMount() {
+    const customMode = new CustomNrqlMode();
+    const editor0 = this.aceEditor0.editor.getSession().setMode(customMode);
+    const editor1 = this.aceEditor1.editor.getSession().setMode(customMode);
+    const editor2 = this.aceEditor2.editor.getSession().setMode(customMode);
+  }
+
+  saveNrqlMulti = async (
+    updateDataContextState,
+    mapConfig,
+    linkId,
+    tempState
+  ) => {
     const {
       hm_1_NRQL,
       hm_2_NRQL,
@@ -46,6 +66,32 @@ export default class HoverMetrics extends React.PureComponent {
       }
     };
 
+    await updateDataContextState({ mapConfig }, ['saveMap']);
+  };
+
+  deleteNrql = (updateDataContextState, mapConfig, linkId, no) => {
+    delete mapConfig.linkData[linkId].hoverMetrics[no];
+    this.setState(
+      { [`hm_${no}_NRQL`]: null, [`hm_${no}_ACC`]: null },
+      async () => {
+        await updateDataContextState({ mapConfig }, ['saveMap']);
+      }
+    );
+  };
+
+  saveNrql = async (
+    updateDataContextState,
+    mapConfig,
+    linkId,
+    tempState,
+    no
+  ) => {
+    mapConfig.linkData[linkId].hoverMetrics = {
+      [no]: {
+        nrql: this.state[`hm_${no}_NRQL`] || tempState[[`hm_${no}_NRQL`]],
+        accountId: this.state[`hm_${no}_ACC`] || tempState[`hm_${no}_ACC`]
+      }
+    };
     await updateDataContextState({ mapConfig }, ['saveMap']);
   };
 
@@ -133,38 +179,94 @@ export default class HoverMetrics extends React.PureComponent {
 
                   {[1, 2, 3].map((metric, i) => {
                     return (
-                      <Form.Group widths={16} key={i}>
-                        <Form.Input
-                          width={12}
-                          fluid
-                          label={`Query ${i + 1}`}
-                          placeholder={`SELECT average(duration) as 'ms' from Transaction`}
-                          value={value(`hm_${i + 1}_NRQL`)}
-                          onChange={e =>
-                            this.setState({
-                              [`hm_${i + 1}_NRQL`]: e.target.value
-                            })
-                          }
-                        />
-                        <Form.Select
-                          search
-                          width={4}
-                          label="Account"
-                          value={value(`hm_${i + 1}_ACC`)}
-                          options={accountOptions}
-                          onChange={(e, d) =>
-                            this.setState({ [`hm_${i + 1}_ACC`]: d.value })
-                          }
-                        />
-                      </Form.Group>
+                      <React.Fragment key={i}>
+                        <Form.Group widths={16}>
+                          <Form.Field width={11}>
+                            <label>Query {i + 1}</label>
+                            <div
+                              className="App"
+                              style={{
+                                backgroundColor: '#202020',
+                                paddingTop: '10px'
+                              }}
+                            >
+                              <AceEditor
+                                ref={c => {
+                                  this[`aceEditor${i}`] = c;
+                                }}
+                                height="27px"
+                                width="100%"
+                                mode="text"
+                                theme="monokai"
+                                name={`hm_${i + 1}_NRQL`}
+                                editorProps={{ $blockScrolling: false }}
+                                // maxLines={1}
+                                fontFamily="monospace"
+                                fontSize={14}
+                                showGutter={false}
+                                value={value(`hm_${i + 1}_NRQL`)}
+                                onChange={str =>
+                                  this.setState({
+                                    [`hm_${i + 1}_NRQL`]: str
+                                  })
+                                }
+                              />
+                            </div>
+                          </Form.Field>
+
+                          <Form.Select
+                            search
+                            width={3}
+                            label="Account"
+                            value={value(`hm_${i + 1}_ACC`)}
+                            options={accountOptions}
+                            onChange={(e, d) =>
+                              this.setState({ [`hm_${i + 1}_ACC`]: d.value })
+                            }
+                          />
+
+                          <Form.Field width={2}>
+                            <label>&nbsp;</label>
+                            <div style={{ textAlign: 'right' }}>
+                              <Button
+                                style={{ maxWidth: '52px' }}
+                                icon="check"
+                                positive
+                                onClick={() =>
+                                  this.saveNrql(
+                                    updateDataContextState,
+                                    mapConfig,
+                                    selectedLink,
+                                    tempState,
+                                    i + 1
+                                  )
+                                }
+                              />
+                              <Button
+                                style={{ maxWidth: '52px' }}
+                                icon="delete"
+                                negative
+                                onClick={() =>
+                                  this.deleteNrql(
+                                    updateDataContextState,
+                                    mapConfig,
+                                    selectedLink,
+                                    i + 1
+                                  )
+                                }
+                              />
+                            </div>
+                          </Form.Field>
+                        </Form.Group>
+                      </React.Fragment>
                     );
                   })}
 
-                  <Button
+                  {/* <Button
                     positive
                     style={{ float: 'right' }}
                     onClick={() =>
-                      this.saveNrql(
+                      this.saveNrqlMulti(
                         updateDataContextState,
                         mapConfig,
                         selectedLink,
@@ -181,7 +283,7 @@ export default class HoverMetrics extends React.PureComponent {
                       }}
                     />
                     Save
-                  </Button>
+                  </Button> */}
                   <br />
                 </>
               ) : (

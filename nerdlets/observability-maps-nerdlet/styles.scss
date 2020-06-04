@@ -378,7 +378,7 @@ i {
   padding: 0.67857143em 1em !important;
   background: #fff !important;
   border: 1px solid rgba(34, 36, 38, 0.15) !important;
-  color: rgba(0, 0, 0, 0.87) !important;
+  color: rgba(0, 0, 0, 0.87);
   border-radius: 0.28571429rem !important;
   -webkit-transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease !important;
   transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease !important;
@@ -483,3 +483,46 @@ i {
 // div.selection > input.search {
 //   position: relative !important;
 // }
+
+.nrqlInput div input {
+  // font-size: 30px !important;
+  // // opacity: 0.1;
+  // color: red !important;
+}
+
+.query {
+  font: monospace;
+  color: #464e4e;
+
+  .keyword {
+    color: #aa1bc8;
+  }
+  .function {
+    color: #3083e1;
+  }
+  .string {
+    color: #71ba02;
+  }
+  .numeric {
+    color: #dd9715;
+  }
+  .operator {
+    color: #19b1bb;
+  }
+}
+
+.ace-monokai .ace_nrql.ace_keyword {
+  color: #c397d8;
+}
+.ace-monokai .ace_nrql.ace_function {
+  color: #7aa6da;
+}
+.ace-monokai .ace_nrql.ace_string {
+  color: #b9ca4a;
+}
+.ace-monokai .ace_nrql.ace_numeric {
+  color: #e78c45;
+}
+.ace-monokai .ace_nrql.ace_operator {
+  color: #70c0b1;
+}

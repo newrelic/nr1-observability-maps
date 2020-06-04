@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Form, Menu } from 'semantic-ui-react';
 import { DataConsumer } from '../../../context/data';
+import { cleanNodeId } from '../../../lib/helper';
 // import MainChart from './main-chart';
 import HoverMetrics from './hover-metrics';
 // import IconSet from './icon-set';
@@ -34,6 +35,12 @@ export default class EditLink extends React.PureComponent {
             }
           };
 
+          const splitLink = selectedLink.split(':::');
+          const linkTxt =
+            splitLink.length === 2
+              ? `${cleanNodeId(splitLink[0])} > ${cleanNodeId(splitLink[1])}`
+              : selectedLink;
+
           return (
             <Modal
               closeIcon
@@ -43,7 +50,7 @@ export default class EditLink extends React.PureComponent {
               onUnmount={() => updateDataContextState({ closeCharts: false })}
               onMount={() => updateDataContextState({ closeCharts: true })}
             >
-              <Modal.Header>Edit Link - {selectedLink}</Modal.Header>
+              <Modal.Header>Edit Link - {linkTxt}</Modal.Header>
 
               <Modal.Content>
                 <Menu pointing secondary>

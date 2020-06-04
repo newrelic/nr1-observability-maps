@@ -40,8 +40,8 @@ const defaultNodeData = {
     x: 300,
     icon: 'arrow up'
   },
-  'Tip: Right click on map nodes for more options!': {
-    id: 'Tip: Right click on map nodes for more options!',
+  'Tip: Right click on map nodes and links for more options!': {
+    id: 'Tip: Right click on map nodes and links for more options!',
     y: 100,
     x: 350,
     icon: 'help'
@@ -70,7 +70,9 @@ export class DataProvider extends Component {
       data: {
         nodes: [
           defaultNodeData['Select or create a map, to get started!'],
-          defaultNodeData['Tip: Right click on map nodes for more options!']
+          defaultNodeData[
+            'Tip: Right click on map nodes and links for more options!'
+          ]
         ],
         links: []
       },
