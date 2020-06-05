@@ -1,0 +1,8 @@
+{
+  "lastUpdated": "Fri Jun 05 2020 18:05:39 GMT-0400 (Eastern Daylight Time)",
+  "projectName": "nr1-observability-maps",
+  "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
+  "includeDev": true,
+  "dependencies": {},
+  "devDependencies": {}
+}

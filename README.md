@@ -2,7 +2,7 @@
 
 # Observability Maps (nr1-observability-maps)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github/newrelic/nr1-observability-maps)
+![CI](https://github.com/newrelic/nr1-observability-maps/workflows/CI/badge.svg) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-observability-maps?include_prereleases&sort=semver) [![Known Vulnerabilities](https://snyk.io/test/github/newrelic/nr1-observability-maps/badge.svg)](https://snyk.io/test/github/newrelic/nr1-observability-maps)
 
 ## Overview
 
