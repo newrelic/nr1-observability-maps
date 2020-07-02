@@ -8,16 +8,18 @@ export default class MainChart extends React.PureComponent {
     super(props);
     this.state = {
       mc_1_NRQL: null,
+      mc_1_LABEL: null,
       mc_1_ACC: null,
       mc_1_TYPE: null
     };
   }
 
   saveNrql = async (updateDataContextState, mapConfig, nodeId, tempState) => {
-    const { mc_1_NRQL, mc_1_ACC, mc_1_TYPE } = tempState;
+    const { mc_1_NRQL, mc_1_LABEL, mc_1_ACC, mc_1_TYPE } = tempState;
     mapConfig.nodeData[nodeId].mainChart = {
       1: {
         nrql: this.state.mc_1_NRQL || mc_1_NRQL,
+        label: this.state.mc_1_LABEL || mc_1_LABEL,
         accountId: this.state.mc_1_ACC || mc_1_ACC,
         type: this.state.mc_1_TYPE || mc_1_TYPE
       }
@@ -49,6 +51,7 @@ export default class MainChart extends React.PureComponent {
 
           const tempState = {
             mc_1_NRQL: '',
+            mc_1_LABEL: '',
             mc_1_ACC: '',
             mc_1_TYPE: ''
           };
@@ -59,6 +62,8 @@ export default class MainChart extends React.PureComponent {
           ) {
             tempState.mc_1_NRQL =
               mapConfig.nodeData[selectedNode].mainChart[1].nrql;
+            tempState.mc_1_LABEL =
+              mapConfig.nodeData[selectedNode].mainChart[1].label;
             tempState.mc_1_ACC =
               mapConfig.nodeData[selectedNode].mainChart[1].accountId;
             tempState.mc_1_TYPE =
@@ -92,7 +97,7 @@ export default class MainChart extends React.PureComponent {
                 return (
                   <Form.Group widths={16} key={i}>
                     <Form.Input
-                      width={9}
+                      width={6}
                       fluid
                       label={`Query ${i + 1}`}
                       placeholder={`SELECT average(duration) as 'ms' from Transaction TIMESERIES`}
@@ -105,6 +110,16 @@ export default class MainChart extends React.PureComponent {
                       value={value(`mc_${i + 1}_NRQL`)}
                       onChange={e =>
                         this.handleNrql(e, i, value(`mc_${i + 1}_NRQL`))
+                      }
+                    />
+                    <Form.Input
+                      width={3}
+                      fluid
+                      label="Label"
+                      placeholder="Chart name"
+                      value={value(`mc_${i + 1}_LABEL`)}
+                      onChange={e =>
+                        this.setState({ [`mc_${i + 1}_LABEL`]: e.target.value })
                       }
                     />
                     <Form.Select

@@ -526,3 +526,17 @@ i {
 .ace-monokai .ace_nrql.ace_operator {
   color: #70c0b1;
 }
+
+// additional styles - AY
+.main-chart {
+  h2 {
+    margin: 0;
+    padding: 0;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: .25px;
+    margin-bottom: 24px;
+  }
+}

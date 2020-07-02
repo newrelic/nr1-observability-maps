@@ -71,8 +71,13 @@ export default class MainChart extends React.PureComponent {
       mainChart[1] &&
       mainChart[1].nrql &&
       mainChart[1].accountId &&
-      mainChart[1].type
-      ? chart(mainChart)
-      : 'No Chart Configured';
+      mainChart[1].type ? (
+      <div className="main-chart">
+        {'label' in mainChart[1] && <h2>{mainChart[1].label}</h2>}
+        {chart(mainChart)}
+      </div>
+    ) : (
+      'No Chart Configured'
+    );
   }
 }

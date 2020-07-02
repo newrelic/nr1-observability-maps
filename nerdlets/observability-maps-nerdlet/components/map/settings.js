@@ -12,7 +12,8 @@ export default class MapSettings extends React.PureComponent {
       backgroundImage: null,
       backgroundPosition: null,
       backgroundRepeat: null,
-      backgroundSize: null
+      backgroundSize: null,
+      infoText: null
     };
   }
 
@@ -27,7 +28,8 @@ export default class MapSettings extends React.PureComponent {
       backgroundImage,
       backgroundPosition,
       backgroundRepeat,
-      backgroundSize
+      backgroundSize,
+      infoText
     } = tempState;
 
     if (!mapConfig.settings) {
@@ -54,6 +56,7 @@ export default class MapSettings extends React.PureComponent {
       this.state.backgroundRepeat || backgroundRepeat;
     mapConfig.settings.backgroundSize =
       this.state.backgroundSize || backgroundSize;
+    mapConfig.settings.infoText = this.state.infoText || infoText;
 
     await writeUserDocument('ObservabilityMaps', selectedMap.value, mapConfig);
     await dataFetcher(['userMaps']);
@@ -66,7 +69,8 @@ export default class MapSettings extends React.PureComponent {
       backgroundImage: null,
       backgroundPosition: null,
       backgroundRepeat: null,
-      backgroundSize: null
+      backgroundSize: null,
+      infoText: null
     });
   };
 
@@ -81,7 +85,8 @@ export default class MapSettings extends React.PureComponent {
             backgroundImage: '',
             backgroundPosition: '',
             backgroundRepeat: '',
-            backgroundSize: ''
+            backgroundSize: '',
+            infoText: ''
           };
 
           if (mapConfig.settings) {
@@ -91,6 +96,7 @@ export default class MapSettings extends React.PureComponent {
               mapConfig.settings.backgroundPosition;
             tempState.backgroundRepeat = mapConfig.settings.backgroundRepeat;
             tempState.backgroundSize = mapConfig.settings.backgroundSize;
+            tempState.infoText = mapConfig.settings.infoText;
           }
 
           const value = name =>
@@ -180,6 +186,14 @@ export default class MapSettings extends React.PureComponent {
                       fluid
                       label="Background Size"
                       placeholder="auto"
+                    />
+                    <Form.Input
+                      onChange={(e, d) => this.handleChange(e, d, 'infoText')}
+                      value={value('infoText')}
+                      width="8"
+                      fluid
+                      label="Info Text"
+                      placeholder="information text to display on map"
                     />
                   </Form.Group>
                 </Form>

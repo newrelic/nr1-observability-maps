@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import MenuBar from './navigation/menu-bar';
 import Map from './map/map';
+import Info from './info/info';
 import NodeHandler from './custom-nodes/handler';
 import LinkHandler from './custom-links/handler';
 import Sidebar from './sidebar/sidebar';
@@ -50,7 +51,7 @@ export default class ObservabilityMaps extends React.Component {
         type: 'CURVE_SMOOTH',
         renderLabel: true,
         labelProperty: link => <LinkHandler link={link} />,
-        fontColor: '#21ba45',
+        fontColor: 'white',
         fontSize: 13,
         fontWeight: 'bold'
       },
@@ -84,6 +85,7 @@ export default class ObservabilityMaps extends React.Component {
               <Grid columns={16} style={mainGridStyle}>
                 <Grid.Row style={{ paddingTop: '0px' }}>
                   <Grid.Column width={16}>
+                    <Info />
                     <Map
                       d3MapConfig={d3MapConfig}
                       graphWidth={graphWidth}
