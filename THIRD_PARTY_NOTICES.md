@@ -41,7 +41,7 @@ code, the source code can be found at [https://github.com/newrelic/nr1-observabi
 
 ### ace-builds
 
-This product includes source derived from [ace-builds](https://github.com/ajaxorg/ace-builds) ([v1.4.11](https://github.com/ajaxorg/ace-builds/tree/v1.4.11)), distributed under the [BSD-3-Clause License](https://github.com/ajaxorg/ace-builds/blob/v1.4.11/LICENSE):
+This product includes source derived from [ace-builds](https://github.com/ajaxorg/ace-builds) ([v1.4.12](https://github.com/ajaxorg/ace-builds/tree/v1.4.12)), distributed under the [BSD-3-Clause License](https://github.com/ajaxorg/ace-builds/blob/v1.4.12/LICENSE):
 
 ```
 Copyright (c) 2010, Ajax.org B.V.
@@ -73,7 +73,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### d3
 
-This product includes source derived from [d3](https://github.com/d3/d3) ([v5.16.0](https://github.com/d3/d3/tree/v5.16.0)), distributed under the [BSD-3-Clause License](https://github.com/d3/d3/blob/v5.16.0/LICENSE):
+This product includes source derived from [d3](https://github.com/d3/d3) ([v5.12.0](https://github.com/d3/d3/tree/v5.12.0)), distributed under the [BSD-3-Clause License](https://github.com/d3/d3/blob/v5.12.0/LICENSE):
 
 ```
 Copyright 2010-2017 Mike Bostock
@@ -108,12 +108,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### graphql-tag
 
-This product includes source derived from [graphql-tag](https://github.com/apollostack/graphql-tag) ([v2.10.1](https://github.com/apollostack/graphql-tag/tree/v2.10.1)), distributed under the [MIT License](https://github.com/apollostack/graphql-tag/blob/v2.10.1/LICENSE):
+This product includes source derived from [graphql-tag](https://github.com/apollographql/graphql-tag) ([v2.10.4](https://github.com/apollographql/graphql-tag/tree/v2.10.4)), distributed under the [MIT License](https://github.com/apollographql/graphql-tag/blob/v2.10.4/LICENSE):
 
 ```
 The MIT License (MIT)
 
-Copyright (c) 2015 - 2018 Meteor Development Group, Inc.
+Copyright (c) 2020 Meteor Development Group, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -137,7 +137,7 @@ SOFTWARE.
 
 ### graphql
 
-This product includes source derived from [graphql](https://github.com/graphql/graphql-js) ([v14.5.8](https://github.com/graphql/graphql-js/tree/v14.5.8)), distributed under the [MIT License](https://github.com/graphql/graphql-js/blob/v14.5.8/LICENSE):
+This product includes source derived from [graphql](https://github.com/graphql/graphql-js) ([v14.7.0](https://github.com/graphql/graphql-js/tree/v14.7.0)), distributed under the [MIT License](https://github.com/graphql/graphql-js/blob/v14.7.0/LICENSE):
 
 ```
 MIT License
@@ -195,7 +195,7 @@ SOFTWARE.
 
 ### react-ace
 
-This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.0.0](https://github.com/securingsincity/react-ace/tree/v9.0.0)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.0.0/LICENSE):
+This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.1.1](https://github.com/securingsincity/react-ace/tree/v9.1.1)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.1.1/LICENSE):
 
 ```
 The MIT License (MIT)
@@ -225,7 +225,7 @@ SOFTWARE.
 
 ### react-dom
 
-This product includes source derived from [react-dom](https://github.com/facebook/react) ([v16.11.0](https://github.com/facebook/react/tree/v16.11.0)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.11.0/LICENSE):
+This product includes source derived from [react-dom](https://github.com/facebook/react) ([v16.6.3](https://github.com/facebook/react/tree/v16.6.3)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.6.3/LICENSE):
 
 ```
 MIT License
@@ -283,7 +283,7 @@ SOFTWARE.
 
 ### react-select
 
-This product includes source derived from [react-select](https://github.com/JedWatson/react-select) ([v3.0.8](https://github.com/JedWatson/react-select/tree/v3.0.8)), distributed under the [MIT License](https://github.com/JedWatson/react-select/blob/v3.0.8/README.md):
+This product includes source derived from [react-select](https://github.com/JedWatson/react-select) ([v3.1.0](https://github.com/JedWatson/react-select/tree/v3.1.0)), distributed under the [MIT License](https://github.com/JedWatson/react-select/blob/v3.1.0/README.md):
 
 ```
 MIT License Copyright (c) <year> <copyright holders>
@@ -325,7 +325,7 @@ SOFTWARE.
 
 ### react
 
-This product includes source derived from [react](https://github.com/facebook/react) ([v16.11.0](https://github.com/facebook/react/tree/v16.11.0)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.11.0/LICENSE):
+This product includes source derived from [react](https://github.com/facebook/react) ([v16.6.3](https://github.com/facebook/react/tree/v16.6.3)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.6.3/LICENSE):
 
 ```
 MIT License
@@ -354,7 +354,7 @@ SOFTWARE.
 
 ### semantic-ui-react
 
-This product includes source derived from [semantic-ui-react](https://github.com/Semantic-Org/Semantic-UI-React) ([v0.88.1](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.88.1)), distributed under the [MIT License](https://github.com/Semantic-Org/Semantic-UI-React/blob/v0.88.1/LICENSE.md):
+This product includes source derived from [semantic-ui-react](https://github.com/Semantic-Org/Semantic-UI-React) ([v0.88.2](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.88.2)), distributed under the [MIT License](https://github.com/Semantic-Org/Semantic-UI-React/blob/v0.88.2/LICENSE.md):
 
 ```
 MIT License
@@ -383,7 +383,7 @@ SOFTWARE.
 
 ### semver
 
-This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.1.3](https://github.com/npm/node-semver/tree/v7.1.3)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.1.3/LICENSE):
+This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.3.2](https://github.com/npm/node-semver/tree/v7.3.2)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.3.2/LICENSE):
 
 ```
 The ISC License
@@ -409,7 +409,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ### @newrelic/eslint-plugin-newrelic
 
-This product includes source derived from [@newrelic/eslint-plugin-newrelic](https://github.com/NewRelic/eslint-plugin-newrelic) ([v0.3.0](https://github.com/NewRelic/eslint-plugin-newrelic/tree/v0.3.0)), distributed under the [Apache-2.0 License](https://github.com/NewRelic/eslint-plugin-newrelic/blob/v0.3.0/LICENSE):
+This product includes source derived from [@newrelic/eslint-plugin-newrelic](https://github.com/NewRelic/eslint-plugin-newrelic) ([v0.3.1](https://github.com/NewRelic/eslint-plugin-newrelic/tree/v0.3.1)), distributed under the [Apache-2.0 License](https://github.com/NewRelic/eslint-plugin-newrelic/blob/v0.3.1/LICENSE):
 
 ```
                                  Apache License
@@ -618,7 +618,7 @@ This product includes source derived from [@newrelic/eslint-plugin-newrelic](htt
 
 ### @semantic-release/changelog
 
-This product includes source derived from [@semantic-release/changelog](https://github.com/semantic-release/changelog) ([v3.0.6](https://github.com/semantic-release/changelog/tree/v3.0.6)), distributed under the [MIT License](https://github.com/semantic-release/changelog/blob/v3.0.6/LICENSE):
+This product includes source derived from [@semantic-release/changelog](https://github.com/semantic-release/changelog) ([v5.0.1](https://github.com/semantic-release/changelog/tree/v5.0.1)), distributed under the [MIT License](https://github.com/semantic-release/changelog/blob/v5.0.1/LICENSE):
 
 ```
 MIT License
@@ -647,7 +647,7 @@ SOFTWARE.
 
 ### @semantic-release/git
 
-This product includes source derived from [@semantic-release/git](https://github.com/semantic-release/git) ([v7.0.18](https://github.com/semantic-release/git/tree/v7.0.18)), distributed under the [MIT License](https://github.com/semantic-release/git/blob/v7.0.18/LICENSE):
+This product includes source derived from [@semantic-release/git](https://github.com/semantic-release/git) ([v9.0.0](https://github.com/semantic-release/git/tree/v9.0.0)), distributed under the [MIT License](https://github.com/semantic-release/git/blob/v9.0.0/LICENSE):
 
 ```
 MIT License
