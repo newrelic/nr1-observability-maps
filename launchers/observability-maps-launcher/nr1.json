@@ -1,7 +1,7 @@
 {
-    "schemaType": "LAUNCHER",
-    "id": "observability-maps-launcher",
-    "description": "Observability Maps",
-    "displayName": "Observability Maps",
-    "rootNerdletId": "observability-maps-nerdlet"
+  "schemaType": "LAUNCHER",
+  "id": "observability-maps-launcher",
+  "description": "Map anything and everything!",
+  "displayName": "Observability Maps",
+  "rootNerdletId": "observability-maps-nerdlet"
 }

@@ -1,42 +1,40 @@
 {
-    "private": true,
-    "name": "observability-map",
-    "description": "Nerdpack observability-map",
-    "version": "0.1.6",
-    "scripts": {
-        "start": "nr1 nerdpack:serve",
-        "test": "exit 0"
-    },
-    "nr1": {
-        "staging": "e616177e-c7cf-4922-8a05-b89c2a303dd8",
-        "uuid": "f3d05ddf-4a9d-429a-8758-165d3b439f8c",
-        "d11": "c9af90aa-e5d9-413d-a1b4-75a5ad381980"
-    },
-    "dependencies": {
-        "d3": "^5.12.0",
-        "graphql": "^14.7.0",
-        "graphql-tag": "^2.10.4",
-        "prop-types": "^15.6.2",
-        "react": "^16.6.3",
-        "react-d3-graph": "github:Kav91/react-d3-graph#test",
-        "react-dom": "^16.6.3",
-        "react-event-timeline": "^1.6.3",
-        "react-select": "^3.1.0",
-        "semantic-ui-react": "^0.88.2"
-    },
-    "browserslist": [
-        "last 2 versions",
-        "not ie < 11",
-        "not dead"
-    ],
-    "devDependencies": {
-        "babel-eslint": "^10.0.3",
-        "eslint": "^6.6.0",
-        "eslint-config-airbnb": "^18.0.1",
-        "eslint-plugin-babel": "^5.3.0",
-        "eslint-plugin-import": "^2.18.2",
-        "eslint-plugin-jsx-a11y": "^6.2.3",
-        "eslint-plugin-react": "^7.16.0",
-        "eslint-plugin-react-hooks": "^1.7.0"
-    }
+  "private": true,
+  "name": "nr1-observability-maps",
+  "description": "Observability Maps",
+  "version": "0.6.7",
+  "scripts": {
+    "start": "nr1 nerdpack:serve",
+    "test": "exit 0",
+    "eslint-check": "eslint nerdlets/",
+    "eslint-fix": "eslint nerdlets/ --fix"
+  },
+  "dependencies": {
+    "ace-builds": "^1.4.11",
+    "d3": "^5.12.0",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.10.4",
+    "prop-types": "^15.6.2",
+    "react": "16.6.3",
+    "react-ace": "^9.0.0",
+    "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.2",
+    "react-dom": "16.6.3",
+    "react-event-timeline": "^1.6.3",
+    "react-select": "^3.1.0",
+    "semantic-ui-react": "^0.88.2",
+    "react-toastify": "^5.5.0",
+    "semver": "^7.1.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not ie < 11",
+    "not dead"
+  ],
+  "devDependencies": {
+    "@newrelic/eslint-plugin-newrelic": "^0.3.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1"
+  }
 }

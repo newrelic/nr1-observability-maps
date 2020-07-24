@@ -1,184 +1,180 @@
-import React from "react";
-import { Icon, Button } from "semantic-ui-react";
-import { navigation } from "nr1";
-import CreateMap from "../map/create";
-import DeleteMap from "../map/delete";
-import ExportMap from "../map/export";
-import Select from "react-select";
-import UserConfig from "../user-config";
-import ManageNodes from "../node/manage";
-import ManageLinks from "../link/manage";
-import ImportMap from "../map/import";
-import RefreshSelector from "../map/refresh";
-import ManageIcons from "../icons/manage";
-
-function openChartBuilder(query, account) {
-    const nerdlet = {
-        id: "wanda-data-exploration.nrql-editor",
-        urlState: {
-            initialActiveInterface: "nrqlEditor",
-            initialChartType: "table",
-            initialAccountId: account,
-            initialNrqlValue: query,
-            isViewingQuery: true
-        }
-    };
-    navigation.openOverlay(nerdlet);
-}
+/* eslint 
+no-console: 0
+*/
+import React from 'react';
+import { Button } from 'semantic-ui-react';
+import CreateMap from '../map/create';
+import DeleteMap from '../map/delete';
+import ExportMap from '../map/export';
+import Select from 'react-select';
+// import UserConfig from '../user-config';
+import ManageNodes from '../node/manage';
+import ManageLinks from '../link/manage';
+import ImportMap from '../map/import';
+import RefreshSelector from '../map/refresh';
+import ManageIcons from '../icons/manage';
+import MapSettings from '../map/settings';
+import UserSettings from '../user/settings';
+import { DataConsumer } from '../../context/data';
 
 export default class MenuBar extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedMap: null
-        };
-        this.handleMapMenuChange = this.handleMapMenuChange.bind(this);
+  handleMapMenuChange = (
+    selectedMap,
+    availableMaps,
+    updateDataContextState
+  ) => {
+    if (typeof selectedMap === 'string' || selectedMap instanceof String) {
+      const map = availableMaps.filter(map => map.id === selectedMap);
+      if (map.length === 1) {
+        const selected = { value: map[0].id, label: map[0].id, type: 'user' };
+        updateDataContextState({ selectedMap: selected }, ['loadMap']);
+        console.log(`Map selected:`, selectedMap);
+      }
+    } else {
+      updateDataContextState({ selectedMap }, ['loadMap']);
+      console.log(`Map selected:`, selectedMap);
     }
+  };
 
-    handleMapMenuChange = selectedMap => {
-        if (typeof selectedMap === "string" || selectedMap instanceof String) {
-            let map = this.props.userMaps.filter(map => map.id == selectedMap);
-            if (map.length == 1) {
-                let selected = { value: map[0].id, label: map[0].id, type: "user" };
-                this.setState({ selectedMap: selected });
-                this.props.setParentState({ selectedMap: selected }, ["loadMap"]);
+  render() {
+    return (
+      <DataConsumer>
+        {({
+          accounts,
+          selectedMap,
+          userMaps,
+          accountMaps,
+          updateDataContextState,
+          timelineOpen,
+          storageLocation,
+          dataFetcher,
+          selectMap
+        }) => {
+          const storageOptions = accounts.map(acc => ({
+            key: acc.id,
+            label: acc.name,
+            value: acc.id,
+            type: 'account'
+          }));
+
+          storageOptions.sort((a, b) => {
+            if (a.label < b.label) {
+              return -1;
             }
-        } else {
-            this.setState(
-                { selectedMap },
-                () => this.props.setParentState({ selectedMap }, ["loadMap"]),
-                () => console.log(`Map selected:`, this.state.selectedMap)
-            );
-        }
-    };
+            if (a.label > b.label) {
+              return 1;
+            }
+            return 0;
+          });
 
-    render() {
-        let { selectedMap } = this.state;
-        let {
-            accounts,
-            accountMaps,
-            userMaps,
-            dataFetcher,
-            loading,
-            setParentState,
-            mapConfig,
-            mapData,
-            bucketMs,
-            userIcons,
-            timelineOpen
-        } = this.props;
-        let availableMaps = [];
+          storageOptions.unshift({
+            key: 'User',
+            label: 'User (Personal)',
+            value: 'user',
+            type: 'user'
+          });
 
-        if (accountMaps) {
+          let availableMaps = [];
+
+          if (accountMaps && storageLocation.type === 'account') {
             accountMaps = accountMaps.map(map => ({
-                value: map.id,
-                label: map.id.replace("+", " "),
-                type: "account"
+              value: map.id,
+              label: (map.id || '').replace(/\+/g, ' '),
+              type: 'account'
             }));
-            availableMaps = [...availableMaps, ...accountMaps];
-        }
-        if (userMaps) {
+            availableMaps = [...accountMaps];
+          }
+
+          if (userMaps && storageLocation.type === 'user') {
             userMaps = userMaps.map(map => ({
-                value: map.id,
-                label: map.id.replace("+", " "),
-                type: "user"
+              value: map.id,
+              label: map.id.replace(/\+/g, ' '),
+              type: 'user'
             }));
-            availableMaps = [...availableMaps, ...userMaps];
-        }
+            availableMaps = [...userMaps];
+          }
 
-        return (
+          if (selectedMap)
+            selectedMap.label = selectedMap.label.replace(/\+/g, ' ');
+
+          return (
             <div>
-                <div className="utility-bar">
-                    <div className="react-select-input-group">
-                        <label>Select Map</label>
-                        <Select
-                            options={availableMaps}
-                            onChange={this.handleMapMenuChange}
-                            value={selectedMap}
-                            classNamePrefix="react-select"
-                        />
-                    </div>
-
-                    {selectedMap ? (
-                        <DeleteMap
-                            selectedMap={selectedMap}
-                            dataFetcher={dataFetcher}
-                            handleMapMenuChange={this.handleMapMenuChange}
-                            setParentState={setParentState}
-                        />
-                    ) : (
-                        ""
-                    )}
-
-                    <CreateMap
-                        accountMaps={accountMaps}
-                        userMaps={userMaps}
-                        dataFetcher={dataFetcher}
-                        handleMapMenuChange={this.handleMapMenuChange}
-                        setParentState={setParentState}
-                    />
-
-                    <ImportMap userMaps={userMaps} dataFetcher={dataFetcher} setParentState={setParentState} />
-
-                    {selectedMap ? (
-                        <ExportMap selectedMap={selectedMap} mapConfig={mapConfig} setParentState={setParentState} />
-                    ) : (
-                        ""
-                    )}
-
-                    <div className="flex-push"></div>
-
-                    {selectedMap ? (
-                        <ManageNodes
-                            accounts={accounts}
-                            mapConfig={mapConfig}
-                            mapData={mapData}
-                            dataFetcher={dataFetcher}
-                            selectedMap={selectedMap}
-                            setParentState={setParentState}
-                        />
-                    ) : (
-                        ""
-                    )}
-                    {selectedMap ? (
-                        <ManageLinks
-                            accounts={accounts}
-                            mapConfig={mapConfig}
-                            mapData={mapData}
-                            dataFetcher={dataFetcher}
-                            selectedMap={selectedMap}
-                            setParentState={setParentState}
-                        />
-                    ) : (
-                        ""
-                    )}
-
-                    {/* <UserConfig /> */}
-
-                    <ManageIcons userIcons={userIcons} dataFetcher={dataFetcher} setParentState={setParentState} />
-
-                    {selectedMap ? (
-                        <Button
-                            icon={timelineOpen ? "clock" : "clock outline"}
-                            content="Timeline"
-                            className="filter-button"
-                            onClick={() => setParentState({ timelineOpen: !timelineOpen })}
-                        />
-                    ) : (
-                        ""
-                    )}
-
-                    <RefreshSelector bucketMs={bucketMs} setParentState={setParentState} />
-
-                    <Icon
-                        loading={loading}
-                        circular
-                        name={loading ? "spinner" : "circle"}
-                        color={loading ? "black" : "green"}
-                        style={{ backgroundColor: "white" }}
-                    />
+              <div className="utility-bar">
+                <div className="react-select-input-group">
+                  <label>Map Storage</label>
+                  <Select
+                    options={storageOptions}
+                    onChange={async d => {
+                      await updateDataContextState({
+                        storageLocation: d
+                      });
+                      selectMap(null, true);
+                      dataFetcher(['accountMaps']);
+                    }}
+                    value={storageLocation}
+                    classNamePrefix="react-select"
+                  />
                 </div>
+                <div className="react-select-input-group">
+                  <label>Available Maps</label>
+                  <Select
+                    options={availableMaps}
+                    onChange={map =>
+                      this.handleMapMenuChange(
+                        map,
+                        availableMaps,
+                        updateDataContextState
+                      )
+                    }
+                    value={selectedMap}
+                    classNamePrefix="react-select"
+                  />
+                </div>
+
+                {/* <Button onClick={() => openSnackbar('opening snackbar')}>
+                  open
+                </Button> */}
+
+                {selectedMap ? <DeleteMap /> : ''}
+
+                <CreateMap />
+
+                <ImportMap />
+
+                {selectedMap ? <ExportMap /> : ''}
+
+                <div className="flex-push" />
+
+                {selectedMap ? <ManageNodes /> : ''}
+                {selectedMap ? <ManageLinks /> : ''}
+
+                {/* <UserConfig /> */}
+
+                <ManageIcons />
+
+                {selectedMap ? <MapSettings /> : ''}
+
+                {selectedMap ? (
+                  <Button
+                    icon={timelineOpen ? 'clock' : 'clock outline'}
+                    content="Timeline"
+                    className="filter-button"
+                    onClick={() =>
+                      updateDataContextState({ timelineOpen: !timelineOpen })
+                    }
+                  />
+                ) : (
+                  ''
+                )}
+
+                <UserSettings />
+
+                <RefreshSelector />
+              </div>
             </div>
-        );
-    }
+          );
+        }}
+      </DataConsumer>
+    );
+  }
 }
