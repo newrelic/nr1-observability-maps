@@ -86,11 +86,12 @@ export default class HoverMetrics extends React.PureComponent {
     tempState,
     no
   ) => {
-    mapConfig.linkData[linkId].hoverMetrics = {
-      [no]: {
-        nrql: this.state[`hm_${no}_NRQL`] || tempState[[`hm_${no}_NRQL`]],
-        accountId: this.state[`hm_${no}_ACC`] || tempState[`hm_${no}_ACC`]
-      }
+    if (!mapConfig.linkData[linkId].hoverMetrics) {
+      mapConfig.linkData[linkId].hoverMetrics = {};
+    }
+    mapConfig.linkData[linkId].hoverMetrics[no] = {
+      nrql: this.state[`hm_${no}_NRQL`] || tempState[[`hm_${no}_NRQL`]],
+      accountId: this.state[`hm_${no}_ACC`] || tempState[`hm_${no}_ACC`]
     };
     await updateDataContextState({ mapConfig }, ['saveMap']);
   };
