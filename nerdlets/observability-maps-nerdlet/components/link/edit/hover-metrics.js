@@ -25,8 +25,7 @@ export default class HoverMetrics extends React.PureComponent {
       hm_1_ACC: null,
       hm_2_ACC: null,
       hm_3_ACC: null,
-      selectedHoverOption: null,
-      editorsSet: false
+      selectedHoverOption: null
     };
   }
 
