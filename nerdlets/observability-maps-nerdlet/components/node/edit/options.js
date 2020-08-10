@@ -27,7 +27,7 @@ export default class Options extends React.PureComponent {
     mapConfig.nodeData[newName].id = newName;
 
     // recurse links, to create new ones
-    Object.keys(mapConfig.linkData).forEach((link) => {
+    Object.keys(mapConfig.linkData).forEach(link => {
       if (
         link.startsWith(`${selectedNode}:::`) ||
         link.endsWith(`:::${selectedNode}`)
@@ -62,7 +62,7 @@ export default class Options extends React.PureComponent {
             editName: cleanNodeId(selectedNode)
           };
 
-          const value = (name) =>
+          const value = name =>
             (this.state[name] != null ? this.state[name] : tempState[name]) ||
             '';
 
@@ -87,7 +87,7 @@ export default class Options extends React.PureComponent {
                   placeholder="New Node Name"
                   value={value('editName')}
                   error={renameNodeError ? renameNodeErrorContent : false}
-                  onChange={(e) => this.setState({ editName: e.target.value })}
+                  onChange={e => this.setState({ editName: e.target.value })}
                 />
               </Form.Group>
 
