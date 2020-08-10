@@ -89,7 +89,7 @@ export const rightClick = (
       break;
     case 'addConnectedServices':
       // only support non infra entities
-      mapData.nodeData[rightClickedNodeId].relationships.forEach(rs => {
+      mapData.nodeData[rightClickedNodeId].relationships.forEach((rs) => {
         const sourceEntityType =
           (((rs || {}).source || {}).entity || {}).entityType || null;
         const targetEntityType =
@@ -241,10 +241,10 @@ export const rightClick = (
       break;
     case 'deleteNode':
       delete mapConfig.nodeData[rightClickedNodeId];
-      Object.keys(mapConfig.linkData).forEach(link => {
+      Object.keys(mapConfig.linkData).forEach((link) => {
         if (
-          link.includes(`${rightClickedNodeId}:::`) ||
-          link.includes(`:::${rightClickedNodeId}`)
+          link.startsWith(`${rightClickedNodeId}:::`) ||
+          link.endsWith(`:::${rightClickedNodeId}`)
         ) {
           delete mapConfig.linkData[link];
         }

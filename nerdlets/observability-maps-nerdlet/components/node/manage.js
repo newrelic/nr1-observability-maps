@@ -77,10 +77,10 @@ export default class ManageNodes extends React.PureComponent {
             const accountSplit = selectedAccount.split(/: (.+)/);
 
             // clean up links
-            Object.keys(mapConfig.linkData).forEach(link => {
+            Object.keys(mapConfig.linkData).forEach((link) => {
               if (
-                link.includes(`${accountSplit[1]}:::`) ||
-                link.includes(`:::${accountSplit[1]}`)
+                link.startsWith(`${accountSplit[1]}:::`) ||
+                link.endsWith(`:::${accountSplit[1]}`)
               ) {
                 delete mapConfig.linkData[link];
               }
@@ -90,10 +90,10 @@ export default class ManageNodes extends React.PureComponent {
             break;
           case 'entity':
             // clean up links
-            Object.keys(mapConfig.linkData).forEach(link => {
+            Object.keys(mapConfig.linkData).forEach((link) => {
               if (
-                link.includes(`${accountSplit[1]}:::`) ||
-                link.includes(`:::${accountSplit[1]}`)
+                link.startsWith(`${accountSplit[1]}:::`) ||
+                link.endsWith(`:::${accountSplit[1]}`)
               ) {
                 delete mapConfig.linkData[link];
               }
@@ -105,8 +105,11 @@ export default class ManageNodes extends React.PureComponent {
             break;
           case 'node':
             // clean up links
-            Object.keys(mapConfig.linkData).forEach(link => {
-              if (link.includes(`${node}:::`) || link.includes(`:::${node}`)) {
+            Object.keys(mapConfig.linkData).forEach((link) => {
+              if (
+                link.startsWith(`${node}:::`) ||
+                link.endsWith(`:::${node}`)
+              ) {
                 delete mapConfig.linkData[link];
               }
             });
@@ -125,7 +128,7 @@ export default class ManageNodes extends React.PureComponent {
     });
   };
 
-  fetchEntities = async cursor => {
+  fetchEntities = async (cursor) => {
     let { selectedAccount, selectedDomain, searchedEntities } = this.state;
     // if no cursor its a new search so empty entities
     if (!cursor) {
@@ -182,7 +185,7 @@ export default class ManageNodes extends React.PureComponent {
     return (
       <DataConsumer>
         {({ accounts, mapConfig, updateDataContextState }) => {
-          const accountOptions = accounts.map(account => ({
+          const accountOptions = accounts.map((account) => ({
             key: account.id,
             text: `${account.id}: ${account.name}`,
             value: `${account.id}: ${account.name}`
@@ -211,7 +214,7 @@ export default class ManageNodes extends React.PureComponent {
             } else if (
               // check for duplicate
               Object.keys(mapConfig.nodeData || {}).filter(
-                node => node === customNodeName
+                (node) => node === customNodeName
               ).length > 0
             ) {
               customNodeError.content = 'Please enter a unique node name';
@@ -321,7 +324,7 @@ export default class ManageNodes extends React.PureComponent {
                           control={Input}
                           label="Search"
                           placeholder="My service..."
-                          onChange={e =>
+                          onChange={(e) =>
                             this.setState({ searchText: e.target.value })
                           }
                         />
@@ -352,7 +355,7 @@ export default class ManageNodes extends React.PureComponent {
                         <Table compact>
                           <Table.Body>
                             {searchedEntities
-                              .filter(entity =>
+                              .filter((entity) =>
                                 entity.name
                                   ? entity.name
                                       .toLowerCase()
@@ -402,7 +405,7 @@ export default class ManageNodes extends React.PureComponent {
                       }
                       fluid
                       value={customNodeName}
-                      onChange={e =>
+                      onChange={(e) =>
                         this.setState({ customNodeName: e.target.value })
                       }
                       placeholder="Name..."
