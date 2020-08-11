@@ -21,7 +21,7 @@ export default class LinksTable extends React.PureComponent {
               return (
                 <Table.Row key={link}>
                   <Table.Cell>
-                    {st[0]} > {st[1]}
+                    {st[0]} &gt; {st[1]}
                   </Table.Cell>
                   <Table.Cell>
                     <Button
@@ -49,9 +49,10 @@ export default class LinksTable extends React.PureComponent {
             <Table compact basic>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell width={2}>
+                  <Table.HeaderCell>
                     Current links for {selectedSource}
                   </Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               <Table.Body>
