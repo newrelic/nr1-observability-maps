@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rail, Segment, Icon, Menu, Button } from 'semantic-ui-react';
+import { Rail, Segment, Icon, Menu, Popup } from 'semantic-ui-react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import { navigation } from 'nr1';
 import { DataConsumer } from '../../context/data';
@@ -67,32 +67,25 @@ export default class TimelineView extends React.PureComponent {
                 {eventType === 'deployment'
                   ? this.renderDeploymentDetails(event)
                   : ''}
-
-                <Button
-                  size="tiny"
-                  onClick={() => navigation.openStackedEntity(event.guid)}
-                >
+                <a onClick={() => navigation.openStackedEntity(event.guid)}>
                   <Icon name="external" />
-                  Entity
-                </Button>
-
+                  View Entity
+                </a>
+                &nbsp;&nbsp;
                 {eventType === 'alert' ? (
-                  <Button
-                    onClick={() => window.open(event.violationUrl, '_blank')}
-                  >
+                  <a onClick={() => window.open(event.violationUrl, '_blank')}>
                     <Icon name="external" />
                     View Violation
-                  </Button>
+                  </a>
                 ) : (
                   ''
                 )}
+                &nbsp;&nbsp;
                 {eventType === 'deployment' ? (
-                  <Button
-                    onClick={() => window.open(event.permalink, '_blank')}
-                  >
+                  <a onClick={() => window.open(event.permalink, '_blank')}>
                     <Icon name="external" />
                     View Deployment
-                  </Button>
+                  </a>
                 ) : (
                   ''
                 )}
@@ -173,10 +166,15 @@ export default class TimelineView extends React.PureComponent {
                       active={activeItem === 'alerts'}
                       onClick={this.handleItemClick}
                     />
-                    <Menu.Item
-                      name="deployments"
-                      active={activeItem === 'deployments'}
-                      onClick={this.handleItemClick}
+                    <Popup
+                      content="Deployments last day"
+                      trigger={
+                        <Menu.Item
+                          name="deployments"
+                          active={activeItem === 'deployments'}
+                          onClick={this.handleItemClick}
+                        />
+                      }
                     />
                   </Menu>
                   {activeItem === 'all'
