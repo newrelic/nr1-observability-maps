@@ -29,8 +29,8 @@ export default class Options extends React.PureComponent {
     // recurse links, to create new ones
     Object.keys(mapConfig.linkData).forEach(link => {
       if (
-        link.includes(`${selectedNode}:::`) ||
-        link.includes(`:::${selectedNode}`)
+        link.startsWith(`${selectedNode}:::`) ||
+        link.endsWith(`:::${selectedNode}`)
       ) {
         const newLink = link.replace(selectedNode, newName);
 

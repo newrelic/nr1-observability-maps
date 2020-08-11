@@ -243,8 +243,8 @@ export const rightClick = (
       delete mapConfig.nodeData[rightClickedNodeId];
       Object.keys(mapConfig.linkData).forEach(link => {
         if (
-          link.includes(`${rightClickedNodeId}:::`) ||
-          link.includes(`:::${rightClickedNodeId}`)
+          link.startsWith(`${rightClickedNodeId}:::`) ||
+          link.endsWith(`:::${rightClickedNodeId}`)
         ) {
           delete mapConfig.linkData[link];
         }

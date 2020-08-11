@@ -79,8 +79,8 @@ export default class ManageNodes extends React.PureComponent {
             // clean up links
             Object.keys(mapConfig.linkData).forEach(link => {
               if (
-                link.includes(`${accountSplit[1]}:::`) ||
-                link.includes(`:::${accountSplit[1]}`)
+                link.startsWith(`${accountSplit[1]}:::`) ||
+                link.endsWith(`:::${accountSplit[1]}`)
               ) {
                 delete mapConfig.linkData[link];
               }
@@ -92,8 +92,8 @@ export default class ManageNodes extends React.PureComponent {
             // clean up links
             Object.keys(mapConfig.linkData).forEach(link => {
               if (
-                link.includes(`${accountSplit[1]}:::`) ||
-                link.includes(`:::${accountSplit[1]}`)
+                link.startsWith(`${accountSplit[1]}:::`) ||
+                link.endsWith(`:::${accountSplit[1]}`)
               ) {
                 delete mapConfig.linkData[link];
               }
@@ -106,7 +106,10 @@ export default class ManageNodes extends React.PureComponent {
           case 'node':
             // clean up links
             Object.keys(mapConfig.linkData).forEach(link => {
-              if (link.includes(`${node}:::`) || link.includes(`:::${node}`)) {
+              if (
+                link.startsWith(`${node}:::`) ||
+                link.endsWith(`:::${node}`)
+              ) {
                 delete mapConfig.linkData[link];
               }
             });
