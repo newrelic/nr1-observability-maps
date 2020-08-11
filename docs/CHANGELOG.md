@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.9...v0.7.0) (2020-08-11)
+
+
+### Features
+
+* improve timeline and deployment popup ([#35](https://github.com/newrelic/nr1-observability-maps/issues/35)) ([8db8b32](https://github.com/newrelic/nr1-observability-maps/commit/8db8b329847fef18fae2db4776d615f884cc89d2))
+
 ## [0.6.9](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.8...v0.6.9) (2020-08-11)
 
 
