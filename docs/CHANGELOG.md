@@ -1,3 +1,10 @@
+## [0.6.9](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.8...v0.6.9) (2020-08-11)
+
+
+### Bug Fixes
+
+* stricter link validation ([#34](https://github.com/newrelic/nr1-observability-maps/issues/34)) ([9c30480](https://github.com/newrelic/nr1-observability-maps/commit/9c304804feb387a835ae09da090c61f3f9190441))
+
 ## [0.6.8](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.7...v0.6.8) (2020-07-24)
 
 
