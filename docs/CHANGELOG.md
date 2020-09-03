@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2020-09-03)
+
+
+### Bug Fixes
+
+* updating default branch to main ([d8c1deb](https://github.com/newrelic/nr1-observability-maps/commit/d8c1deb34653e33954730937f32c5de4a1a28bec))
+
 # [0.7.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.9...v0.7.0) (2020-08-11)
 
 
