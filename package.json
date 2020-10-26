@@ -2,7 +2,7 @@
   "private": true,
   "name": "nr1-observability-maps",
   "description": "Observability Maps",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "scripts": {
     "start": "nr1 nerdpack:serve",
     "test": "exit 0",
@@ -15,7 +15,6 @@
     "graphql": "^14.7.0",
     "graphql-tag": "^2.10.4",
     "prop-types": "^15.6.2",
-    "react": "16.6.3",
     "react-ace": "^9.1.1",
     "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.3",
     "react-dom": "16.6.3",
@@ -31,10 +30,12 @@
     "not dead"
   ],
   "devDependencies": {
-    "@newrelic/eslint-plugin-newrelic": "^0.3.0",
+    "@newrelic/eslint-plugin-newrelic": "^0.3.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "eslint": "^6.8.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "react": "16.6.3",
+    "react-dom": "16.6.3"
   }
 }
