@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.1...v0.8.0) (2020-10-26)
+
+
+### Features
+
+* update react-d3-graph & prevent neg nodes ([#49](https://github.com/newrelic/nr1-observability-maps/issues/49)) ([1989fdd](https://github.com/newrelic/nr1-observability-maps/commit/1989fddd6062dc8a50d346206a45b42c71d18003))
+
 ## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2020-09-03)
 
 
