@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Thu Sep 03 2020 18:33:33 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Mon Oct 26 2020 04:09:08 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
   "includeDev": true,
@@ -72,6 +72,17 @@
       "licenseUrl": "https://github.com/securingsincity/react-ace/blob/v9.1.1/LICENSE",
       "licenseTextSource": "file",
       "publisher": "James Hrisho"
+    },
+    "react-dom@16.6.3": {
+      "name": "react-dom",
+      "version": "16.6.3",
+      "range": "16.6.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/react",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
+      "licenseFile": "node_modules/react-dom/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
+      "licenseTextSource": "file"
     },
     "react-event-timeline@1.6.3": {
       "name": "react-event-timeline",
