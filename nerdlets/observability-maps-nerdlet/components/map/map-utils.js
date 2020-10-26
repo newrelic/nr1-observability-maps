@@ -96,6 +96,8 @@ export const rightClick = (
           (((rs || {}).target || {}).entity || {}).entityType || null;
 
         if (
+          rs.source.entity &&
+          rs.target.entity &&
           rs.source.entity.name &&
           rs.target.entity.name &&
           rs.source.entity.name !== rs.target.entity.name &&
