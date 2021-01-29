@@ -71,7 +71,7 @@ export default class Map extends React.PureComponent {
     }
 
     console.log(
-      `Node ${nodeId} is moved to new position. New position is x= ${x} y= ${y}`
+      `Node ${nodeId} moved to new position. New position is x= ${x} y= ${y}`
     );
   };
 

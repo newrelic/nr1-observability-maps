@@ -131,7 +131,7 @@ export class DataProvider extends Component {
 
   checkVersion = async () => {
     fetch(
-      'https://raw.githubusercontent.com/newrelic/nr1-observability-maps/master/package.json'
+      'https://raw.githubusercontent.com/newrelic/nr1-observability-maps/main/package.json'
     )
       .then(response => {
         return response.json();
