@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.8.0...v0.9.0) (2021-01-29)
+
+
+### Features
+
+* update version check to main ([faeb66d](https://github.com/newrelic/nr1-observability-maps/commit/faeb66d41d3ab2524641a888979726a933d317fa))
+
 # [0.8.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.1...v0.8.0) (2020-10-26)
 
 
