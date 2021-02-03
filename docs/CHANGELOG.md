@@ -1,3 +1,15 @@
+# [0.10.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.9.1...v0.10.0) (2021-02-03)
+
+
+### Bug Fixes
+
+* refresh account maps on saveMap ([0d94921](https://github.com/newrelic/nr1-observability-maps/commit/0d94921bec94d30cfa431fc1b6bb6b4be989627f))
+
+
+### Features
+
+* update package deps ([0461ced](https://github.com/newrelic/nr1-observability-maps/commit/0461cedf4e61a6d3d6db1475924779ce60f56c45))
+
 ## [0.9.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.9.0...v0.9.1) (2021-02-03)
 
 
