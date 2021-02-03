@@ -275,7 +275,7 @@ export class DataProvider extends Component {
                     );
                   }
 
-                  await this.dataFetcher(['userMaps']);
+                  await this.dataFetcher(['userMaps', 'accountMaps']);
                   await this.handleMapData();
                   toast.dismiss(this.toastSaveMap);
                 } else {
