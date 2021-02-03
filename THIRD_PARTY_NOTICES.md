@@ -109,7 +109,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### graphql-tag
 
-This product includes source derived from [graphql-tag](https://github.com/apollographql/graphql-tag) ([v2.10.4](https://github.com/apollographql/graphql-tag/tree/v2.10.4)), distributed under the [MIT License](https://github.com/apollographql/graphql-tag/blob/v2.10.4/LICENSE):
+This product includes source derived from [graphql-tag](https://github.com/apollographql/graphql-tag) ([v2.11.0](https://github.com/apollographql/graphql-tag/tree/v2.11.0)), distributed under the [MIT License](https://github.com/apollographql/graphql-tag/blob/v2.11.0/LICENSE):
 
 ```
 The MIT License (MIT)
@@ -284,7 +284,7 @@ SOFTWARE.
 
 ### react-select
 
-This product includes source derived from [react-select](https://github.com/JedWatson/react-select) ([v3.1.0](https://github.com/JedWatson/react-select/tree/v3.1.0)), distributed under the [MIT License](https://github.com/JedWatson/react-select/blob/v3.1.0/README.md):
+This product includes source derived from [react-select](https://github.com/JedWatson/react-select/tree/master/packages/react-select) ([v3.2.0](https://github.com/JedWatson/react-select/tree/master/packages/react-select/tree/v3.2.0)), distributed under the [MIT License](https://github.com/JedWatson/react-select/tree/master/packages/react-select/blob/v3.2.0/README.md):
 
 ```
 MIT License

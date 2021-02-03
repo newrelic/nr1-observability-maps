@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Wed Feb 03 2021 02:27:40 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Wed Feb 03 2021 02:36:12 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
   "includeDev": true,
@@ -28,15 +28,15 @@
       "publisher": "Mike Bostock",
       "url": "https://bost.ocks.org/mike"
     },
-    "graphql-tag@2.10.4": {
+    "graphql-tag@2.11.0": {
       "name": "graphql-tag",
-      "version": "2.10.4",
-      "range": "^2.10.4",
+      "version": "2.11.0",
+      "range": "^2.11.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/apollographql/graphql-tag",
-      "versionedRepoUrl": "https://github.com/apollographql/graphql-tag/tree/v2.10.4",
+      "versionedRepoUrl": "https://github.com/apollographql/graphql-tag/tree/v2.11.0",
       "licenseFile": "node_modules/graphql-tag/LICENSE",
-      "licenseUrl": "https://github.com/apollographql/graphql-tag/blob/v2.10.4/LICENSE",
+      "licenseUrl": "https://github.com/apollographql/graphql-tag/blob/v2.11.0/LICENSE",
       "licenseTextSource": "file"
     },
     "graphql@14.7.0": {
@@ -96,15 +96,15 @@
       "licenseTextSource": "file",
       "publisher": "RC"
     },
-    "react-select@3.1.0": {
+    "react-select@3.2.0": {
       "name": "react-select",
-      "version": "3.1.0",
-      "range": "^3.1.0",
+      "version": "3.2.0",
+      "range": "^3.1.1",
       "licenses": "MIT",
-      "repoUrl": "https://github.com/JedWatson/react-select",
-      "versionedRepoUrl": "https://github.com/JedWatson/react-select/tree/v3.1.0",
+      "repoUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select",
+      "versionedRepoUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select/tree/v3.2.0",
       "licenseFile": "node_modules/react-select/README.md",
-      "licenseUrl": "https://github.com/JedWatson/react-select/blob/v3.1.0/README.md",
+      "licenseUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select/blob/v3.2.0/README.md",
       "licenseTextSource": "spdx",
       "publisher": "Jed Watson"
     },
