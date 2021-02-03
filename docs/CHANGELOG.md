@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.9.0...v0.9.1) (2021-02-03)
+
+
+### Bug Fixes
+
+* refresh account maps when account stored map imported ([b72af56](https://github.com/newrelic/nr1-observability-maps/commit/b72af5632ca3c08bcc30ccde31ba56602f36acd1))
+
 # [0.9.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.8.0...v0.9.0) (2021-01-29)
 
 
