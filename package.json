@@ -2,7 +2,7 @@
   "private": true,
   "name": "nr1-observability-maps",
   "description": "Observability Maps",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "scripts": {
     "start": "nr1 nerdpack:serve",
     "test": "exit 0",
@@ -21,7 +21,6 @@
     "react": "16.6.3",
     "react-ace": "^9.1.2",
     "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.3",
-
     "react-dom": "16.6.3",
     "react-event-timeline": "^1.6.3",
     "react-select": "^3.1.1",
