@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2021-02-24)
+
+
+### Bug Fixes
+
+* upgrade semver from 7.3.2 to 7.3.4 ([4ad0a61](https://github.com/newrelic/nr1-observability-maps/commit/4ad0a61bc3c502663f2df42ddd48c3e06c03e69c))
+
 # [0.7.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.9...v0.7.0) (2020-08-11)
 
 
