@@ -76,6 +76,7 @@ export class DataProvider extends Component {
         ],
         links: []
       },
+      tempLocations: {},
       userIcons: [],
       storeLocation: 'user',
       storageLocation: {
@@ -130,7 +131,7 @@ export class DataProvider extends Component {
 
   checkVersion = async () => {
     fetch(
-      'https://raw.githubusercontent.com/newrelic/nr1-observability-maps/master/package.json'
+      'https://raw.githubusercontent.com/newrelic/nr1-observability-maps/main/package.json'
     )
       .then(response => {
         return response.json();
@@ -274,7 +275,7 @@ export class DataProvider extends Component {
                     );
                   }
 
-                  await this.dataFetcher(['userMaps']);
+                  await this.dataFetcher(['userMaps', 'accountMaps']);
                   await this.handleMapData();
                   toast.dismiss(this.toastSaveMap);
                 } else {
@@ -607,12 +608,28 @@ export class DataProvider extends Component {
       // -------------------------------------------
       let links = [];
       // reconstruct node data for graph
+      const { tempLocations } = this.state;
       let nodes = Object.keys((mapData || {}).nodeData || {}).map(node => {
         const obj = { id: node, ...mapData.nodeData[node] };
 
-        // randomize node location if no x / y coordinates have been set
-        if (!obj.x) obj.x = Math.floor(Math.random() * 500) + 50;
-        if (!obj.y) obj.y = Math.floor(Math.random() * 500) + 50;
+        // randomize node location if no x / y coordinates have been set or if they are negative
+        if (!obj.x || !obj.y || obj.x < 0 || obj.y < 0) {
+          if (!(node in tempLocations)) {
+            tempLocations[node] = {
+              x: Math.floor(Math.random() * 500) + 50,
+              y: Math.floor(Math.random() * 500) + 50
+            };
+
+            this.setState({ tempLocations }, () => {
+              obj.x = tempLocations[node].x;
+              obj.y = tempLocations[node].y;
+            });
+          } else {
+            obj.x = tempLocations[node].x;
+            obj.y = tempLocations[node].y;
+          }
+        }
+
         mapData.nodeData[node].x = obj.x;
         mapData.nodeData[node].y = obj.y;
 

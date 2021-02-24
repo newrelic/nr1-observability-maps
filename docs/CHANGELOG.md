@@ -1,3 +1,43 @@
+# [0.10.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.9.1...v0.10.0) (2021-02-03)
+
+
+### Bug Fixes
+
+* refresh account maps on saveMap ([0d94921](https://github.com/newrelic/nr1-observability-maps/commit/0d94921bec94d30cfa431fc1b6bb6b4be989627f))
+
+
+### Features
+
+* update package deps ([0461ced](https://github.com/newrelic/nr1-observability-maps/commit/0461cedf4e61a6d3d6db1475924779ce60f56c45))
+
+## [0.9.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.9.0...v0.9.1) (2021-02-03)
+
+
+### Bug Fixes
+
+* refresh account maps when account stored map imported ([b72af56](https://github.com/newrelic/nr1-observability-maps/commit/b72af5632ca3c08bcc30ccde31ba56602f36acd1))
+
+# [0.9.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.8.0...v0.9.0) (2021-01-29)
+
+
+### Features
+
+* update version check to main ([faeb66d](https://github.com/newrelic/nr1-observability-maps/commit/faeb66d41d3ab2524641a888979726a933d317fa))
+
+# [0.8.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.1...v0.8.0) (2020-10-26)
+
+
+### Features
+
+* update react-d3-graph & prevent neg nodes ([#49](https://github.com/newrelic/nr1-observability-maps/issues/49)) ([1989fdd](https://github.com/newrelic/nr1-observability-maps/commit/1989fddd6062dc8a50d346206a45b42c71d18003))
+
+## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2020-09-03)
+
+
+### Bug Fixes
+
+* updating default branch to main ([d8c1deb](https://github.com/newrelic/nr1-observability-maps/commit/d8c1deb34653e33954730937f32c5de4a1a28bec))
+
 # [0.7.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.6.9...v0.7.0) (2020-08-11)
 
 

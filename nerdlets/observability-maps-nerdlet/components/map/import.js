@@ -66,7 +66,7 @@ export default class ImportMap extends React.PureComponent {
         );
       }
 
-      await dataFetcher(['userMaps']);
+      await dataFetcher(['userMaps', 'accountMaps']);
     } catch (e) {
       toast.update(this.toastImportMap, {
         render: `Failed to import: ${mapName}`,

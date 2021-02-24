@@ -67,11 +67,11 @@ export default class Map extends React.PureComponent {
     if (!ignoreNames.includes(nodeId)) {
       mapConfig.nodeData[nodeId].x = x;
       mapConfig.nodeData[nodeId].y = y;
-      updateDataContextState({ mapConfig }, ['saveMap']);
+      updateDataContextState({ mapConfig: { ...mapConfig } }, ['saveMap']);
     }
 
     console.log(
-      `Node ${nodeId} is moved to new position. New position is x= ${x} y= ${y}`
+      `Node ${nodeId} moved to new position. New position is x= ${x} y= ${y}`
     );
   };
 

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Mon Aug 24 2020 05:27:04 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Wed Feb 03 2021 02:36:12 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
   "includeDev": true,
@@ -28,15 +28,15 @@
       "publisher": "Mike Bostock",
       "url": "https://bost.ocks.org/mike"
     },
-    "graphql-tag@2.10.4": {
+    "graphql-tag@2.11.0": {
       "name": "graphql-tag",
-      "version": "2.10.4",
-      "range": "^2.10.4",
+      "version": "2.11.0",
+      "range": "^2.11.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/apollographql/graphql-tag",
-      "versionedRepoUrl": "https://github.com/apollographql/graphql-tag/tree/v2.10.4",
+      "versionedRepoUrl": "https://github.com/apollographql/graphql-tag/tree/v2.11.0",
       "licenseFile": "node_modules/graphql-tag/LICENSE",
-      "licenseUrl": "https://github.com/apollographql/graphql-tag/blob/v2.10.4/LICENSE",
+      "licenseUrl": "https://github.com/apollographql/graphql-tag/blob/v2.11.0/LICENSE",
       "licenseTextSource": "file"
     },
     "graphql@14.7.0": {
@@ -96,15 +96,15 @@
       "licenseTextSource": "file",
       "publisher": "RC"
     },
-    "react-select@3.1.0": {
+    "react-select@3.2.0": {
       "name": "react-select",
-      "version": "3.1.0",
-      "range": "^3.1.0",
+      "version": "3.2.0",
+      "range": "^3.1.1",
       "licenses": "MIT",
-      "repoUrl": "https://github.com/JedWatson/react-select",
-      "versionedRepoUrl": "https://github.com/JedWatson/react-select/tree/v3.1.0",
+      "repoUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select",
+      "versionedRepoUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select/tree/v3.2.0",
       "licenseFile": "node_modules/react-select/README.md",
-      "licenseUrl": "https://github.com/JedWatson/react-select/blob/v3.1.0/README.md",
+      "licenseUrl": "https://github.com/JedWatson/react-select/tree/master/packages/react-select/blob/v3.2.0/README.md",
       "licenseTextSource": "spdx",
       "publisher": "Jed Watson"
     },
@@ -121,17 +121,6 @@
       "publisher": "Fadi Khadra",
       "email": "fdkhadra@gmail.com",
       "url": "https://fkhadra.github.io"
-    },
-    "react@16.6.3": {
-      "name": "react",
-      "version": "16.6.3",
-      "range": "16.6.3",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/facebook/react",
-      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
-      "licenseFile": "node_modules/react/LICENSE",
-      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
-      "licenseTextSource": "file"
     },
     "semantic-ui-react@0.88.2": {
       "name": "semantic-ui-react",
@@ -221,6 +210,28 @@
       "licenseUrl": "https://github.com/prettier/prettier/blob/v1.19.1/LICENSE",
       "licenseTextSource": "file",
       "publisher": "James Long"
+    },
+    "react-dom@16.6.3": {
+      "name": "react-dom",
+      "version": "16.6.3",
+      "range": "16.6.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/react",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
+      "licenseFile": "node_modules/react-dom/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
+      "licenseTextSource": "file"
+    },
+    "react@16.6.3": {
+      "name": "react",
+      "version": "16.6.3",
+      "range": "16.6.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/facebook/react",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
+      "licenseFile": "node_modules/react/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
+      "licenseTextSource": "file"
     }
   }
 }
