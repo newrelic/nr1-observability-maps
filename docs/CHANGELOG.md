@@ -1,3 +1,11 @@
+## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2021-03-09)
+
+
+### Bug Fixes
+
+* upgrade react-ace from 9.1.1 to 9.3.0 ([38b1f17](https://github.com/newrelic/nr1-observability-maps/commit/38b1f17c329c702626a97c5f4452006260381e07))
+* upgrade semver from 7.3.2 to 7.3.4 ([4ad0a61](https://github.com/newrelic/nr1-observability-maps/commit/4ad0a61bc3c502663f2df42ddd48c3e06c03e69c))
+
 ## [0.7.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.7.0...v0.7.1) (2021-02-24)
 
 
