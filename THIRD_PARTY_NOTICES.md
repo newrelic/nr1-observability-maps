@@ -195,7 +195,7 @@ SOFTWARE.
 
 ### react-ace
 
-This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.1.1](https://github.com/securingsincity/react-ace/tree/v9.1.1)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.1.1/LICENSE):
+This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.3.0](https://github.com/securingsincity/react-ace/tree/v9.3.0)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.3.0/LICENSE):
 
 ```
 The MIT License (MIT)
