@@ -19,7 +19,7 @@
     "graphql-tag": "^2.11.0",
     "prop-types": "^15.6.2",
     "react": "16.6.3",
-    "react-ace": "^9.1.2",
+    "react-ace": "^9.3.0",
     "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.3",
     "react-dom": "16.6.3",
     "react-event-timeline": "^1.6.3",
