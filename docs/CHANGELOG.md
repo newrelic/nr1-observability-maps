@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.10.1...v0.11.0) (2021-04-19)
+
+
+### Features
+
+* prompt with remove link or remove link and node ([#65](https://github.com/newrelic/nr1-observability-maps/issues/65)) ([c3dcabc](https://github.com/newrelic/nr1-observability-maps/commit/c3dcabc8412a56aa2e937c20fc4af27de009d9eb))
+
 ## [0.10.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.10.0...v0.10.1) (2021-02-24)
 
 
