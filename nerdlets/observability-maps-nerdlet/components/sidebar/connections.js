@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, List, Checkbox, Header, Menu } from 'semantic-ui-react';
 import { setAlertDesign, setEntityDesign, cleanNodeId } from '../../lib/helper';
 import { DataConsumer } from '../../context/data';
+import { Modal, HeadingText, Button } from 'nr1';
 
 const domains = [
   'APM',
@@ -13,16 +14,15 @@ const domains = [
   'EXTERNAL'
 ];
 
-const updateLink = (
-  checked,
-  direction,
-  node,
-  entity,
-  mapConfig,
-  updateDataContextState
+const updateLink = async (
+  modalData,
+  updateDataContextState,
+  removeLinkOnly
 ) => {
   // node is the selected node from the right click
   // the entity, is the entity to be removed
+  const { checked, direction, node, entity, mapConfig } = modalData;
+  // console.log(modalData);
 
   const name = entity.domain
     ? `${entity.name} [${entity.domain}]`
@@ -37,8 +37,10 @@ const updateLink = (
         delete mapConfig.linkData[link];
       }
     });
-    delete mapConfig.nodeData[name];
-    delete mapConfig.nodeData[entity.name]; // fallback
+    if (!removeLinkOnly) {
+      delete mapConfig.nodeData[name];
+      delete mapConfig.nodeData[entity.name]; // fallback
+    }
   } else {
     mapConfig.linkData[linkId] = {
       source: direction === 'outgoing' ? node : name,
@@ -50,7 +52,7 @@ const updateLink = (
       entityType: entity.entityType
     };
   }
-  updateDataContextState({ mapConfig }, ['saveMap']);
+  await updateDataContextState({ mapConfig }, ['saveMap']);
 };
 
 export default class SidebarConnections extends React.PureComponent {
@@ -58,12 +60,21 @@ export default class SidebarConnections extends React.PureComponent {
     super(props);
     this.state = {
       incomingActiveMenuItem: '',
-      outgoingActiveMenuItem: ''
+      outgoingActiveMenuItem: '',
+      modalOpen: false,
+      modalData: null
     };
   }
 
+  onClose = () => this.setState({ modalOpen: false });
+
   render() {
-    let { incomingActiveMenuItem, outgoingActiveMenuItem } = this.state;
+    let {
+      incomingActiveMenuItem,
+      outgoingActiveMenuItem,
+      modalOpen,
+      modalData
+    } = this.state;
 
     return (
       <DataConsumer>
@@ -77,6 +88,44 @@ export default class SidebarConnections extends React.PureComponent {
 
             return (
               <>
+                <Modal hidden={!modalOpen} onClose={this.onClose}>
+                  <HeadingText
+                    type={HeadingText.TYPE.HEADING_2}
+                    style={{ textAlign: 'center' }}
+                  >
+                    Confirmation
+                  </HeadingText>
+                  <Button
+                    onClick={async () => {
+                      await updateLink(modalData, updateDataContextState, true);
+                      this.onClose();
+                    }}
+                    style={{ width: '100%' }}
+                  >
+                    Remove Link
+                  </Button>
+                  <br />
+                  <br />
+                  <Button
+                    onClick={async () => {
+                      await updateLink(modalData, updateDataContextState);
+                      this.onClose();
+                    }}
+                    style={{ width: '100%' }}
+                  >
+                    Remove Node & Link
+                  </Button>
+                  <br />
+                  <br /> <br />
+                  <Button
+                    onClick={this.onClose}
+                    style={{ float: 'right' }}
+                    type={Button.TYPE.DESTRUCTIVE}
+                  >
+                    Close
+                  </Button>
+                </Modal>
+
                 <Header as="h5" style={{ paddingLeft: '10px' }}>
                   {title}
                 </Header>
@@ -157,16 +206,31 @@ export default class SidebarConnections extends React.PureComponent {
                             <Checkbox
                               className="truncate-sidebar"
                               checked={checked}
-                              onClick={() =>
-                                updateLink(
-                                  checked,
-                                  title.toLowerCase(),
-                                  selectedNode,
-                                  conn[direction].entity,
-                                  mapConfig,
-                                  updateDataContextState
-                                )
-                              }
+                              onClick={() => {
+                                if (checked) {
+                                  this.setState({
+                                    modalOpen: true,
+                                    modalData: {
+                                      checked,
+                                      direction: title.toLowerCase(),
+                                      node: selectedNode,
+                                      entity: conn[direction].entity,
+                                      mapConfig
+                                    }
+                                  });
+                                } else {
+                                  updateLink(
+                                    {
+                                      checked,
+                                      direction: title.toLowerCase(),
+                                      node: selectedNode,
+                                      entity: conn[direction].entity,
+                                      mapConfig
+                                    },
+                                    updateDataContextState
+                                  );
+                                }
+                              }}
                               label={conn[direction].entity.name}
                             />
                           </List.Item>
