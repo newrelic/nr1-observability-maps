@@ -24,6 +24,7 @@ code, the source code can be found at [https://github.com/newrelic/nr1-observabi
 * [react-event-timeline](#react-event-timeline)
 * [react-select](#react-select)
 * [react-toastify](#react-toastify)
+* [react](#react)
 * [semantic-ui-react](#semantic-ui-react)
 * [semver](#semver)
 
@@ -196,7 +197,7 @@ SOFTWARE.
 
 ### react-ace
 
-This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.1.1](https://github.com/securingsincity/react-ace/tree/v9.1.1)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.1.1/LICENSE):
+This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.1.2](https://github.com/securingsincity/react-ace/tree/v9.1.2)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.1.2/LICENSE):
 
 ```
 The MIT License (MIT)
@@ -326,6 +327,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### react
+
+This product includes source derived from [react](https://github.com/facebook/react) ([v16.6.3](https://github.com/facebook/react/tree/v16.6.3)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.6.3/LICENSE):
+
+```
+MIT License
+
+Copyright (c) Facebook, Inc. and its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+```
+
 ### semantic-ui-react
 
 This product includes source derived from [semantic-ui-react](https://github.com/Semantic-Org/Semantic-UI-React) ([v0.88.2](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.88.2)), distributed under the [MIT License](https://github.com/Semantic-Org/Semantic-UI-React/blob/v0.88.2/LICENSE.md):
@@ -357,7 +387,7 @@ SOFTWARE.
 
 ### semver
 
-This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.3.2](https://github.com/npm/node-semver/tree/v7.3.2)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.3.2/LICENSE):
+This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.3.4](https://github.com/npm/node-semver/tree/v7.3.4)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.3.4/LICENSE):
 
 ```
 The ISC License
