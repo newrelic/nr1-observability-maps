@@ -39,7 +39,6 @@ export default class ManageNodes extends React.PureComponent {
 
   action = async (action, mapConfig, updateDataContextState, entity, node) => {
     let { selectedAccount, selectedNodeType, customNodeName } = this.state;
-    this.setState({ open: false });
 
     if (entity) selectedNodeType = 'entity';
     if (node) selectedNodeType = 'node';
@@ -121,11 +120,15 @@ export default class ManageNodes extends React.PureComponent {
     }
 
     updateDataContextState({ mapConfig }, ['saveMap']);
-    this.setState({
-      selectedNodeType: null,
-      searchedEntities: [],
-      customNodeName: ''
-    });
+    const stateUpdate = {
+      [`${entity.name} [${entity.domain}]`]: action === 'add'
+    };
+
+    if (selectedNodeType === 'custom') {
+      stateUpdate.customNodeName = '';
+    }
+
+    this.setState(stateUpdate);
   };
 
   fetchEntities = async cursor => {
@@ -363,12 +366,19 @@ export default class ManageNodes extends React.PureComponent {
                                   : false
                               )
                               .map((entity, i) => {
+                                // check artifical status
+                                const stateStatus = this.state[
+                                  `${entity.name} [${entity.domain}]`
+                                ];
+
                                 // keep both for backwards compatibility
                                 const exists =
+                                  stateStatus ||
                                   mapConfig.nodeData[entity.name] ||
                                   mapConfig.nodeData[
                                     `${entity.name} [${entity.domain}]`
                                   ];
+
                                 return (
                                   <Table.Row key={i}>
                                     <Table.Cell>{entity.name}</Table.Cell>
