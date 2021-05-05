@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.12.0...v0.13.0) (2021-05-05)
+
+
+### Features
+
+* add node multi entity select ([#68](https://github.com/newrelic/nr1-observability-maps/issues/68)) ([54250a0](https://github.com/newrelic/nr1-observability-maps/commit/54250a090ae97b32da6d7c115b755cec748466c3))
+
 # [0.12.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.11.1...v0.12.0) (2021-04-21)
 
 
