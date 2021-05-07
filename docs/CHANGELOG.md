@@ -1,3 +1,10 @@
+## [0.13.2](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.1...v0.13.2) (2021-05-07)
+
+
+### Bug Fixes
+
+* upgrade react-ace from 9.1.2 to 9.3.0 ([e5c2aac](https://github.com/newrelic/nr1-observability-maps/commit/e5c2aac8aeacceffe4b5f413cfe92d094edc60cc))
+
 ## [0.13.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.0...v0.13.1) (2021-05-07)
 
 
