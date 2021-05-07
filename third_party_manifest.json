@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Fri May 07 2021 17:09:55 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Fri May 07 2021 18:07:57 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
   "includeDev": true,
@@ -61,15 +61,15 @@
       "licenseUrl": "https://github.com/facebook/prop-types/blob/v15.7.2/LICENSE",
       "licenseTextSource": "file"
     },
-    "react-ace@9.1.2": {
+    "react-ace@9.3.0": {
       "name": "react-ace",
-      "version": "9.1.2",
-      "range": "^9.1.2",
+      "version": "9.3.0",
+      "range": "^9.3.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/securingsincity/react-ace",
-      "versionedRepoUrl": "https://github.com/securingsincity/react-ace/tree/v9.1.2",
+      "versionedRepoUrl": "https://github.com/securingsincity/react-ace/tree/v9.3.0",
       "licenseFile": "node_modules/react-ace/LICENSE",
-      "licenseUrl": "https://github.com/securingsincity/react-ace/blob/v9.1.2/LICENSE",
+      "licenseUrl": "https://github.com/securingsincity/react-ace/blob/v9.3.0/LICENSE",
       "licenseTextSource": "file",
       "publisher": "James Hrisho"
     },
