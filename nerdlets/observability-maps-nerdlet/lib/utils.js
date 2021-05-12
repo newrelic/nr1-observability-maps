@@ -4,13 +4,13 @@ import {
   UserStorageQuery,
   UserStorageMutation,
   AccountStorageQuery,
-  AccountStorageMutation
+  AccountStorageMutation,
+  ngql
 } from 'nr1';
-import gql from 'graphql-tag';
 
 export const nerdGraphQuery = async query => {
   const nerdGraphData = await NerdGraphQuery.query({
-    query: gql`
+    query: ngql`
       ${query}
     `
   });
@@ -97,7 +97,7 @@ export const nrdbQuery = async (accountId, query, timeout) => {
 };
 
 // no need to run directly, nrdbQuery just passes it through
-export const gqlNrqlQuery = (accountId, query, timeout) => gql`{
+export const gqlNrqlQuery = (accountId, query, timeout) => ngql`{
       actor {
         account(id: ${accountId}) {
           nrql(query: "${query}", timeout: ${timeout || 30000}) {
@@ -108,7 +108,7 @@ export const gqlNrqlQuery = (accountId, query, timeout) => gql`{
     }`;
 
 // search for entities by domain & account
-export const entitySearchByAccountQuery = (domain, accountId, cursor) => gql`{
+export const entitySearchByAccountQuery = (domain, accountId, cursor) => ngql`{
   actor {
     entitySearch(query: "domain IN ('${domain}') AND reporting = 'true' ${
   accountId ? `AND tags.accountId IN ('${accountId}')` : ''
