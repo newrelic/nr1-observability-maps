@@ -1,3 +1,10 @@
+## [0.13.3](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.2...v0.13.3) (2021-05-13)
+
+
+### Bug Fixes
+
+* remove graphql-tag ([8272910](https://github.com/newrelic/nr1-observability-maps/commit/82729102f41cb8568d5d3e41d7d1505ac63d2207))
+
 ## [0.13.2](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.1...v0.13.2) (2021-05-07)
 
 
