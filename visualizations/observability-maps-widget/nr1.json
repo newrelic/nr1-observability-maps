@@ -1,0 +1,41 @@
+{
+  "schemaType": "VISUALIZATION",
+  "id": "observability-maps-widget",
+  "displayName": "Observability Maps Widget",
+  "description": "",
+  "configuration": [
+    {
+      "name": "mapStorage",
+      "title": "Map Storage Location",
+      "description": "Where the map is stored",
+      "type": "enum",
+      "items": [
+        {
+          "title": "User",
+          "value": "user"
+        },        {
+          "title": "Account",
+          "value": "account"
+        }
+      ]
+    },
+    {
+      "name": "accountId",
+      "title": "Account ID (used if account is entered above)",
+      "description": "Account ID",
+      "type": "account-id"
+    },
+    {
+      "name": "mapName",
+      "title": "Map Name",
+      "description": "Enter a valid map name",
+      "type": "string"
+    },
+    {
+      "name": "hideMenu",
+      "title": "Hide menu bar",
+      "description": "Toggles the menu bar visibility",
+      "type": "boolean"
+    }
+  ]
+}
