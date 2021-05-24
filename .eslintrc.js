@@ -25,6 +25,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/prop-types': 0,
     'no-new': 0,
-    'no-case-declarations': 0
+    'no-case-declarations': 0,
+    'eslint-comments/no-unlimited-disable': 0
   }
 };
