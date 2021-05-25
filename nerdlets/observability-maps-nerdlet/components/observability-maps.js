@@ -10,6 +10,7 @@ import EditLink from './link/edit/edit-link';
 import { cleanNodeId } from '../lib/helper';
 import Timeline from './timeline/timeline';
 import { DataConsumer } from '../context/data';
+import { Card, CardBody, HeadingText } from 'nr1';
 
 export default class ObservabilityMaps extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class ObservabilityMaps extends React.Component {
 
   render() {
     const { sidebarOpen } = this.state;
+    const { isWidget } = this.props;
     const graphWidth = sidebarOpen
       ? (this.props.width / 4) * 3
       : this.props.width;
@@ -61,7 +63,42 @@ export default class ObservabilityMaps extends React.Component {
 
     return (
       <DataConsumer>
-        {({ mapConfig }) => {
+        {({
+          mapConfig,
+          userMaps,
+          accountMaps,
+          vizMapName,
+          vizMapStorage,
+          vizAccountId
+        }) => {
+          const errors = [];
+
+          if (isWidget) {
+            if (!vizMapStorage) {
+              errors.push('Map storage not selected');
+            }
+
+            if (vizMapStorage === 'user') {
+              if (
+                !userMaps.find(
+                  map => map.id.replaceAll('+', ' ') === vizMapName
+                )
+              ) {
+                errors.push(`User map: ${vizMapName} not found`);
+              }
+            } else if (vizMapStorage === 'account') {
+              if (!vizAccountId) {
+                errors.push('Account not selected');
+              } else if (
+                !accountMaps.find(
+                  map => map.id.replaceAll('+', ' ') === vizMapName
+                )
+              ) {
+                errors.push(`Account map: ${vizMapName} not found`);
+              }
+            }
+          }
+
           const mainGridStyle = {
             height: this.props.height - 46,
             backgroundColor: 'black',
@@ -79,7 +116,13 @@ export default class ObservabilityMaps extends React.Component {
 
           return (
             <div style={{ overflowY: 'hidden', overflowX: 'hidden' }}>
-              <MenuBar />
+              {errors.length > 0 &&
+                EmptyState(
+                  errors,
+                  vizMapStorage === 'user' ? userMaps : accountMaps,
+                  vizMapStorage
+                )}
+              <MenuBar isWidget={isWidget} />
 
               <Grid columns={16} style={mainGridStyle}>
                 <Grid.Row style={{ paddingTop: '0px' }}>
@@ -105,3 +148,68 @@ export default class ObservabilityMaps extends React.Component {
     );
   }
 }
+
+const EmptyState = (errors, maps, mapStorage) => (
+  <Card className="EmptyState">
+    <CardBody className="EmptyState-cardBody">
+      <HeadingText
+        spacingType={[HeadingText.SPACING_TYPE.SMALL]}
+        type={HeadingText.TYPE.HEADING_3}
+      >
+        Create your Observability Map in the standard application before setting
+        the custom visualization widget.
+      </HeadingText>
+      <br />
+      <HeadingText
+        spacingType={[HeadingText.SPACING_TYPE.SMALL]}
+        type={HeadingText.TYPE.HEADING_3}
+      >
+        Please amend any errors and supply the base configuration...
+      </HeadingText>
+      <HeadingText
+        spacingType={[HeadingText.SPACING_TYPE.SMALL]}
+        type={HeadingText.TYPE.HEADING_4}
+      >
+        When this message clears your configuration is ready to be added
+      </HeadingText>
+      <div>
+        {errors.map((error, i) => {
+          return (
+            <HeadingText
+              key={i}
+              spacingType={[HeadingText.SPACING_TYPE.MEDIUM]}
+              type={HeadingText.TYPE.HEADING_4}
+            >
+              {error}
+            </HeadingText>
+          );
+        })}
+      </div>
+
+      <br />
+      {mapStorage && (
+        <>
+          <HeadingText
+            spacingType={[HeadingText.SPACING_TYPE.LARGE]}
+            type={HeadingText.TYPE.HEADING_3}
+          >
+            {`Available ${mapStorage} maps`}
+          </HeadingText>
+          <div>
+            {(maps || []).map((map, i) => {
+              return (
+                <HeadingText
+                  key={i}
+                  spacingType={[HeadingText.SPACING_TYPE.MEDIUM]}
+                  type={HeadingText.TYPE.HEADING_4}
+                >
+                  {map.id.replace(/\+/g, ' ')}
+                </HeadingText>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </CardBody>
+  </Card>
+);

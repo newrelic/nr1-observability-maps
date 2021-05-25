@@ -12,6 +12,8 @@ Using Observability Maps you can make connections between different types of ent
 
 Right click on nodes and links for further configuration options and shortcuts.
 
+You can also add this to your favorite dashboard by navigating to Apps > Custom Visualizations and selecting Observability Maps Widget.
+
 ![Screenshot](./catalog/screenshots/nr1-observability-maps-1.png)
 
 ## Open source license

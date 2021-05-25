@@ -8,13 +8,18 @@ import { AutoSizer } from 'nr1';
 import ObservabilityMaps from './components/observability-maps';
 import { DataProvider } from './context/data';
 
-export default class Root extends React.Component {
+export default class ObservabilityMapsCore extends React.Component {
   render() {
+    const { isWidget, vizConfig } = this.props;
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <DataProvider>
-            <ObservabilityMaps width={width} height={height} />
+          <DataProvider isWidget={isWidget} vizConfig={vizConfig}>
+            <ObservabilityMaps
+              isWidget={isWidget}
+              width={width}
+              height={height}
+            />
           </DataProvider>
         )}
       </AutoSizer>

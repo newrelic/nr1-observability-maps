@@ -101,7 +101,11 @@ export class DataProvider extends Component {
       showContextMenu: false,
       hasError: false,
       err: null,
-      errInfo: null
+      errInfo: null,
+      vizMapName: '',
+      vizMapStorage: '',
+      vizAccountId: null,
+      vizHideMenu: false
     };
   }
 
@@ -114,6 +118,7 @@ export class DataProvider extends Component {
       'accounts',
       'userIcons'
     ]);
+    this.vizCheck();
     if (this.state.accounts.length === 0) {
       toast.error('Unable to load accounts, please check your nerdpack uuid.', {
         autoClose: 10000,
@@ -125,8 +130,79 @@ export class DataProvider extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.state.accounts.length > 0) {
+      this.vizCheck();
+    }
+  }
+
   componentDidCatch(err, errInfo) {
     this.setState({ hasError: true, err, errInfo });
+  }
+
+  vizCheck() {
+    const { isWidget } = this.props;
+    const {
+      userMaps,
+      vizMapName,
+      vizMapStorage,
+      vizAccountId,
+      vizHideMenu
+    } = this.state;
+
+    if (isWidget) {
+      const { mapName, mapStorage, accountId, hideMenu } =
+        this.props?.vizConfig || {};
+
+      let storageLocation = {
+        key: 'User',
+        label: 'User (Personal)',
+        value: 'user',
+        type: 'user'
+      };
+
+      let selectedMap = null;
+
+      if (
+        mapName !== vizMapName ||
+        mapStorage !== vizMapStorage ||
+        accountId !== vizAccountId ||
+        hideMenu !== vizHideMenu
+      ) {
+        if (mapStorage === 'user') {
+          selectedMap = (userMaps || []).find(
+            m =>
+              m.id.toLowerCase().replaceAll('+', '') ===
+              (mapName || '').toLowerCase()
+          );
+        } else if (mapStorage === 'account') {
+          storageLocation = {
+            type: 'account',
+            value: accountId,
+            key: accountId,
+            label: accountId
+          };
+        }
+
+        // eslint-disable-next-line
+        this.setState({ storageLocation, vizMapName: mapName, vizMapStorage: mapStorage, vizAccountId: accountId, vizHideMenu: hideMenu }, async () => {
+            if (storageLocation.type === 'account') {
+              const maps = await this.dataFetcher(['accountMaps']);
+              const accountMaps = maps.accountMaps || [];
+              selectedMap = (accountMaps || []).find(
+                m =>
+                  m.id.toLowerCase().replaceAll('+', '') ===
+                  mapName.toLowerCase()
+              );
+            }
+
+            if (selectedMap) {
+              this.selectMap(selectedMap.id);
+            }
+          }
+        );
+      }
+    }
   }
 
   checkVersion = async () => {
@@ -349,17 +425,25 @@ export class DataProvider extends Component {
       });
 
       await Promise.all(dataPromises).then(async values => {
+        const { storageLocation } = this.state;
         const data = {};
         data.availableMaps = [];
         values.forEach((value, i) => {
           switch (content[i]) {
             case 'userMaps':
-              data[content[i]] = value;
-              data.availableMaps = [...data.availableMaps, ...value];
+              data[content[i]] = value.map(v => ({
+                ...v,
+                type: 'user'
+              }));
+              data.availableMaps = [...data.availableMaps, ...data[content[i]]];
               break;
             case 'accountMaps':
-              data[content[i]] = value;
-              data.availableMaps = [...data.availableMaps, ...value];
+              data[content[i]] = value.map(v => ({
+                ...v,
+                type: 'account',
+                storageLocation
+              }));
+              data.availableMaps = [...data.availableMaps, ...data[content[i]]];
               break;
             case 'userIcons':
               data[content[i]] = value;
@@ -375,7 +459,7 @@ export class DataProvider extends Component {
         });
 
         this.setState(data, () => {
-          resolve();
+          resolve(data);
         });
       });
     });

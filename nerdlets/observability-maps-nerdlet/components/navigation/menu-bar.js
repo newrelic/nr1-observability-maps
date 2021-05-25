@@ -48,8 +48,10 @@ export default class MenuBar extends React.PureComponent {
           timelineOpen,
           storageLocation,
           dataFetcher,
-          selectMap
+          selectMap,
+          vizHideMenu
         }) => {
+          const { isWidget } = this.props;
           const storageOptions = accounts.map(acc => ({
             key: acc.id,
             label: acc.name,
@@ -97,51 +99,55 @@ export default class MenuBar extends React.PureComponent {
           if (selectedMap)
             selectedMap.label = selectedMap.label.replace(/\+/g, ' ');
 
+          if (vizHideMenu) {
+            return '';
+          }
+
           return (
             <div>
               <div className="utility-bar">
-                <div className="react-select-input-group">
-                  <label>Map Storage</label>
-                  <Select
-                    options={storageOptions}
-                    onChange={async d => {
-                      await updateDataContextState({
-                        storageLocation: d
-                      });
-                      selectMap(null, true);
-                      dataFetcher(['accountMaps']);
-                    }}
-                    value={storageLocation}
-                    classNamePrefix="react-select"
-                  />
-                </div>
-                <div className="react-select-input-group">
-                  <label>Available Maps</label>
-                  <Select
-                    options={availableMaps}
-                    onChange={map =>
-                      this.handleMapMenuChange(
-                        map,
-                        availableMaps,
-                        updateDataContextState
-                      )
-                    }
-                    value={selectedMap}
-                    classNamePrefix="react-select"
-                  />
-                </div>
+                {!isWidget && (
+                  <>
+                    <div className="react-select-input-group">
+                      <label>Map Storage</label>
+                      <Select
+                        options={storageOptions}
+                        onChange={async d => {
+                          await updateDataContextState({
+                            storageLocation: d
+                          });
+                          selectMap(null, true);
+                          dataFetcher(['accountMaps']);
+                        }}
+                        value={storageLocation}
+                        classNamePrefix="react-select"
+                      />
+                    </div>
+                    <div className="react-select-input-group">
+                      <label>Available Maps</label>
+                      <Select
+                        options={availableMaps}
+                        onChange={map =>
+                          this.handleMapMenuChange(
+                            map,
+                            availableMaps,
+                            updateDataContextState
+                          )
+                        }
+                        value={selectedMap}
+                        classNamePrefix="react-select"
+                      />
+                    </div>
 
-                {/* <Button onClick={() => openSnackbar('opening snackbar')}>
-                  open
-                </Button> */}
+                    {selectedMap ? <DeleteMap /> : ''}
 
-                {selectedMap ? <DeleteMap /> : ''}
+                    <CreateMap />
 
-                <CreateMap />
+                    <ImportMap />
 
-                <ImportMap />
-
-                {selectedMap ? <ExportMap /> : ''}
+                    {selectedMap ? <ExportMap /> : ''}
+                  </>
+                )}
 
                 <div className="flex-push" />
 
