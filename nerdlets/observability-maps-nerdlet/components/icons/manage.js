@@ -74,7 +74,7 @@ export default class ManageIcons extends React.PureComponent {
         {({ userIcons, updateDataContextState, dataFetcher }) => {
           const options = userIcons.map((set, i) => ({
             key: i,
-            text: set.id.replace(/\+/g, ' '),
+            text: set.id.replaceAll('+', ' ').replaceAll('-', ' '),
             value: set.id,
             data: set.document
           }));
@@ -151,7 +151,7 @@ export default class ManageIcons extends React.PureComponent {
                     fluid
                     label="Name"
                     placeholder="Icon Set Name"
-                    value={name.replace(/\+/g, ' ')}
+                    value={name.replaceAll('+', ' ').replaceAll('-', ' ')}
                     onChange={e => this.setState({ name: e.target.value })}
                   />
                   <Label

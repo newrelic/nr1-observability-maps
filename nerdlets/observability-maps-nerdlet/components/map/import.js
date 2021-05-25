@@ -109,7 +109,9 @@ export default class ImportMap extends React.PureComponent {
             pointing: 'above'
           };
           const existingMap = [...availableMaps].filter(
-            map => map.id.replace(/\+/g, ' ') === mapName || map.id === mapName
+            map =>
+              map.id.replaceAll('+', ' ').replaceAll('-', ' ') === mapName ||
+              map.id === mapName
           );
           if (existingMap.length > 0) {
             mapNameErrorContent.content = 'This map name already exists';

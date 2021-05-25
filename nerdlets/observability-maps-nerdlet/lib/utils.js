@@ -41,7 +41,7 @@ export const writeUserDocument = async (collection, documentId, payload) => {
   const result = await UserStorageMutation.mutate({
     actionType: UserStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
     collection,
-    documentId,
+    documentId: documentId.replaceAll(' ', '-'),
     document: payload
   });
   return result;
@@ -57,7 +57,7 @@ export const writeAccountDocument = async (
     accountId,
     actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
     collection,
-    documentId,
+    documentId: documentId.replaceAll(' ', '-'),
     document: payload
   });
   return result;

@@ -48,7 +48,7 @@ const defaultNodeData = {
   }
 };
 
-const cleanName = name => name.replace(/\+/g, ' ');
+const cleanName = name => name.replaceAll('+', ' ').replaceAll('-', ' ');
 
 export class DataProvider extends Component {
   constructor(props) {
@@ -172,8 +172,10 @@ export class DataProvider extends Component {
         if (mapStorage === 'user') {
           selectedMap = (userMaps || []).find(
             m =>
-              m.id.toLowerCase().replaceAll('+', '') ===
-              (mapName || '').toLowerCase()
+              m.id.toLowerCase().replaceAll('+', ' ') ===
+                (mapName || '').toLowerCase() ||
+              m.id.toLowerCase().replaceAll('-', ' ') ===
+                (mapName || '').toLowerCase()
           );
         } else if (mapStorage === 'account') {
           storageLocation = {
@@ -191,8 +193,10 @@ export class DataProvider extends Component {
               const accountMaps = maps.accountMaps || [];
               selectedMap = (accountMaps || []).find(
                 m =>
-                  m.id.toLowerCase().replaceAll('+', '') ===
-                  mapName.toLowerCase()
+                  m.id.toLowerCase().replaceAll('+', ' ') ===
+                    (mapName || '').toLowerCase() ||
+                  m.id.toLowerCase().replaceAll('-', ' ') ===
+                    (mapName || '').toLowerCase()
               );
             }
 
@@ -513,13 +517,18 @@ export class DataProvider extends Component {
         maps = accountMaps;
       }
 
-      const map = maps.filter(map => map.id === selectedMap.replace(/ /g, '+'));
-      console.log(map);
+      const map = maps.find(
+        m =>
+          m.id === selectedMap.replaceAll(' ', '+') ||
+          m.id === selectedMap.replaceAll(' ', '-')
+      );
+      // const map = maps.filter(map => map.id === selectedMap.replace(/ /g, '+'));
+      // console.log(map);
 
-      if (map.length === 1) {
+      if (map) {
         const selected = {
-          value: map[0].id,
-          label: map[0].id,
+          value: map.id,
+          label: map.id,
           type: storageLocation.type,
           accountId:
             storageLocation.type === 'account' ? storageLocation.value : null
@@ -546,7 +555,9 @@ export class DataProvider extends Component {
   findMap = name => {
     const { availableMaps } = this.state;
     for (let z = 0; z < availableMaps.length; z++) {
-      const mapId = availableMaps[z].id.replace(/\+/g, ' ');
+      const mapId = availableMaps[z].id
+        .replaceAll('+', ' ')
+        .replaceAll('-', ' ');
       if (mapId === name || availableMaps[z].id === name) {
         return true;
       }

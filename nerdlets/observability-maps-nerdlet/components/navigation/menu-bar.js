@@ -81,7 +81,7 @@ export default class MenuBar extends React.PureComponent {
           if (accountMaps && storageLocation.type === 'account') {
             accountMaps = accountMaps.map(map => ({
               value: map.id,
-              label: (map.id || '').replace(/\+/g, ' '),
+              label: (map.id || '').replaceAll('+', ' ').replaceAll('-', ' '),
               type: 'account'
             }));
             availableMaps = [...accountMaps];
@@ -90,14 +90,16 @@ export default class MenuBar extends React.PureComponent {
           if (userMaps && storageLocation.type === 'user') {
             userMaps = userMaps.map(map => ({
               value: map.id,
-              label: map.id.replace(/\+/g, ' '),
+              label: map.id.replaceAll('+', ' ').replaceAll('-', ' '),
               type: 'user'
             }));
             availableMaps = [...userMaps];
           }
 
           if (selectedMap)
-            selectedMap.label = selectedMap.label.replace(/\+/g, ' ');
+            selectedMap.label = selectedMap.label
+              .replaceAll('+', ' ')
+              .replaceAll('-', ' ');
 
           if (vizHideMenu) {
             return '';

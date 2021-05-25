@@ -140,7 +140,7 @@ export default class UserSettings extends React.PureComponent {
               .map(map => ({
                 key: map.id,
                 value: map.id,
-                text: (map.id || '').replace(/\+/g, ' '),
+                text: (map.id || '').replaceAll('+', ' ').replaceAll('-', ' '),
                 type: 'account'
               }));
             availableMaps = [...accountMaps];
@@ -150,7 +150,7 @@ export default class UserSettings extends React.PureComponent {
             userMaps = userMaps.map(map => ({
               key: map.id,
               value: map.id,
-              text: map.id.replace(/\+/g, ' '),
+              text: map.id.replaceAll('+', ' ').replaceAll('-', ' '),
               type: 'user'
             }));
             availableMaps = [...userMaps];
@@ -214,7 +214,10 @@ export default class UserSettings extends React.PureComponent {
 
                   {value('defaultMap') ? (
                     <Header as="h5" style={{ marginTop: '3px' }}>
-                      Current: {value('defaultMap').replace(/\+/g, ' ')}
+                      Current:{' '}
+                      {value('defaultMap')
+                        .replaceAll('+', ' ')
+                        .replaceAll('-', ' ')}
                     </Header>
                   ) : (
                     ``

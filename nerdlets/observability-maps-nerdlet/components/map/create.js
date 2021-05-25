@@ -72,12 +72,14 @@ export default class CreateMap extends React.PureComponent {
           const existingMap = [...userMaps, ...accountMaps]
             .map(map => ({
               value: map.id,
-              label: map.id.replace(/\+/g, ' '),
+              label: map.id.replaceAll('+', ' ').replaceAll('-', ' '),
               type: 'user'
             }))
             .filter(
               map =>
-                (map.value && map.value.replace(/\+/g, ' ') === mapName) ||
+                (map.value &&
+                  map.value.replaceAll('+', ' ').replaceAll('-', ' ') ===
+                    mapName) ||
                 map.value === mapName
             );
 

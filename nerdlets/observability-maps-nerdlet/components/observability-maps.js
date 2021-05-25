@@ -81,7 +81,9 @@ export default class ObservabilityMaps extends React.Component {
             if (vizMapStorage === 'user') {
               if (
                 !userMaps.find(
-                  map => map.id.replaceAll('+', ' ') === vizMapName
+                  map =>
+                    map.id.replaceAll('+', ' ') === vizMapName ||
+                    map.id.replaceAll('-', ' ') === vizMapName
                 )
               ) {
                 errors.push(`User map: ${vizMapName} not found`);
@@ -91,7 +93,9 @@ export default class ObservabilityMaps extends React.Component {
                 errors.push('Account not selected');
               } else if (
                 !accountMaps.find(
-                  map => map.id.replaceAll('+', ' ') === vizMapName
+                  map =>
+                    map.id.replaceAll('+', ' ') === vizMapName ||
+                    map.id.replaceAll('-', ' ') === vizMapName
                 )
               ) {
                 errors.push(`Account map: ${vizMapName} not found`);
@@ -203,7 +207,7 @@ const EmptyState = (errors, maps, mapStorage) => (
                   spacingType={[HeadingText.SPACING_TYPE.MEDIUM]}
                   type={HeadingText.TYPE.HEADING_4}
                 >
-                  {map.id.replace(/\+/g, ' ')}
+                  {map.id.replaceAll('+', ' ').replaceAll('-', ' ')}
                 </HeadingText>
               );
             })}
