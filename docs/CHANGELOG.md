@@ -1,3 +1,10 @@
+## [0.14.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.14.0...v0.14.1) (2021-05-25)
+
+
+### Bug Fixes
+
+* update document space handling ([6b4b06a](https://github.com/newrelic/nr1-observability-maps/commit/6b4b06ad1a22c7f8dc742ab7fe48f0f35e77f42e))
+
 # [0.14.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.3...v0.14.0) (2021-05-25)
 
 
