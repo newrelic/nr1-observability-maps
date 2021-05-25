@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.3...v0.14.0) (2021-05-25)
+
+
+### Features
+
+* update readme ([47d3d3d](https://github.com/newrelic/nr1-observability-maps/commit/47d3d3dee1af91ff4d7e86fae643711c2e341f49))
+
 ## [0.13.3](https://github.com/newrelic/nr1-observability-maps/compare/v0.13.2...v0.13.3) (2021-05-13)
 
 
