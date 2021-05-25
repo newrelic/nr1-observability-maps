@@ -152,6 +152,13 @@ export default class ObservabilityMaps extends React.Component {
 const EmptyState = (errors, maps, mapStorage) => (
   <Card className="EmptyState">
     <CardBody className="EmptyState-cardBody">
+      <HeadingText
+        spacingType={[HeadingText.SPACING_TYPE.SMALL]}
+        type={HeadingText.TYPE.HEADING_3}
+      >
+        Create your Observability Map in the standard application before setting
+        the custom visualization widget.
+      </HeadingText>
       <br />
       <HeadingText
         spacingType={[HeadingText.SPACING_TYPE.SMALL]}

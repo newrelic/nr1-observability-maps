@@ -13,5 +13,5 @@
       "url": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091"
     }
   },
-  "whatsNew": "- Prompt when unchecking a connected entity"
+  "whatsNew": "- Add dashboard widget mode (Custom Visualization)"
 }
