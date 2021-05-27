@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.14.1...v0.15.0) (2021-05-27)
+
+
+### Features
+
+* add initial zoom parameter ([1e3eaef](https://github.com/newrelic/nr1-observability-maps/commit/1e3eaef79516dc21bb81acfcc3cd6bf78282af49))
+
 ## [0.14.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.14.0...v0.14.1) (2021-05-25)
 
 
