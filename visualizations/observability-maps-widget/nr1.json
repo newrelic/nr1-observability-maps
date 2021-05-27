@@ -11,6 +11,10 @@
       "type": "enum",
       "items": [
         {
+          "title": "Select a storage location",
+          "value": null
+        },   
+        {
           "title": "User",
           "value": "user"
         },        {
@@ -36,6 +40,12 @@
       "title": "Hide menu bar",
       "description": "Toggles the menu bar visibility",
       "type": "boolean"
+    },
+    {
+      "name": "initialZoom",
+      "title": "Initial Zoom (refresh to see effect)",
+      "description": "Initial Map Zoom",
+      "type": "number"
     }
   ]
 }

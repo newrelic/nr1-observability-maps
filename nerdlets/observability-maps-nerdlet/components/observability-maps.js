@@ -22,7 +22,7 @@ export default class ObservabilityMaps extends React.Component {
 
   render() {
     const { sidebarOpen } = this.state;
-    const { isWidget } = this.props;
+    const { isWidget, vizConfig } = this.props;
     const graphWidth = sidebarOpen
       ? (this.props.width / 4) * 3
       : this.props.width;
@@ -31,6 +31,7 @@ export default class ObservabilityMaps extends React.Component {
     // the graph configuration, you only need to pass down properties
     // that you want to override, otherwise default ones will be used
     const d3MapConfig = {
+      initialZoom: vizConfig?.initialZoom || undefined,
       staticGraph: false,
       staticGraphWithDragAndDrop: true,
       d3: {
@@ -131,11 +132,7 @@ export default class ObservabilityMaps extends React.Component {
               <Grid columns={16} style={mainGridStyle}>
                 <Grid.Row style={{ paddingTop: '0px' }}>
                   <Grid.Column width={16}>
-                    <Map
-                      d3MapConfig={d3MapConfig}
-                      graphWidth={graphWidth}
-                      height={this.props.height}
-                    />
+                    <Map d3MapConfig={d3MapConfig} graphWidth={graphWidth} />
                   </Grid.Column>
                 </Grid.Row>
 

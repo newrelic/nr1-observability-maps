@@ -18,7 +18,8 @@ export default class ObservabilityMapsCore extends React.Component {
             <ObservabilityMaps
               isWidget={isWidget}
               width={width}
-              height={height}
+              vizConfig={vizConfig}
+              height={vizConfig?.hideMenu === true ? height + 60 : height}
             />
           </DataProvider>
         )}
