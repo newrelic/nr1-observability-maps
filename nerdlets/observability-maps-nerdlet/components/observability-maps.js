@@ -31,7 +31,7 @@ export default class ObservabilityMaps extends React.Component {
     // the graph configuration, you only need to pass down properties
     // that you want to override, otherwise default ones will be used
     const d3MapConfig = {
-      initialZoom: vizConfig?.initialZoom || undefined,
+      initialZoom: vizConfig?.initialZoom || null,
       staticGraph: false,
       staticGraphWithDragAndDrop: true,
       d3: {
