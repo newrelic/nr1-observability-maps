@@ -1,3 +1,10 @@
+## [0.15.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.15.0...v0.15.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* set initialZoom to null instead of undefined if not custom viz ([#72](https://github.com/newrelic/nr1-observability-maps/issues/72)) ([203f63f](https://github.com/newrelic/nr1-observability-maps/commit/203f63f1de772bc5feb5142bffe1e0ba2782b42a))
+
 # [0.15.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.14.1...v0.15.0) (2021-05-27)
 
 
