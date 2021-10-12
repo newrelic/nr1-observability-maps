@@ -211,7 +211,7 @@ export const rightClick = (
       break;
     case 'viewLogs':
       const logs = {
-        id: 'logger.log-tailer',
+        id: 'logger.home',
         urlState: {
           query: `"${cleanNodeId(
             rightClickedNodeId
