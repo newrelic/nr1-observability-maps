@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.16.0...v0.17.0) (2021-10-18)
+
+
+### Features
+
+* add whats inside screenshot for nerdlet, viz  and launcher ([ac6b23f](https://github.com/newrelic/nr1-observability-maps/commit/ac6b23f4d44b828962a041e0bed7e6d851be1745))
+
 # [0.16.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.15.1...v0.16.0) (2021-10-04)
 
 
