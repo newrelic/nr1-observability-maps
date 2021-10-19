@@ -1,3 +1,10 @@
+## [0.17.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.17.0...v0.17.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* deprecated platform parameters ([#77](https://github.com/newrelic/nr1-observability-maps/issues/77)) ([10b166d](https://github.com/newrelic/nr1-observability-maps/commit/10b166d440ff59845a14ffe29fee5cb4bbf63518))
+
 # [0.17.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.16.0...v0.17.0) (2021-10-18)
 
 
