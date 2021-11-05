@@ -1,3 +1,15 @@
+# [0.18.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.17.1...v0.18.0) (2021-11-05)
+
+
+### Bug Fixes
+
+* revert uuid change ([0b5afbe](https://github.com/newrelic/nr1-observability-maps/commit/0b5afbe32e184b7c77e09f18be3fe2acdb1efd79))
+
+
+### Features
+
+* add catalog keywords and categoryTerms ([813af44](https://github.com/newrelic/nr1-observability-maps/commit/813af449897abbe1cbfc159d7791a374e5b95122))
+
 ## [0.17.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.17.0...v0.17.1) (2021-10-19)
 
 
