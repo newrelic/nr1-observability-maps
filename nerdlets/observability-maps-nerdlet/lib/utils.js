@@ -108,11 +108,21 @@ export const gqlNrqlQuery = (accountId, query, timeout) => ngql`{
     }`;
 
 // search for entities by domain & account
-export const entitySearchByAccountQuery = (domain, accountId, cursor) => ngql`{
+export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
+  let subType;
+  if (domain.startsWith('EXT-')) {
+    const domainSplit = domain.split('-');
+    domain = domainSplit[0];
+    subType = domainSplit[1];
+  }
+
+  return ngql`{
   actor {
-    entitySearch(query: "domain IN ('${domain}') AND reporting = 'true' ${
-  accountId ? `AND tags.accountId IN ('${accountId}')` : ''
-}") {
+    entitySearch(query: "domain IN ('${domain}') ${
+    subType ? `AND type = '${subType}'` : ``
+  } AND reporting = 'true' ${
+    accountId ? `AND tags.accountId IN ('${accountId}')` : ''
+  }") {
       query
       results${cursor ? `(cursor: "${cursor}")` : ''} {
         nextCursor
@@ -126,6 +136,7 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => ngql`{
     }
   }
 }`;
+};
 
 export const singleNrql = (alias, query, accountId) => `
       ${alias}: account(id: ${accountId}) {

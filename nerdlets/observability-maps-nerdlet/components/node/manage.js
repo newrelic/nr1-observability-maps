@@ -13,14 +13,6 @@ const options = [
   { key: 'c', text: 'Custom', value: 'custom' }
 ];
 
-const domainOptions = [
-  { key: 'a', text: 'APM', value: 'APM' },
-  { key: 'b', text: 'BROWSER', value: 'BROWSER' },
-  { key: 'm', text: 'MOBILE', value: 'MOBILE' },
-  { key: 'i', text: 'INFRA', value: 'INFRA' },
-  { key: 's', text: 'SYNTH', value: 'SYNTH' }
-];
-
 export default class ManageNodes extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -33,8 +25,39 @@ export default class ManageNodes extends React.PureComponent {
       searchedEntities: [],
       activeNodeItem: 'Add Node',
       showSearchMsg: false,
-      searchText: ''
+      searchText: '',
+      domainOptions: [
+        { key: 'a', text: 'APM', value: 'APM' },
+        { key: 'b', text: 'BROWSER', value: 'BROWSER' },
+        { key: 'm', text: 'MOBILE', value: 'MOBILE' },
+        { key: 'i', text: 'INFRA', value: 'INFRA' },
+        { key: 's', text: 'SYNTH', value: 'SYNTH' }
+      ]
     };
+  }
+
+  async componentDidMount() {
+    const ngData = await nerdGraphQuery(
+      `{
+        actor {
+          entitySearch(query: "domain = 'EXT'") {
+            types {
+              type
+            }
+          }
+        }
+      }`
+    );
+
+    const { domainOptions } = this.state;
+
+    (ngData?.actor?.entitySearch?.types || []).forEach(t => {
+      domainOptions.push({
+        key: t.type,
+        text: `EXT-${t.type}`,
+        value: `EXT-${t.type}`
+      });
+    });
   }
 
   action = async (action, mapConfig, updateDataContextState, entity, node) => {
@@ -138,6 +161,7 @@ export default class ManageNodes extends React.PureComponent {
       searchedEntities = [];
     }
     const accountSplit = selectedAccount.split(/: (.+)/);
+
     const nerdGraphResult = await nerdGraphQuery(
       entitySearchByAccountQuery(
         selectedDomain,
@@ -291,7 +315,7 @@ export default class ManageNodes extends React.PureComponent {
                         <Form.Select
                           width="5"
                           label="Domain"
-                          options={domainOptions}
+                          options={this.state.domainOptions}
                           placeholder="Select Domain..."
                           onChange={(e, d) =>
                             this.setState({ selectedDomain: d.value })
