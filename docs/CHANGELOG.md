@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.18.0...v0.19.0) (2021-11-08)
+
+
+### Features
+
+* add EXT entity support ([5cc4404](https://github.com/newrelic/nr1-observability-maps/commit/5cc440427085dc9ee19faea4722d5842ff35b5f7))
+
 # [0.18.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.17.1...v0.18.0) (2021-11-05)
 
 
