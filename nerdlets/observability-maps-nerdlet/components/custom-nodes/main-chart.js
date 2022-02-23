@@ -17,7 +17,7 @@ export default class MainChart extends React.PureComponent {
           return (
             <LineChart
               className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
+              accountIds={[mainChart[1].accountId]}
               query={mainChart[1].nrql}
             />
           );
@@ -25,7 +25,7 @@ export default class MainChart extends React.PureComponent {
           return (
             <AreaChart
               className="nr1-dashboards vz-theme-dark MosaicWidget"
-              accountId={mainChart[1].accountId}
+              accountIds={[mainChart[1].accountId]}
               query={mainChart[1].nrql}
             />
           );
@@ -34,7 +34,7 @@ export default class MainChart extends React.PureComponent {
             return (
               <BillboardChart
                 className="nr1-dashboards vz-theme-dark MosaicWidget"
-                accountId={mainChart[1].accountId}
+                accountIds={[mainChart[1].accountId]}
                 query={mainChart[1].nrql}
               />
             );
@@ -45,7 +45,7 @@ export default class MainChart extends React.PureComponent {
             return (
               <PieChart
                 className="nr1-dashboards vz-theme-dark MosaicWidget"
-                accountId={mainChart[1].accountId}
+                accountIds={[mainChart[1].accountId]}
                 query={mainChart[1].nrql}
               />
             );
@@ -56,7 +56,7 @@ export default class MainChart extends React.PureComponent {
             return (
               <TableChart
                 className="nr1-dashboards vz-theme-dark MosaicWidget"
-                accountId={mainChart[1].accountId}
+                accountIds={[mainChart[1].accountId]}
                 query={mainChart[1].nrql}
               />
             );
