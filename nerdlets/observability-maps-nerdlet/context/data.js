@@ -21,13 +21,18 @@ import {
 } from '../lib/utils';
 import { chunk, validateMapData } from '../lib/helper';
 import { ToastContainer, toast } from 'react-toastify';
+import { workloadEntityQuery } from '../lib/queries';
 import pkg from '../../../package.json';
 
+const async = require('async');
 const semver = require('semver');
 
 toast.configure();
 
 const DataContext = React.createContext();
+
+const QUEUE_LIMIT = 5;
+const ENTITY_SEARCH_CHUNK_MAX = 25;
 
 const collectionName = 'ObservabilityMaps';
 const userConfig = 'ObservabilityUserConfig';
@@ -55,7 +60,9 @@ export class DataProvider extends Component {
     super(props);
 
     this.state = {
+      drawerOpen: true,
       selectedMap: null,
+      entityMode: false,
       bucketMs: { key: 1, label: '30 sec', value: 30000 },
       selectedNode: '',
       selectedLink: '',
@@ -110,23 +117,34 @@ export class DataProvider extends Component {
   }
 
   async componentDidMount() {
+    const { workloadGuids } = this.props;
     this.checkVersion();
-    await this.dataFetcher([
-      'userConfig',
-      'userMaps',
-      'accountMaps',
-      'accounts',
-      'userIcons'
-    ]);
-    this.vizCheck();
-    if (this.state.accounts.length === 0) {
-      toast.error('Unable to load accounts, please check your nerdpack uuid.', {
-        autoClose: 10000,
-        containerId: 'B'
-      });
-    } else {
-      this.handleDefaults();
-      this.refreshData();
+
+    if (workloadGuids) {
+      this.setState({ entityMode: true, workloadGuids }, () =>
+        this.handleEntityMode()
+      );
+      // } else {
+      await this.dataFetcher([
+        'userConfig',
+        'userMaps',
+        'accountMaps',
+        'accounts',
+        'userIcons'
+      ]);
+      // this.vizCheck();
+      // if (this.state.accounts.length === 0) {
+      //   toast.error(
+      //     'Unable to load accounts, please check your nerdpack uuid.',
+      //     {
+      //       autoClose: 10000,
+      //       containerId: 'B'
+      //     }
+      //   );
+      // } else {
+      //   this.handleDefaults();
+      //   this.refreshData();
+      // }
     }
   }
 
@@ -139,6 +157,139 @@ export class DataProvider extends Component {
   componentDidCatch(err, errInfo) {
     this.setState({ hasError: true, err, errInfo });
   }
+
+  handleEntityMode = async () => {
+    // get all related entities under a workload
+    const workloadData = await this.getWorkloadData();
+    // // for every workloads entities, get their related entities
+    await this.getWorkloadEntityData(workloadData);
+
+    // console.log(workloadEntityData);
+    // // const guidChunks = chunk(workloadGuids, ENTITY_SEARCH_CHUNK_MAX);
+    // // const workloadGuidChunks = guidChunks.map(workloadGuidChunk => ({
+    // //   workloadGuidChunk
+    // // }));
+  };
+
+  getWorkloadEntityData = workloadData => {
+    return new Promise(resolve => {
+      //
+
+      const entitiesToQuery = [];
+      Object.keys(workloadData).forEach(wl => {
+        const relatedEntities =
+          workloadData[wl]?.relatedEntities?.results || [];
+        relatedEntities.forEach(relatedEntity => {
+          const targetEntity = relatedEntity?.target?.entity;
+          entitiesToQuery.push({
+            workloadGuid: wl,
+            entityGuid: targetEntity.guid
+          });
+        });
+      });
+
+      const entityChunks = chunk(entitiesToQuery, ENTITY_SEARCH_CHUNK_MAX);
+
+      console.log(entityChunks);
+
+      // get all related entities under a workload
+      const entityData = {};
+      const entityQueue = async.queue((task, callback) => {
+        const { guid, nextCursor } = task;
+
+        // NerdGraphQuery.query({
+        //   query: workloadEntityQuery(nextCursor),
+        //   variables: { workloadGuid: guid }
+        // }).then(response => {
+        //   if (response.error?.graphQLErrors) {
+        //     console.log(response.error?.graphQLErrors);
+        //   } else {
+        //     const entity = response?.data?.actor?.entity;
+        //     // const relatedEntities = entity?.relatedEntities;
+
+        //     // if (!workloadData[entity.guid]) {
+        //     //   workloadData[entity.guid] = entity;
+        //     // } else {
+        //     //   workloadData[entity.guid].relatedEntities.results = [
+        //     //     ...workloadData[entity.guid].relatedEntities.results,
+        //     //     ...(entity?.relatedEntities?.results || [])
+        //     //   ];
+        //     // }
+
+        //     // // check if next cursor and fetch related entities
+        //     // if (relatedEntities?.nextCursor) {
+        //     //   entityQueue.push({
+        //     //     guid,
+        //     //     nextCursor: relatedEntities?.nextCursor
+        //     //   });
+        //     // }
+        //   }
+
+        //   callback();
+        // });
+      }, QUEUE_LIMIT);
+
+      // entityQueue.push(workloadGuidMap);
+
+      entityQueue.drain(() => {
+        resolve(workloadData);
+      });
+    });
+  };
+
+  getWorkloadData = () => {
+    const { workloadGuids } = this.state;
+
+    return new Promise(resolve => {
+      // do not chunk workload entity guids, work on them separately
+      const workloadGuidMap = workloadGuids.map(guid => ({ guid }));
+
+      // get all related entities under a workload
+      const workloadData = {};
+      const workloadQueue = async.queue((task, callback) => {
+        const { guid, nextCursor } = task;
+
+        NerdGraphQuery.query({
+          query: workloadEntityQuery(nextCursor),
+          variables: { workloadGuid: guid }
+        }).then(response => {
+          if (response.error?.graphQLErrors) {
+            console.log(response.error?.graphQLErrors);
+          } else {
+            const entity = response?.data?.actor?.entity;
+            const relatedEntities = entity?.relatedEntities;
+
+            if (!workloadData[entity.guid]) {
+              workloadData[entity.guid] = entity;
+            } else {
+              workloadData[entity.guid].relatedEntities.results = [
+                ...workloadData[entity.guid].relatedEntities.results,
+                ...(entity?.relatedEntities?.results || [])
+              ];
+            }
+
+            // check if next cursor and fetch related entities
+            if (relatedEntities?.nextCursor) {
+              workloadQueue.push({
+                guid,
+                nextCursor: relatedEntities?.nextCursor
+              });
+            }
+          }
+
+          callback();
+        });
+      }, QUEUE_LIMIT);
+
+      workloadQueue.push(workloadGuidMap);
+
+      workloadQueue.drain(() => {
+        resolve(workloadData);
+      });
+    });
+  };
+
+  //
 
   vizCheck() {
     const { isWidget } = this.props;
@@ -186,8 +337,15 @@ export class DataProvider extends Component {
           };
         }
 
-        // eslint-disable-next-line
-        this.setState({ storageLocation, vizMapName: mapName, vizMapStorage: mapStorage, vizAccountId: accountId, vizHideMenu: hideMenu }, async () => {
+        this.setState(
+          {
+            storageLocation,
+            vizMapName: mapName,
+            vizMapStorage: mapStorage,
+            vizAccountId: accountId,
+            vizHideMenu: hideMenu
+          },
+          async () => {
             if (storageLocation.type === 'account') {
               const maps = await this.dataFetcher(['accountMaps']);
               const accountMaps = maps.accountMaps || [];
@@ -928,4 +1086,5 @@ export class DataProvider extends Component {
   }
 }
 
+export default DataContext;
 export const DataConsumer = DataContext.Consumer;
