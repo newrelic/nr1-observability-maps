@@ -10,14 +10,17 @@
     "eslint-fix": "eslint nerdlets/ --fix"
   },
   "ids": {
-    "dtv2": "e3c8de28-21c2-4977-89f3-c97d1667d722"
+    "dtv2": "e3c8de28-21c2-4977-89f3-c97d1667d722",
+    "cloudaccel1":"3547d0ee-5513-435c-bb94-5357eff4ff77",
+    "cloudaccel2":"d195081c-874c-42e0-bb31-6e900aed9509"
   },
   "dependencies": {
     "ace-builds": "^1.4.12",
+    "async": "^3.2.3",
     "d3": "^5.12.0",
     "graphql": "^14.7.0",
+    "lodash": "^4.17.21",
     "prop-types": "^15.6.2",
-    "react": "16.6.3",
     "react-ace": "^9.3.0",
     "react-d3-graph": "github:Kav91/react-d3-graph#v0.0.3",
     "react-dom": "16.6.3",
@@ -38,7 +41,7 @@
     "@semantic-release/git": "^9.0.0",
     "eslint": "^6.8.0",
     "prettier": "^1.19.1",
-    "react": "16.6.3",
-    "react-dom": "16.6.3"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
