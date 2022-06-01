@@ -1,43 +1,45 @@
 {
-  "lastUpdated": "Fri May 07 2021 18:07:57 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Wed Jun 01 2022 15:00:30 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
   "includeDev": true,
+  "includeOptDeps": false,
   "dependencies": {
-    "ace-builds@1.4.12": {
+    "ace-builds@1.5.3": {
       "name": "ace-builds",
-      "version": "1.4.12",
-      "range": "^1.4.11",
+      "version": "1.5.3",
+      "range": "^1.4.14",
       "licenses": "BSD-3-Clause",
       "repoUrl": "https://github.com/ajaxorg/ace-builds",
-      "versionedRepoUrl": "https://github.com/ajaxorg/ace-builds/tree/v1.4.12",
+      "versionedRepoUrl": "https://github.com/ajaxorg/ace-builds/tree/v1.5.3",
       "licenseFile": "node_modules/ace-builds/LICENSE",
-      "licenseUrl": "https://github.com/ajaxorg/ace-builds/blob/v1.4.12/LICENSE",
+      "licenseUrl": "https://github.com/ajaxorg/ace-builds/blob/v1.5.3/LICENSE",
       "licenseTextSource": "file"
     },
-    "d3@5.12.0": {
+    "async@3.2.3": {
+      "name": "async",
+      "version": "3.2.3",
+      "range": "^3.2.3",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/caolan/async",
+      "versionedRepoUrl": "https://github.com/caolan/async/tree/v3.2.3",
+      "licenseFile": "node_modules/async/LICENSE",
+      "licenseUrl": "https://github.com/caolan/async/blob/v3.2.3/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Caolan McMahon"
+    },
+    "d3@5.16.0": {
       "name": "d3",
-      "version": "5.12.0",
+      "version": "5.16.0",
       "range": "^5.12.0",
       "licenses": "BSD-3-Clause",
       "repoUrl": "https://github.com/d3/d3",
-      "versionedRepoUrl": "https://github.com/d3/d3/tree/v5.12.0",
+      "versionedRepoUrl": "https://github.com/d3/d3/tree/v5.16.0",
       "licenseFile": "node_modules/d3/LICENSE",
-      "licenseUrl": "https://github.com/d3/d3/blob/v5.12.0/LICENSE",
+      "licenseUrl": "https://github.com/d3/d3/blob/v5.16.0/LICENSE",
       "licenseTextSource": "file",
       "publisher": "Mike Bostock",
       "url": "https://bost.ocks.org/mike"
-    },
-    "graphql-tag@2.11.0": {
-      "name": "graphql-tag",
-      "version": "2.11.0",
-      "range": "^2.11.0",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/apollographql/graphql-tag",
-      "versionedRepoUrl": "https://github.com/apollographql/graphql-tag/tree/v2.11.0",
-      "licenseFile": "node_modules/graphql-tag/LICENSE",
-      "licenseUrl": "https://github.com/apollographql/graphql-tag/blob/v2.11.0/LICENSE",
-      "licenseTextSource": "file"
     },
     "graphql@14.7.0": {
       "name": "graphql",
@@ -50,39 +52,53 @@
       "licenseUrl": "https://github.com/graphql/graphql-js/blob/v14.7.0/LICENSE",
       "licenseTextSource": "file"
     },
-    "prop-types@15.7.2": {
+    "lodash@4.17.21": {
+      "name": "lodash",
+      "version": "4.17.21",
+      "range": "^4.17.21",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/lodash/lodash",
+      "versionedRepoUrl": "https://github.com/lodash/lodash/tree/v4.17.21",
+      "licenseFile": "node_modules/lodash/LICENSE",
+      "licenseUrl": "https://github.com/lodash/lodash/blob/v4.17.21/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "John-David Dalton",
+      "email": "john.david.dalton@gmail.com"
+    },
+    "prop-types@15.8.1": {
       "name": "prop-types",
-      "version": "15.7.2",
+      "version": "15.8.1",
       "range": "^15.6.2",
       "licenses": "MIT",
       "repoUrl": "https://github.com/facebook/prop-types",
-      "versionedRepoUrl": "https://github.com/facebook/prop-types/tree/v15.7.2",
+      "versionedRepoUrl": "https://github.com/facebook/prop-types/tree/v15.8.1",
       "licenseFile": "node_modules/prop-types/LICENSE",
-      "licenseUrl": "https://github.com/facebook/prop-types/blob/v15.7.2/LICENSE",
+      "licenseUrl": "https://github.com/facebook/prop-types/blob/v15.8.1/LICENSE",
       "licenseTextSource": "file"
     },
-    "react-ace@9.3.0": {
+    "react-ace@9.5.0": {
       "name": "react-ace",
-      "version": "9.3.0",
+      "version": "9.5.0",
       "range": "^9.3.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/securingsincity/react-ace",
-      "versionedRepoUrl": "https://github.com/securingsincity/react-ace/tree/v9.3.0",
+      "versionedRepoUrl": "https://github.com/securingsincity/react-ace/tree/v9.5.0",
       "licenseFile": "node_modules/react-ace/LICENSE",
-      "licenseUrl": "https://github.com/securingsincity/react-ace/blob/v9.3.0/LICENSE",
+      "licenseUrl": "https://github.com/securingsincity/react-ace/blob/v9.5.0/LICENSE",
       "licenseTextSource": "file",
       "publisher": "James Hrisho"
     },
-    "react-dom@16.6.3": {
-      "name": "react-dom",
-      "version": "16.6.3",
-      "range": "16.6.3",
+    "react-d3-graph@2.5.0": {
+      "name": "react-d3-graph",
+      "version": "2.5.0",
+      "range": "github:Kav91/react-d3-graph#v0.0.3",
       "licenses": "MIT",
-      "repoUrl": "https://github.com/facebook/react",
-      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
-      "licenseFile": "node_modules/react-dom/LICENSE",
-      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
-      "licenseTextSource": "file"
+      "repoUrl": "https://github.com/danielcaldas/react-d3-graph",
+      "versionedRepoUrl": "https://github.com/danielcaldas/react-d3-graph/tree/v2.5.0",
+      "licenseFile": "node_modules/react-d3-graph/LICENSE",
+      "licenseUrl": "https://github.com/danielcaldas/react-d3-graph/blob/v2.5.0/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Daniel Caldas"
     },
     "react-event-timeline@1.6.3": {
       "name": "react-event-timeline",
@@ -122,40 +138,30 @@
       "email": "fdkhadra@gmail.com",
       "url": "https://fkhadra.github.io"
     },
-    "react@16.6.3": {
-      "name": "react",
-      "version": "16.6.3",
-      "range": "16.6.3",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/facebook/react",
-      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
-      "licenseFile": "node_modules/react/LICENSE",
-      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
-      "licenseTextSource": "file"
-    },
-    "semantic-ui-react@0.88.2": {
+    "semantic-ui-react@2.1.3": {
       "name": "semantic-ui-react",
-      "version": "0.88.2",
-      "range": "^0.88.2",
+      "version": "2.1.3",
+      "range": "^2.1.3",
       "licenses": "MIT",
       "repoUrl": "https://github.com/Semantic-Org/Semantic-UI-React",
-      "versionedRepoUrl": "https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.88.2",
+      "versionedRepoUrl": "https://github.com/Semantic-Org/Semantic-UI-React/tree/v2.1.3",
       "licenseFile": "node_modules/semantic-ui-react/LICENSE.md",
-      "licenseUrl": "https://github.com/Semantic-Org/Semantic-UI-React/blob/v0.88.2/LICENSE.md",
+      "licenseUrl": "https://github.com/Semantic-Org/Semantic-UI-React/blob/v2.1.3/LICENSE.md",
       "licenseTextSource": "file",
       "publisher": "Levi Thomason",
       "email": "me@levithomason.com"
     },
-    "semver@7.3.5": {
+    "semver@7.3.7": {
       "name": "semver",
-      "version": "7.3.5",
+      "version": "7.3.7",
       "range": "^7.3.5",
       "licenses": "ISC",
       "repoUrl": "https://github.com/npm/node-semver",
-      "versionedRepoUrl": "https://github.com/npm/node-semver/tree/v7.3.5",
+      "versionedRepoUrl": "https://github.com/npm/node-semver/tree/v7.3.7",
       "licenseFile": "node_modules/semver/LICENSE",
-      "licenseUrl": "https://github.com/npm/node-semver/blob/v7.3.5/LICENSE",
-      "licenseTextSource": "file"
+      "licenseUrl": "https://github.com/npm/node-semver/blob/v7.3.7/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "GitHub Inc."
     }
   },
   "devDependencies": {
@@ -184,15 +190,15 @@
       "publisher": "Pierre Vanduynslager",
       "url": "https://github.com/pvdlg"
     },
-    "@semantic-release/git@9.0.0": {
+    "@semantic-release/git@9.0.1": {
       "name": "@semantic-release/git",
-      "version": "9.0.0",
+      "version": "9.0.1",
       "range": "^9.0.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/semantic-release/git",
-      "versionedRepoUrl": "https://github.com/semantic-release/git/tree/v9.0.0",
+      "versionedRepoUrl": "https://github.com/semantic-release/git/tree/v9.0.1",
       "licenseFile": "node_modules/@semantic-release/git/LICENSE",
-      "licenseUrl": "https://github.com/semantic-release/git/blob/v9.0.0/LICENSE",
+      "licenseUrl": "https://github.com/semantic-release/git/blob/v9.0.1/LICENSE",
       "licenseTextSource": "file",
       "publisher": "Pierre Vanduynslager",
       "url": "https://github.com/pvdlg"
@@ -222,26 +228,26 @@
       "licenseTextSource": "file",
       "publisher": "James Long"
     },
-    "react-dom@16.6.3": {
+    "react-dom@17.0.2": {
       "name": "react-dom",
-      "version": "16.6.3",
-      "range": "16.6.3",
+      "version": "17.0.2",
+      "range": "^17.0.2",
       "licenses": "MIT",
       "repoUrl": "https://github.com/facebook/react",
-      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v17.0.2",
       "licenseFile": "node_modules/react-dom/LICENSE",
-      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v17.0.2/LICENSE",
       "licenseTextSource": "file"
     },
-    "react@16.6.3": {
+    "react@17.0.2": {
       "name": "react",
-      "version": "16.6.3",
-      "range": "16.6.3",
+      "version": "17.0.2",
+      "range": "^17.0.2",
       "licenses": "MIT",
       "repoUrl": "https://github.com/facebook/react",
-      "versionedRepoUrl": "https://github.com/facebook/react/tree/v16.6.3",
+      "versionedRepoUrl": "https://github.com/facebook/react/tree/v17.0.2",
       "licenseFile": "node_modules/react/LICENSE",
-      "licenseUrl": "https://github.com/facebook/react/blob/v16.6.3/LICENSE",
+      "licenseUrl": "https://github.com/facebook/react/blob/v17.0.2/LICENSE",
       "licenseTextSource": "file"
     }
   }
