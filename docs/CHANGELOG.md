@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.19.0...v0.20.0) (2022-06-01)
+
+
+### Features
+
+* bump ([dabd8dd](https://github.com/newrelic/nr1-observability-maps/commit/dabd8dd5bec4b1a84067a11c96828de9e0977a13))
+
 # [0.19.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.18.0...v0.19.0) (2021-11-08)
 
 
