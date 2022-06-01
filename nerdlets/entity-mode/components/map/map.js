@@ -179,7 +179,7 @@ function Map(props) {
       [i].setAttribute('markerHeight', '12');
   }
 
-  console.log('rendering: map');
+  // console.log('rendering: map');
 
   const contextOptions = buildContextOptions(
     mapData,

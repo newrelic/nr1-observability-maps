@@ -17,22 +17,13 @@ function EntityModeRoot(props) {
 
   const nerdletContext = useContext(NerdletStateContext);
 
-  // test guids being pushed manually
-  //
-
-  // nerdletContext.workloadGuids = ['MTYwNjg2MnxOUjF8V09SS0xPQUR8OTE4MDk'];
-  // nerdletContext.workloadGuids = [
-  //   'MTYwNjg2MnxOUjF8V09SS0xPQUR8ODkwNzc',
-  //   'MTYwNjg2MnxOUjF8V09SS0xPQUR8NDkyMjg'
-  // ];
-
   //////////////////////////////
   // cloud accel test workloads
-  nerdletContext.workloadGuids = [
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8ODkwMTc',
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTE1OTU',
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTIyNDg'
-  ];
+  // nerdletContext.workloadGuids = [
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8ODkwMTc',
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTE1OTU',
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTIyNDg'
+  // ];
 
   return (
     <DataProvider {...nerdletContext}>

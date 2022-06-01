@@ -100,4 +100,7 @@ AnsibleServiceSamples: nrdbQuery(nrql: "FROM AnsibleServiceSample SELECT latest(
 }
 AnsibleDiskIOSamples: nrdbQuery(nrql: "FROM AnsibleDiskIOSample SELECT latest(iopsReadPerSec) as 'iopsReadPerSec', latest(iopsWritePerSec) as 'iopsWritePerSec', latest(major) as 'major', latest(minor) as 'minor', latest(timeInterval) as 'timeInterval' FACET entity.name, device, namespace  LIMIT MAX", timeout: 120) {
   results
+}
+AnsibleVmSystemSamples: nrdbQuery(nrql: "FROM AnsibleVmSystemSample SELECT count(*) FACET entity.name, datacenter, cluster, esxiHostname, ipAddress LIMIT MAX", timeout: 120) {
+  results
 }`;
