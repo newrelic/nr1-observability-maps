@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import DataContext from '../../context/data';
 import { StackItem } from 'nr1';
 import ProcessTable from './processTable';
@@ -37,12 +37,9 @@ export default function DataDrawer(props) {
   };
 
   const updateEntities = entity => {
-    console.log(entity);
     delete selectedEntities[entity];
     updateDataState(selectedEntities);
   };
-
-  //  console.log(selectedEntities);
 
   const getName = nodeId => {
     const node = entityMapData.nodes.find(n => n.id === nodeId);

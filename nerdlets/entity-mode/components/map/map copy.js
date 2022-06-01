@@ -1,5 +1,7 @@
 /* eslint
 no-console: 0,
+no-unused-vars: 0,
+react/no-unused-state: 0,
 */
 import React from 'react';
 import { Graph } from 'react-d3-graph';

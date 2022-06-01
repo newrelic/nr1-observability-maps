@@ -145,7 +145,7 @@ export default class SidebarConnections extends React.PureComponent {
                                   : 'outgoingActiveMenuItem']: domain
                               })
                             }
-                          ></Menu.Item>
+                          />
                         );
                       } else {
                         return '';

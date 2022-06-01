@@ -90,13 +90,13 @@ export default function StorageTable(props) {
       key: 'Device'
     },
     {
-      value: ({ item }) => item?.['diskTotalBytes'],
+      value: ({ item }) => item?.diskTotalBytes,
       width: '10%',
       key: 'Disk Total',
       alignmentType: TableHeaderCell.ALIGNMENT_TYPE.RIGHT
     },
     {
-      value: ({ item }) => item?.['diskUsedBytes'],
+      value: ({ item }) => item?.diskUsedBytes,
       width: '10%',
       key: 'Disk Used',
       alignmentType: TableHeaderCell.ALIGNMENT_TYPE.RIGHT
@@ -148,11 +148,11 @@ export default function StorageTable(props) {
             <TableRowCell>{item.facet[2]}</TableRowCell>
             <MetricTableRowCell
               type={MetricTableRowCell.TYPE.BYTES}
-              value={item?.['diskTotalBytes'] || 0}
+              value={item?.diskTotalBytes || 0}
             />
             <MetricTableRowCell
               type={MetricTableRowCell.TYPE.BYTES}
-              value={item?.['diskUsedBytes'] || 0}
+              value={item?.diskUsedBytes || 0}
             />
           </TableRow>
         )}

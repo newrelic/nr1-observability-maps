@@ -8,7 +8,7 @@ import { nerdlet, AutoSizer, NerdletStateContext } from 'nr1';
 import EntityMode from './components/entity-mode';
 import { DataProvider } from './context/data';
 
-function EntityModeRoot(props) {
+function EntityModeRoot() {
   useEffect(() => {
     nerdlet.setConfig({
       timePicker: false
@@ -17,7 +17,7 @@ function EntityModeRoot(props) {
 
   const nerdletContext = useContext(NerdletStateContext);
 
-  //////////////////////////////
+  // ////////////////////////////
   // cloud accel test workloads
   // nerdletContext.workloadGuids = [
   //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8ODkwMTc',

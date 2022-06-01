@@ -26,6 +26,7 @@ module.exports = {
     'react/prop-types': 0,
     'no-new': 0,
     'no-case-declarations': 0,
-    'eslint-comments/no-unlimited-disable': 0
+    'eslint-comments/no-unlimited-disable': 0,
+    'eslint-comments/no-unused-disable': 0
   }
 };

@@ -6,7 +6,6 @@ no-console: 0,
 import React, { useContext, useMemo } from 'react';
 import { Button, Card, CardHeader, CardBody, HeadingText } from 'nr1';
 import DataContext from '../../context/data';
-import _ from 'lodash';
 
 function LeftSidebar() {
   const { updateDataState, dataDrawer, gravity, linkLength } = useContext(
@@ -40,7 +39,7 @@ function LeftSidebar() {
               max="1000"
               step="50"
               value={gravity}
-              class="slider"
+              className="slider"
               onChange={e =>
                 updateDataState({ gravity: parseInt(e.target.value) })
               }
@@ -63,7 +62,7 @@ function LeftSidebar() {
               max="1000"
               step="25"
               value={linkLength}
-              class="slider"
+              className="slider"
               onChange={e =>
                 updateDataState({ linkLength: parseInt(e.target.value) })
               }

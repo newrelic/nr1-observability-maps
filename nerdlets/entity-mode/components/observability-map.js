@@ -4,7 +4,6 @@ no-console: 0,
 */ // --> OFF
 
 import React, { useContext, useMemo } from 'react';
-import { Button } from 'nr1';
 import DataContext from '../context/data';
 import Map from './map/map';
 import { cleanNodeId } from '../lib/helper';
@@ -13,9 +12,7 @@ import LinkHandler from './custom-links/handler';
 
 function ObservabilityMap(props) {
   const { width, height } = props;
-  const { updateDataState, entityMapData, gravity, linkLength } = useContext(
-    DataContext
-  );
+  const { entityMapData, gravity, linkLength } = useContext(DataContext);
 
   if (width === 0 || height === 0) return null;
   if (entityMapData.nodes.length === 0) return null;

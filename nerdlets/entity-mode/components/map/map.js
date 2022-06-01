@@ -1,5 +1,6 @@
 /* eslint
 no-console: 0,
+no-unused-vars: 0
 */
 import React, { useState, useContext, useMemo } from 'react';
 import { Graph } from 'react-d3-graph';
@@ -69,7 +70,7 @@ function Map(props) {
     x,
     y,
     mapConfig,
-    updateDataContextState
+    updateDataState
   ) => {
     // // perform a quick artifical update, before coordinates are saved to nerdstore
     // const { data } = this.state;
@@ -81,7 +82,7 @@ function Map(props) {
     if (!ignoreNames.includes(nodeId)) {
       mapConfig.nodeData[nodeId].x = x;
       mapConfig.nodeData[nodeId].y = y;
-      updateDataContextState({ mapConfig: { ...mapConfig } }, ['saveMap']);
+      updateDataState({ mapConfig: { ...mapConfig } }, ['saveMap']);
     }
 
     console.log(
@@ -89,12 +90,7 @@ function Map(props) {
     );
   };
 
-  const onRightClickNode = (
-    event,
-    nodeId,
-    mapConfig,
-    updateDataContextState
-  ) => {
+  const onRightClickNode = (event, nodeId, mapConfig, updateDataState) => {
     console.log(`Right clicked node ${(event, nodeId)}`);
     if (mapConfig && mapConfig.nodeData && mapConfig.nodeData[nodeId]) {
       this.setState({
@@ -103,7 +99,7 @@ function Map(props) {
         menuX: event.clientX,
         menuY: event.clientY - 75
       });
-      updateDataContextState({
+      updateDataState({
         sidebarOpen: false,
         selectedNode: nodeId,
         showContextMenu: true
@@ -117,7 +113,7 @@ function Map(props) {
 
   const onClickGraph = updateDataContextState => {
     console.log(`Clicked the graph background`);
-    updateDataContextState({
+    updateDataState({
       selectedNode: '',
       sidebarOpen: false,
       showContextMenu: false
@@ -135,7 +131,7 @@ function Map(props) {
     source,
     target,
     mapConfig,
-    updateDataContextState
+    updateDataState
   ) => {
     console.log(`Right clicked link between ${source} and ${target}`);
     const link = `${source}:::${target}`;
@@ -145,7 +141,7 @@ function Map(props) {
         menuX: event.clientX,
         menuY: event.clientY - 75
       });
-      updateDataContextState({
+      updateDataState({
         sidebarOpen: false,
         selectedLink: link,
         showContextMenu: true
@@ -211,7 +207,7 @@ function Map(props) {
                       rightClick(
                         item,
                         rightClickedNodeId,
-                        updateDataContextState,
+                        updateDataState,
                         mapData,
                         mapConfig
                       )
