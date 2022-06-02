@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.20.0...v0.21.0) (2022-06-02)
+
+
+### Features
+
+* instrumentation helper ([#88](https://github.com/newrelic/nr1-observability-maps/issues/88)) ([c9fdfbb](https://github.com/newrelic/nr1-observability-maps/commit/c9fdfbbad5900cfe115a2f363b8c3fb34b3b3d8c))
+
 # [0.20.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.19.0...v0.20.0) (2022-06-01)
 
 
