@@ -1,0 +1,550 @@
+{
+  "standard": [
+    {
+      "id": "apache",
+      "name": "Apache",
+      "events": [
+        "ApacheSample"
+      ],
+      "github": "newrelic/nri-apache",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/apache-monitoring-integration/"
+      ],
+      "matches": [
+        "apache"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "apache-open-source-integration",
+          "activeEnvironment": "apache-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "cassandra",
+      "name": "Cassandra",
+      "events": [
+        "CassandraSample"
+      ],
+      "github": "newrelic/nri-cassandra",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/cassandra-monitoring-integration/"
+      ],
+      "matches": [
+        "cassandra"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "cassandra-open-source-integration",
+          "activeEnvironment": "cassandra-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "couchbase",
+      "name": "Couchbase",
+      "events": [
+        "CouchbaseNodeSample",
+        "CouchbaseClusterSample",
+        "CouchbaseQueryEngineSample",
+        "CouchbaseBucketSample"
+      ],
+      "github": "newrelic/nri-couchbase",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/couchbase-monitoring-integration/"
+      ],
+      "matches": [
+        "couchbase"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "couchbase-open-source-integration",
+          "activeEnvironment": "couchbase-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "elasticsearch",
+      "name": "Couchbase",
+      "events": [
+        "ElasticsearchClusterSample",
+        "ElasticsearchCommonSample",
+        "ElasticsearchIndexSample",
+        "ElasticsearchNodeSample"
+      ],
+      "github": "newrelic/nri-elasticsearch",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/elasticsearch-monitoring-integration/"
+      ],
+      "matches": [
+        "elasticsearch"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "elasticsearch-open-source-integration",
+          "activeEnvironment": "elasticsearch-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "haproxy",
+      "name": "HA Proxy",
+      "events": [
+        "HAProxyBackendSample",
+        "HAProxyFrontendSample",
+        "HAProxyServerSample"
+      ],
+      "github": "newrelic/nri-haproxy",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/haproxy-monitoring-integration/"
+      ],
+      "matches": [
+        "haproxy"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "haproxy-open-source-integration",
+          "activeEnvironment": "haproxy-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "consul",
+      "name": "Consul",
+      "events": [
+        "ConsulAgentSample",
+        "ConsulDatacenterSample"
+      ],
+      "github": "newrelic/nri-consul",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/hashicorp-consul-monitoring-integration/"
+      ],
+      "matches": [
+        "consul"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "hashicorp-consul-open-source-integration",
+          "activeEnvironment": "hashicorp-consul-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "jmx",
+      "name": "JMX",
+      "events": [
+        "JVMSample"
+      ],
+      "github": "newrelic/nri-jmx",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/jmx-monitoring-integration/"
+      ],
+      "matches": [
+        "java"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "jmx-open-source-integration",
+          "activeEnvironment": "jmx-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "kafka",
+      "name": "Kafka",
+      "events": [
+        "KafkaBrokerSample",
+        "KafkaOffsetSample",
+        "KafkaTopicSample",
+        "KafkaProducerSample"
+      ],
+      "github": "newrelic/nri-kafka",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/kafka/kafka-integration/"
+      ],
+      "matches": [
+        "kafka"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "kafka-open-source-integration",
+          "activeEnvironment": "kafka-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "memcached",
+      "name": "Memcached",
+      "events": [
+        "MemcachedSample",
+        "MemcachedSlabSample"
+      ],
+      "github": "newrelic/nri-memcached",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/memcached-monitoring-integration/"
+      ],
+      "matches": [
+        "memcached"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "memcached-open-source-integration",
+          "activeEnvironment": "memcached-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "mongodb",
+      "name": "Mongodb",
+      "events": [
+        "MongoDatabaseSample",
+        "MongodSample",
+        "MongoSample",
+        "MongosSample",
+        "MongoConfigServerSample",
+        "MongoCollectionSample"
+      ],
+      "github": "newrelic/nri-mongodb",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/mongodb-monitoring-integration/"
+      ],
+      "matches": [
+        "mongo"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "mongodb-open-source-integration",
+          "activeEnvironment": "mongodb-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "events": [
+        "MysqlSample"
+      ],
+      "github": "newrelic/nri-mysql",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/mysql-monitoring-integration/"
+      ],
+      "matches": [
+        "mysql"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "mysql-open-source-integration",
+          "activeEnvironment": "mysql-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "mssql",
+      "name": "MSSQL",
+      "events": [
+        "MssqlInstanceSample",
+        "MssqlDatabaseSample"
+      ],
+      "github": "newrelic/nri-mssql",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/microsoft-sql-server-monitoring-integration/"
+      ],
+      "matches": [
+        "mssql",
+        "sqlserver"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "mssql-open-source-integration",
+          "activeEnvironment": "mssql-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "nagios",
+      "name": "Nagios",
+      "events": [
+        "NagiosServiceCheckSample"
+      ],
+      "github": "newrelic/nri-nagios",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/nagios-monitoring-integration/"
+      ],
+      "matches": [
+        "nagios"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "nagios-open-source-integration",
+          "activeEnvironment": "nagios-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "nginx",
+      "name": "Nginx",
+      "events": [
+        "NginxSample"
+      ],
+      "github": "newrelic/nri-nginx",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/nginx-monitoring-integration/"
+      ],
+      "matches": [
+        "nginx"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "nginx-open-source-integration",
+          "activeEnvironment": "nginx-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "postgres",
+      "name": "Postgres",
+      "events": [
+        "PostgresqlDatabaseSample",
+        "PostgresqlInstanceSample",
+        "PostgresqlTableSample",
+        "PostgresqlIndexSample"
+      ],
+      "github": "newrelic/nri-postgres",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/postgresql/postgresql-integration/"
+      ],
+      "matches": [
+        "postgres"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "postgres-open-source-integration",
+          "activeEnvironment": "postgres-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "rabbitmq",
+      "name": "RabbitMQ",
+      "events": [
+        "RabbitmqExchangeSample",
+        "RabbitmqNodeSample",
+        "RabbitmqQueueSample",
+        "RabbitmqVhostSample"
+      ],
+      "github": "newrelic/nri-rabbitmq",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/rabbitmq-monitoring-integration/"
+      ],
+      "matches": [
+        "rabbitmq"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "rabbitmq-open-source-integration",
+          "activeEnvironment": "rabbitmq-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "events": [
+        "RedisSample"
+      ],
+      "github": "newrelic/nri-redis",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/redis-monitoring-integration/"
+      ],
+      "matches": [
+        "redis"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "redis-open-source-integration",
+          "activeEnvironment": "redis-open-source-integration"
+        }
+      }
+    },
+    {
+      "id": "varnish",
+      "name": "Varnish Cache",
+      "events": [
+        "VarnishSample",
+        "VarnishBackendSample"
+      ],
+      "github": "newrelic/nri-redis",
+      "docs": [
+        "https://docs.newrelic.com/docs/infrastructure/host-integrations/host-integrations-list/varnish-cache-monitoring-integration/"
+      ],
+      "matches": [
+        "varnish"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "install-newrelic.installation-plan",
+        "urlState": {
+          "path": "ohi",
+          "recipeName": "varnish-cache-open-source-integration",
+          "activeEnvironment": "varnish-cache-open-source-integration"
+        }
+      }
+    }
+  ],
+  "flex": [
+    {
+      "id": "netstat-linux",
+      "name": "IP Connections via Netstat",
+      "description": "Get linux TCP/UDP network connections",
+      "github": "newrelic/nri-flex/blob/master/examples/linux/network-linux.yml",
+      "events": [
+        "NetstatConnectionSample"
+      ],
+      "operatingSystems": [
+        "linux"
+      ]
+    },
+    {
+      "id": "uptime-linux",
+      "name": "Capture linux uptime",
+      "description": "Get linux uptime",
+      "github": "newrelic/nri-flex/blob/master/examples/linux/linux-uptime-seconds.yml",
+      "events": [
+        "linuxUptimeSecondsSample"
+      ],
+      "operatingSystems": [
+        "linux"
+      ]
+    }
+  ],
+  "apm": [
+    {
+      "id": "java",
+      "name": "Java",
+      "github": "newrelic/newrelic-java-agent",
+      "docs": [
+        "https://docs.newrelic.com/docs/apm/agents/java-agent/getting-started/introduction-new-relic-java/"
+      ],
+      "matches": [
+        "java"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "setup-nerdlets.setup-java-integration"
+      }
+    },
+    {
+      "id": "dotnet",
+      "name": ".NET",
+      "github": "newrelic/newrelic-dotnet-agent",
+      "docs": [
+        "https://docs.newrelic.com/docs/agents/net-agent/getting-started/introduction-new-relic-net/"
+      ],
+      "matches": [
+        "dotnet"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "setup-nerdlets.setup-dotnet-integration"
+      }
+    },
+    {
+      "id": "nodejs",
+      "name": "Node JS",
+      "github": "newrelic/newrelic-node-agent",
+      "docs": [
+        "https://docs.newrelic.com/docs/apm/agents/nodejs-agent/installation-configuration/install-nodejs-agent/"
+      ],
+      "matches": [
+        "node"
+      ],
+      "notMatch": [
+        "node-exporter"
+      ],
+      "installNerdlet": {
+        "id": "setup-nerdlets.setup-node-integration"
+      }
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "github": "newrelic/newrelic-php-agent",
+      "docs": [
+        "https://docs.newrelic.com/docs/apm/agents/php-agent/getting-started/introduction-new-relic-php/"
+      ],
+      "matches": [
+        "php"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "setup-nerdlets.setup-php-integration"
+      }
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "github": "newrelic/newrelic-python-agent",
+      "docs": [
+        "https://docs.newrelic.com/docs/apm/agents/python-agent/getting-started/introduction-new-relic-python/"
+      ],
+      "matches": [
+        "python"
+      ],
+      "notMatch": [],
+      "installNerdlet": {
+        "id": "setup-nerdlets.setup-python-integration"
+      }
+    }
+  ]
+}

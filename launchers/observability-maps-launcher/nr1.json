@@ -3,5 +3,5 @@
   "id": "observability-maps-launcher",
   "description": "Map anything and everything!",
   "displayName": "Observability Maps",
-  "rootNerdletId": "observability-maps-nerdlet"
+  "rootNerdletId": "entity-mode"
 }

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import DataContext from '../../context/data';
 import {
   navigation,
+  Button,
   EmptyState,
   TextField,
   Table,
@@ -10,11 +11,14 @@ import {
   TableRow,
   TableRowCell
 } from 'nr1';
+import { instrumentationAnalysis } from '../../lib/instrument';
 
 // eslint-disable-next-line no-unused-vars
 export default function ServiceTable(props) {
   const { height, width } = props;
-  const { entityMapData, selectedEntities } = useContext(DataContext);
+  const { entityMapData, selectedEntities, integrations } = useContext(
+    DataContext
+  );
   const [searchText, setSearchText] = useState('');
   const [column, setColumn] = useState(0);
   const [sortingType, setSortingType] = useState(
@@ -55,6 +59,8 @@ export default function ServiceTable(props) {
     );
   }
 
+  instrumentationAnalysis(integrations, entitiesWithData, [1]);
+
   const columns = [
     {
       value: ({ item }) => item?.facet[0],
@@ -80,6 +86,11 @@ export default function ServiceTable(props) {
       value: ({ item }) => item?.source,
       width: '10%',
       key: 'Source'
+    },
+    {
+      value: ({ item }) => item?.instrument?.id,
+      width: '10%',
+      key: 'Instrument'
     }
   ];
 
@@ -128,6 +139,15 @@ export default function ServiceTable(props) {
             <TableRowCell>{item.state}</TableRowCell>
             <TableRowCell>{item.status}</TableRowCell>
             <TableRowCell>{item.source}</TableRowCell>
+            <TableRowCell
+              onClick={item?.instrument ? item?.instrument?.onClick : undefined}
+            >
+              {item?.instrument?.name && (
+                <Button type={Button.TYPE.PRIMARY}>
+                  {item?.instrument?.name}
+                </Button>
+              )}
+            </TableRowCell>
           </TableRow>
         )}
       </Table>
