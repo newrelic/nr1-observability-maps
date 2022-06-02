@@ -14,6 +14,7 @@ import { entityExpansionQuery, workloadEntityQuery } from '../lib/queries';
 const async = require('async');
 
 const QUEUE_LIMIT = 5;
+const DEFAULT_INTEGRATIONS = require('../../../integrations.json');
 
 const DataContext = React.createContext();
 
@@ -52,11 +53,13 @@ export class DataProvider extends Component {
       },
       gravity: 350,
       linkLength: 150,
-      selectedEntities: {}
+      selectedEntities: {},
+      integrations: null
     };
   }
 
   componentDidMount() {
+    this.setIntegrations();
     const { workloadGuids } = this.props;
     if (workloadGuids) {
       this.setState({ entityMode: true, workloadGuids }, () =>
@@ -86,6 +89,31 @@ export class DataProvider extends Component {
     // //   workloadGuidChunk
     // // }));
   };
+
+  setIntegrations() {
+    return new Promise(resolve => {
+      try {
+        fetch(
+          'https://raw.githubusercontent.com/newrelic-experimental/nr1-gaps/master/integrations.json'
+        )
+          .then(response => response.json())
+          .then(integrations =>
+            this.setState({ integrations }, () => resolve())
+          )
+          .catch(e => {
+            console.log('failed to get latest integrations, using defaults');
+            console.log(e);
+            this.setState({ integrations: DEFAULT_INTEGRATIONS }, () =>
+              resolve()
+            );
+          });
+      } catch (e) {
+        console.log('failed to get latest integrations, using defaults');
+        console.log(e);
+        this.setState({ integrations: DEFAULT_INTEGRATIONS }, () => resolve());
+      }
+    });
+  }
 
   getEntityData = workloadData => {
     return new Promise(resolve => {

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import DataContext from '../../context/data';
 import {
   navigation,
+  Button,
   EmptyState,
   TextField,
   Table,
@@ -10,11 +11,14 @@ import {
   TableRow,
   TableRowCell
 } from 'nr1';
+import { instrumentationAnalysis } from '../../lib/instrument';
 
 // eslint-disable-next-line no-unused-vars
 export default function ConnectionTable(props) {
   const { height, width } = props;
-  const { entityMapData, selectedEntities } = useContext(DataContext);
+  const { entityMapData, selectedEntities, integrations } = useContext(
+    DataContext
+  );
   const [searchText, setSearchText] = useState('');
   const [column, setColumn] = useState(0);
   const [sortingType, setSortingType] = useState(
@@ -54,6 +58,8 @@ export default function ConnectionTable(props) {
       />
     );
   }
+
+  instrumentationAnalysis(integrations, entitiesWithData, [0], ['user']);
 
   const columns = [
     {
@@ -95,6 +101,11 @@ export default function ConnectionTable(props) {
       value: ({ item }) => item?.pid,
       width: '10%',
       key: 'PID'
+    },
+    {
+      value: ({ item }) => item?.instrument?.id,
+      width: '10%',
+      key: 'Instrument'
     }
   ];
 
@@ -146,6 +157,15 @@ export default function ConnectionTable(props) {
             <TableRowCell>{item.protocol}</TableRowCell>
             <TableRowCell>{item.user}</TableRowCell>
             <TableRowCell>{item.pid}</TableRowCell>
+            <TableRowCell
+              onClick={item?.instrument ? item?.instrument?.onClick : undefined}
+            >
+              {item?.instrument?.name && (
+                <Button type={Button.TYPE.PRIMARY}>
+                  {item?.instrument?.name}
+                </Button>
+              )}
+            </TableRowCell>
           </TableRow>
         )}
       </Table>

@@ -8,13 +8,17 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-  TableRowCell
+  TableRowCell,
+  Button
 } from 'nr1';
+import { instrumentationAnalysis } from '../../lib/instrument';
 
 // eslint-disable-next-line no-unused-vars
 export default function ProcessTable(props) {
   const { height, width } = props;
-  const { entityMapData, selectedEntities } = useContext(DataContext);
+  const { entityMapData, selectedEntities, integrations } = useContext(
+    DataContext
+  );
   const [searchText, setSearchText] = useState('');
   const [column, setColumn] = useState(0);
   const [sortingType, setSortingType] = useState(
@@ -36,7 +40,9 @@ export default function ProcessTable(props) {
         : true
     )
     .filter(n => (n.ProcessSamples?.results || []).length > 0)
-    .map(e => e.ProcessSamples?.results || [])
+    .map(e => {
+      return e.ProcessSamples?.results || [];
+    })
     .flat()
     .filter(
       e =>
@@ -54,6 +60,8 @@ export default function ProcessTable(props) {
       />
     );
   }
+
+  instrumentationAnalysis(integrations, entitiesWithData, [1]);
 
   const columns = [
     {
@@ -75,6 +83,11 @@ export default function ProcessTable(props) {
       value: ({ item }) => item?.['latest.processId'],
       width: '10%',
       key: 'Process ID'
+    },
+    {
+      value: ({ item }) => item?.instrument?.id,
+      width: '10%',
+      key: 'Instrument'
     }
   ];
 
@@ -122,6 +135,15 @@ export default function ProcessTable(props) {
             <TableRowCell>{item.facet[1]}</TableRowCell>
             <TableRowCell>{item?.['latest.parentProcessId']}</TableRowCell>
             <TableRowCell>{item?.['latest.processId']}</TableRowCell>
+            <TableRowCell
+              onClick={item?.instrument ? item?.instrument?.onClick : undefined}
+            >
+              {item?.instrument?.name && (
+                <Button type={Button.TYPE.PRIMARY}>
+                  {item?.instrument?.name}
+                </Button>
+              )}
+            </TableRowCell>
           </TableRow>
         )}
       </Table>
