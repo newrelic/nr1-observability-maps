@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.21.0...v0.22.0) (2022-06-07)
+
+
+### Features
+
+* remove test workloads ([251bf16](https://github.com/newrelic/nr1-observability-maps/commit/251bf16b4557fa2a0f4e7498a40daae9f571001f))
+
 # [0.21.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.20.0...v0.21.0) (2022-06-02)
 
 
