@@ -1,0 +1,10 @@
+{
+  "APM": {
+    "*": {
+      "mainChart": {
+        "query": "SELECT count(*) FROM Transaction",
+        "chartType": "line"
+      }
+    }
+  }
+}
