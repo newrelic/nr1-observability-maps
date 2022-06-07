@@ -1,3 +1,10 @@
+## [0.22.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.22.0...v0.22.1) (2022-06-07)
+
+
+### Bug Fixes
+
+* launcher nerdlet id ([5e1acf2](https://github.com/newrelic/nr1-observability-maps/commit/5e1acf2652a53620444ae35dd8c385c5d2c88256))
+
 # [0.22.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.21.0...v0.22.0) (2022-06-07)
 
 
