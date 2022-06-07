@@ -2,9 +2,15 @@
   "APM": {
     "*": {
       "mainChart": {
-        "query": "SELECT count(*) FROM Transaction",
+        "nrql": "SELECT count(*) FROM Transaction",
         "chartType": "line"
       }
+    }
+  },
+  "HOST": {
+    "mainChart": {
+      "nrql": "SELECT count(*) FROM SystemSample",
+      "chartType": "line"
     }
   }
 }
