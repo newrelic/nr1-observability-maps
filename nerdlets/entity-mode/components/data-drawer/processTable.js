@@ -40,9 +40,7 @@ export default function ProcessTable(props) {
         : true
     )
     .filter(n => (n.ProcessSamples?.results || []).length > 0)
-    .map(e => {
-      return e.ProcessSamples?.results || [];
-    })
+    .map(e => e.ProcessSamples?.results || [])
     .flat()
     .filter(
       e =>

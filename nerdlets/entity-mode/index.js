@@ -17,13 +17,13 @@ function EntityModeRoot() {
 
   const nerdletContext = useContext(NerdletStateContext);
 
-  // ////////////////////////////
-  // cloud accel test workloads
-  nerdletContext.workloadGuids = [
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8ODkwMTc',
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTE1OTU',
-    'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTIyNDg'
-  ];
+  // // ////////////////////////////
+  // // cloud accel test workloads
+  // nerdletContext.workloadGuids = [
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8ODkwMTc',
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTE1OTU',
+  //   'MzI0MjYyN3xOUjF8V09SS0xPQUR8OTIyNDg'
+  // ];
 
   return (
     <DataProvider {...nerdletContext}>
