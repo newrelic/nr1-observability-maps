@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint no-use-before-define: 0 */ // --> OFF
 import {
   NerdGraphQuery,
