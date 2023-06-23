@@ -118,11 +118,9 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
 
   return ngql`{
   actor {
-    entitySearch(query: "domain IN ('${domain}') ${
-    subType ? `AND type = '${subType}'` : ``
-  } AND reporting = 'true' ${
-    accountId ? `AND tags.accountId IN ('${accountId}')` : ''
-  }") {
+    entitySearch(query: "domain IN ('${domain}') ${subType ? `AND type = '${subType}'` : ``
+    } AND reporting = 'true' ${accountId ? `AND tags.accountId IN ('${accountId}')` : ''
+    }") {
       query
       results${cursor ? `(cursor: "${cursor}")` : ''} {
         nextCursor
@@ -394,13 +392,20 @@ export const ApmEntityBatchQuery = guids => {
         settings {
           apdexTarget
         }
-        deployments {
-          changelog
-          description
-          permalink
-          revision
-          timestamp
-          user
+        deploymentSearch {
+          results {
+            changelog
+            commit
+            deepLink
+            deploymentId
+            deploymentType
+            description
+            entityGuid
+            groupId
+            timestamp
+            user
+            version
+          }
         }
         apmSummary {
           apdexScore
