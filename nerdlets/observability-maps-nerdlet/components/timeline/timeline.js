@@ -41,7 +41,7 @@ export default class TimelineView extends React.PureComponent {
             const bubbleStyle = {};
 
             if (eventType === 'deployment') {
-              title = `${event.name}: ${event.revision}`;
+              title = `${event.description}: ${event.commit}`;
               icon = <Icon style={{ paddingLeft: '2px' }} name="code" />;
             } else if (eventType === 'alert') {
               title = `${event.name}: ${event.label}`;
@@ -128,14 +128,19 @@ export default class TimelineView extends React.PureComponent {
                   recentAlerts.push(data.nodes[i].recentAlertViolations[z]);
                 }
               }
-              if (
-                data.nodes[i].deployments &&
-                data.nodes[i].deployments.length > 0
-              ) {
-                for (let z = 0; z < data.nodes[i].deployments.length; z++) {
-                  data.nodes[i].deployments[z].name = data.nodes[i].name;
-                  data.nodes[i].deployments[z].guid = data.nodes[i].guid;
-                  recentDeployments.push(data.nodes[i].deployments[z]);
+              if ((data.nodes[i]?.deploymentSearch?.results || []).length > 0) {
+                for (
+                  let z = 0;
+                  z < data.nodes[i].deploymentSearch?.results.length;
+                  z++
+                ) {
+                  data.nodes[i].deploymentSearch.results[z].name =
+                    data.nodes[i].name;
+                  data.nodes[i].deploymentSearch.results[z].guid =
+                    data.nodes[i].guid;
+                  recentDeployments.push(
+                    data.nodes[i].deploymentSearch?.results[z]
+                  );
                 }
               }
             }
