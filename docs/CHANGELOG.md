@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.22.1...v0.23.0) (2023-06-29)
+
+
+### Features
+
+* update deployments to deploymentSearch ([#92](https://github.com/newrelic/nr1-observability-maps/issues/92)) ([6264870](https://github.com/newrelic/nr1-observability-maps/commit/62648705d7745f0b8886621965f52f91a0c95e5b))
+
 ## [0.22.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.22.0...v0.22.1) (2022-06-07)
 
 
