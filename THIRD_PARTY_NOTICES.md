@@ -20,6 +20,7 @@ code, the source code can be found at [https://github.com/newrelic/nr1-observabi
 * [graphql](#graphql)
 * [prop-types](#prop-types)
 * [react-ace](#react-ace)
+* [react-d3-graph](#react-d3-graph)
 * [react-dom](#react-dom)
 * [react-event-timeline](#react-event-timeline)
 * [react-select](#react-select)
@@ -41,7 +42,7 @@ code, the source code can be found at [https://github.com/newrelic/nr1-observabi
 
 ### ace-builds
 
-This product includes source derived from [ace-builds](https://github.com/ajaxorg/ace-builds) ([v1.4.12](https://github.com/ajaxorg/ace-builds/tree/v1.4.12)), distributed under the [BSD-3-Clause License](https://github.com/ajaxorg/ace-builds/blob/v1.4.12/LICENSE):
+This product includes source derived from [ace-builds](https://github.com/ajaxorg/ace-builds) ([v1.4.14](https://github.com/ajaxorg/ace-builds/tree/v1.4.14)), distributed under the [BSD-3-Clause License](https://github.com/ajaxorg/ace-builds/blob/v1.4.14/LICENSE):
 
 ```
 Copyright (c) 2010, Ajax.org B.V.
@@ -108,7 +109,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### graphql-tag
 
-This product includes source derived from [graphql-tag](https://github.com/apollographql/graphql-tag) ([v2.10.4](https://github.com/apollographql/graphql-tag/tree/v2.10.4)), distributed under the [MIT License](https://github.com/apollographql/graphql-tag/blob/v2.10.4/LICENSE):
+This product includes source derived from [graphql-tag](https://github.com/apollographql/graphql-tag) ([v2.12.0](https://github.com/apollographql/graphql-tag/tree/v2.12.0)), distributed under the [MIT License](https://github.com/apollographql/graphql-tag/blob/v2.12.0/LICENSE):
 
 ```
 The MIT License (MIT)
@@ -166,7 +167,7 @@ SOFTWARE.
 
 ### prop-types
 
-This product includes source derived from [prop-types](https://github.com/facebook/prop-types) ([v15.7.2](https://github.com/facebook/prop-types/tree/v15.7.2)), distributed under the [MIT License](https://github.com/facebook/prop-types/blob/v15.7.2/LICENSE):
+This product includes source derived from [prop-types](https://github.com/facebook/prop-types) ([v15.8.1](https://github.com/facebook/prop-types/tree/v15.8.1)), distributed under the [MIT License](https://github.com/facebook/prop-types/blob/v15.8.1/LICENSE):
 
 ```
 MIT License
@@ -195,7 +196,7 @@ SOFTWARE.
 
 ### react-ace
 
-This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.3.0](https://github.com/securingsincity/react-ace/tree/v9.3.0)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.3.0/LICENSE):
+This product includes source derived from [react-ace](https://github.com/securingsincity/react-ace) ([v9.5.0](https://github.com/securingsincity/react-ace/tree/v9.5.0)), distributed under the [MIT License](https://github.com/securingsincity/react-ace/blob/v9.5.0/LICENSE):
 
 ```
 The MIT License (MIT)
@@ -220,6 +221,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+```
+
+### react-d3-graph
+
+This product includes source derived from [react-d3-graph](https://github.com/danielcaldas/react-d3-graph) ([v2.3.0](https://github.com/danielcaldas/react-d3-graph/tree/v2.3.0)), distributed under the [MIT License](https://github.com/danielcaldas/react-d3-graph/blob/v2.3.0/LICENSE):
+
+```
+MIT License
+
+Copyright (c) 2017 Daniel Caldas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ```
 
