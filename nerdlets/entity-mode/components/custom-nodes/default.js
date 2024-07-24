@@ -46,7 +46,7 @@ export default class CustomNode extends React.PureComponent {
                   [`popup_${nodeId}`]: !this.state[`popup_${nodeId}`]
                 })
               }
-              className="icon"
+              className="om-icon icon"
               style={{
                 zIndex: 999999,
                 height: '35px',
