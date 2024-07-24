@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "Wed Jun 01 2022 15:00:30 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Wed Jul 24 2024 12:00:27 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nr1-observability-maps",
   "projectUrl": "https://github.com/newrelic/nr1-observability-maps",
-  "includeDev": true,
   "includeOptDeps": false,
+  "includeDev": true,
   "dependencies": {
     "ace-builds@1.5.3": {
       "name": "ace-builds",
