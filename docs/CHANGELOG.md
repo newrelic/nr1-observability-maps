@@ -1,3 +1,15 @@
+# [0.24.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.23.0...v0.24.0) (2024-07-24)
+
+
+### Bug Fixes
+
+* pkg lock ([bfeeb55](https://github.com/newrelic/nr1-observability-maps/commit/bfeeb55eb1307a9e856ba1ed8816b8cc93ef21ec))
+
+
+### Features
+
+* class bump ([b59840a](https://github.com/newrelic/nr1-observability-maps/commit/b59840a7cad726d5fda83beddee23231a33eda62))
+
 # [0.23.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.22.1...v0.23.0) (2023-06-29)
 
 
