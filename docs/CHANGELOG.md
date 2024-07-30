@@ -1,3 +1,10 @@
+## [0.24.2](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.1...v0.24.2) (2024-07-30)
+
+
+### Bug Fixes
+
+* set hover metric unit color ([54e050f](https://github.com/newrelic/nr1-observability-maps/commit/54e050fd5e44725140ae33fed11781f7004d5d40))
+
 ## [0.24.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.0...v0.24.1) (2024-07-30)
 
 
