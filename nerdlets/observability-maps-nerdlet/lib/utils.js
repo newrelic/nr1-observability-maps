@@ -119,9 +119,11 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
 
   return ngql`{
   actor {
-    entitySearch(query: "domain IN ('${domain}') ${subType ? `AND type = '${subType}'` : ``
-    } AND reporting = 'true' ${accountId ? `AND tags.accountId IN ('${accountId}')` : ''
-    }") {
+    entitySearch(query: "domain IN ('${domain}') ${
+    subType ? `AND type = '${subType}'` : ``
+  } AND reporting = 'true' ${
+    accountId ? `AND tags.accountId IN ('${accountId}')` : ''
+  }") {
       query
       results${cursor ? `(cursor: "${cursor}")` : ''} {
         nextCursor
@@ -571,10 +573,11 @@ export const InfraEntityBatchQuery = guids => {
   }`;
 };
 
-export const DashboardQuery = accountId => `{
+export const DashboardQuery = (accountId, cursor) => `{
   actor {
     entitySearch(query: "accountId=${accountId} and type='DASHBOARD'") {
-      results {
+      results${cursor ? `(cursor: "${cursor}")` : ''} {
+        nextCursor
         entities {
           accountId
           guid
