@@ -3,10 +3,17 @@ no-console: 0
 */
 
 import React from 'react';
-import { Button, Form, Table, Radio, Input } from 'semantic-ui-react';
+import { Button, Form, Radio, Input } from 'semantic-ui-react';
 import { DataConsumer } from '../../../context/data';
 import { nerdGraphQuery, DashboardQuery } from '../../../lib/utils';
-import { Spinner } from 'nr1';
+import {
+  Spinner,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+  TableRowCell
+} from 'nr1';
 
 export default class DrilldownDashboard extends React.PureComponent {
   constructor(props) {
@@ -16,40 +23,39 @@ export default class DrilldownDashboard extends React.PureComponent {
       searchedDashboards: [],
       showSearchMsg: false,
       selectedDash: null,
-      searchText: ''
+      searchText: '',
+      fetchingDashboards: false
     };
   }
 
-  fetchDashboards = async cursor => {
-    let { selectedAccount, searchedDashboards } = this.state;
-    // if no cursor its a new search so empty entities
-    if (!cursor) {
-      searchedDashboards = [];
-    }
+  fetchDashboards = async (init, cursor, incomingResults) => {
+    const { selectedAccount } = this.state;
+
+    let results = init ? [] : incomingResults;
 
     const nerdGraphResult = await nerdGraphQuery(
-      DashboardQuery(selectedAccount)
+      DashboardQuery(selectedAccount, cursor)
     );
     const dashboardSearchResults =
       (((nerdGraphResult || {}).actor || {}).entitySearch || {}).results || {};
     // let foundGuids = ((entitySearchResults || {}).entities || []).map((result)=>result.guid)
 
-    searchedDashboards = [
-      ...searchedDashboards,
-      ...dashboardSearchResults.entities
-    ];
-    this.setState({ searchedDashboards }, () => {
-      if (dashboardSearchResults.nextCursor) {
-        console.log(
-          'collecting next dashboardSearch batch guid:',
-          dashboardSearchResults.nextCursor
-        );
-        this.fetchEntities(dashboardSearchResults.nextCursor);
-      } else {
-        // console.log("complete", this.state.searchedEntities.length)
+    results = [...results, ...dashboardSearchResults.entities];
+
+    if (dashboardSearchResults.nextCursor) {
+      console.log(
+        'collecting next dashboardSearch batch guid:',
+        dashboardSearchResults.nextCursor
+      );
+      this.fetchDashboards(false, dashboardSearchResults.nextCursor, results);
+    } else {
+      console.log('complete', results.length);
+      this.setState({ searchedDashboards: results, fetchingDashboards: false });
+
+      if (results.length === 0) {
+        this.setState({ showSearchMsg: true });
       }
-      this.setState({ showSearchMsg: true });
-    });
+    }
   };
 
   updateDashboard = async (
@@ -72,7 +78,8 @@ export default class DrilldownDashboard extends React.PureComponent {
       searchedDashboards,
       showSearchMsg,
       selectedDash,
-      searchText
+      searchText,
+      fetchingDashboards
     } = this.state;
 
     return (
@@ -86,6 +93,12 @@ export default class DrilldownDashboard extends React.PureComponent {
 
           const currentDash = mapConfig.nodeData[selectedNode].dashboard;
           const addDisabled = selectedAccount === null || selectedDash === null;
+
+          const filteredDashboards = searchedDashboards.filter(dash =>
+            dash.name
+              ? dash.name.toLowerCase().includes(searchText.toLowerCase())
+              : false
+          );
 
           if (accountOptions) {
             return (
@@ -102,12 +115,17 @@ export default class DrilldownDashboard extends React.PureComponent {
                     }
                   />
                   <Form.Button
-                    disabled={!selectedAccount}
+                    disabled={!selectedAccount || fetchingDashboards}
                     label="&nbsp;"
                     width={4}
                     content="Fetch Dashboards"
                     onClick={() => {
-                      this.fetchDashboards();
+                      this.setState(
+                        { fetchingDashboards: true, searchedDashboards: [] },
+                        () => {
+                          this.fetchDashboards(true);
+                        }
+                      );
                     }}
                   />
                 </Form.Group>
@@ -130,6 +148,15 @@ export default class DrilldownDashboard extends React.PureComponent {
                   style={{
                     overflowY: 'scroll',
                     height: '300px',
+                    display: fetchingDashboards ? '' : 'none'
+                  }}
+                >
+                  <Spinner />
+                </div>
+                <div
+                  style={{
+                    overflowY: 'scroll',
+                    height: '300px',
                     display:
                       searchedDashboards.length === 0 && showSearchMsg
                         ? ''
@@ -138,42 +165,38 @@ export default class DrilldownDashboard extends React.PureComponent {
                 >
                   No entities found with accountId = {selectedAccount}.
                 </div>
+                {}
                 <div
                   style={{
                     overflowY: 'scroll',
                     height: '300px',
-                    display: searchedDashboards.length === 0 ? 'none' : ''
+                    display:
+                      searchedDashboards.length === 0 || fetchingDashboards
+                        ? 'none'
+                        : ''
                   }}
                 >
-                  <Table compact>
-                    <Table.Body>
-                      {searchedDashboards
-                        .filter(dash =>
-                          dash.name
-                            ? dash.name
-                                .toLowerCase()
-                                .includes(searchText.toLowerCase())
-                            : false
-                        )
-                        .map((dash, i) => {
-                          return (
-                            <Table.Row key={i}>
-                              <Table.Cell>{dash.name}</Table.Cell>
-                              <Table.Cell>
-                                <Radio
-                                  value={dash.guid}
-                                  checked={
-                                    (selectedDash || currentDash) === dash.guid
-                                  }
-                                  onChange={() =>
-                                    this.setState({ selectedDash: dash.guid })
-                                  }
-                                />
-                              </Table.Cell>
-                            </Table.Row>
-                          );
-                        })}
-                    </Table.Body>
+                  <Table items={filteredDashboards}>
+                    <TableHeader>
+                      <TableHeaderCell>Name</TableHeaderCell>
+                      <TableHeaderCell>Select</TableHeaderCell>
+                    </TableHeader>
+                    {({ item }) => (
+                      <TableRow key={item.guid}>
+                        <TableRowCell>{item.name}</TableRowCell>
+                        <TableRowCell>
+                          <Radio
+                            value={item.guid}
+                            checked={
+                              (selectedDash || currentDash) === item.guid
+                            }
+                            onChange={() =>
+                              this.setState({ selectedDash: item.guid })
+                            }
+                          />
+                        </TableRowCell>
+                      </TableRow>
+                    )}
                   </Table>
                 </div>
                 <br />
