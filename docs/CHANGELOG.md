@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.0...v0.24.1) (2024-07-30)
+
+
+### Bug Fixes
+
+* full dashboard list [#98](https://github.com/newrelic/nr1-observability-maps/issues/98) ([#107](https://github.com/newrelic/nr1-observability-maps/issues/107)) ([0ad5e76](https://github.com/newrelic/nr1-observability-maps/commit/0ad5e76ebbee3ebf17b16b5eaae673081b958c4e))
+
 # [0.24.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.23.0...v0.24.0) (2024-07-24)
 
 
