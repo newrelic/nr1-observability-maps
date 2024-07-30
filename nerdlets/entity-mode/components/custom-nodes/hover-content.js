@@ -40,7 +40,9 @@ export default class HoverContent extends React.PureComponent {
                 return (
                   <Table.Cell key={i}>
                     {value} {metric.unit}
-                    <h4>{niceMetricName(metric.name)}</h4>
+                    <h5 style={{ color: 'white' }}>
+                      {niceMetricName(metric.name)}
+                    </h5>
                   </Table.Cell>
                 );
               })}
