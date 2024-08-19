@@ -1,3 +1,10 @@
+# [0.25.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.2...v0.25.0) (2024-08-19)
+
+
+### Features
+
+* add workload entities, patch icon ([#108](https://github.com/newrelic/nr1-observability-maps/issues/108)) ([2b80d57](https://github.com/newrelic/nr1-observability-maps/commit/2b80d5703a73582d317ce5f068bc5db271685e60))
+
 ## [0.24.2](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.1...v0.24.2) (2024-07-30)
 
 
