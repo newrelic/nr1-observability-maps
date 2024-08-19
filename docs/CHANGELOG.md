@@ -1,3 +1,10 @@
+# [0.26.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.25.0...v0.26.0) (2024-08-19)
+
+
+### Features
+
+* add alert severity for workloads ([6e012d1](https://github.com/newrelic/nr1-observability-maps/commit/6e012d1fbe0bd82f873029f0e1d9e90883d746d2))
+
 # [0.25.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.24.2...v0.25.0) (2024-08-19)
 
 
