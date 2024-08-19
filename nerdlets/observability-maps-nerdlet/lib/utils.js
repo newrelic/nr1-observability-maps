@@ -117,11 +117,14 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
     subType = domainSplit[1];
   }
 
+  let domainQuery = `domain IN ('${domain}') AND`;
+  if (domain === 'WORKLOAD') domainQuery = '';
+
   return ngql`{
   actor {
-    entitySearch(query: "domain IN ('${domain}') ${
-    subType ? `AND type = '${subType}'` : ``
-  } AND reporting = 'true' ${
+    entitySearch(query: "${domainQuery} ${
+    subType ? ` type = '${subType}'` : ``
+  } reporting = 'true' ${
     accountId ? `AND tags.accountId IN ('${accountId}')` : ''
   }") {
       query
