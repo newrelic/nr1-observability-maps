@@ -153,6 +153,21 @@ export const entityBatchQuery = guids => {
   return `{
     actor {
       entities(guids: [${guids}]) {
+        ... on WorkloadEntity {
+          guid
+          name
+          alertSeverity
+          recentAlertViolations(count: 5) {
+            agentUrl
+            alertSeverity
+            closedAt
+            label
+            level
+            openedAt
+            violationId
+            violationUrl
+          }
+        }
         ... on SyntheticMonitorEntity {
           guid
           name
