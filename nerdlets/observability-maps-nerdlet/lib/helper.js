@@ -75,6 +75,8 @@ export const setEntityDesign = entityType => {
       return { icon: 'computer' };
     case 'MOBILE_APPLICATION_ENTITY':
       return { icon: 'mobile' };
+    case 'WORKLOAD_ENTITY':
+      return { icon: 'boxes' };
     case 'CUSTOM_ACCOUNT':
       return { icon: 'sitemap' };
     default:

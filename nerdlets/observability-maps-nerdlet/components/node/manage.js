@@ -31,7 +31,8 @@ export default class ManageNodes extends React.PureComponent {
         { key: 'b', text: 'BROWSER', value: 'BROWSER' },
         { key: 'm', text: 'MOBILE', value: 'MOBILE' },
         { key: 'i', text: 'INFRA', value: 'INFRA' },
-        { key: 's', text: 'SYNTH', value: 'SYNTH' }
+        { key: 's', text: 'SYNTH', value: 'SYNTH' },
+        { key: 'w', text: 'WORKLOAD', value: 'WORKLOAD' }
       ]
     };
   }
