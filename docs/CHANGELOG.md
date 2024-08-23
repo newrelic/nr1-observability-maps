@@ -1,3 +1,10 @@
+# [0.27.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.26.0...v0.27.0) (2024-08-23)
+
+
+### Features
+
+* add custom label functionality ([#109](https://github.com/newrelic/nr1-observability-maps/issues/109)) ([d6e1fb4](https://github.com/newrelic/nr1-observability-maps/commit/d6e1fb4f56d87cc1802b6f699f2d6e529388c959))
+
 # [0.26.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.25.0...v0.26.0) (2024-08-19)
 
 
