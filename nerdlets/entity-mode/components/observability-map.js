@@ -53,7 +53,8 @@ function ObservabilityMap(props) {
         highlightStrokeColor: 'blue',
         fontSize: 16,
         highlightFontSize: 16,
-        labelProperty: node => cleanNodeId(node.name || node.id),
+        labelProperty: node =>
+          cleanNodeId(node.customLabel || node.name || node.id),
         // fontColor: 'white',
         viewGenerator: node => <NodeHandler node={node} nodeSize={nodeSize} />
       },
