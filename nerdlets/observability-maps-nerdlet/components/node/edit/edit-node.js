@@ -7,6 +7,7 @@ import IconSet from './icon-set';
 import CustomAlertSeverity from './custom-alert-severity';
 import Options from './options';
 import DrilldownDashboard from './drilldown-dashboard';
+import CustomLabel from './custom-label';
 
 export default class EditNode extends React.PureComponent {
   constructor(props) {
@@ -41,6 +42,8 @@ export default class EditNode extends React.PureComponent {
                 return <Options />;
               case 'dash':
                 return <DrilldownDashboard />;
+              case 'customLabel':
+                return <CustomLabel />;
               default:
                 return '';
             }
@@ -107,6 +110,15 @@ export default class EditNode extends React.PureComponent {
                     onClick={() =>
                       this.setState({
                         selectedEditOption: 'dash'
+                      })
+                    }
+                  />
+                  <Menu.Item
+                    name="Custom Label"
+                    active={selectedEditOption === 'customLabel'}
+                    onClick={() =>
+                      this.setState({
+                        selectedEditOption: 'customLabel'
                       })
                     }
                   />
