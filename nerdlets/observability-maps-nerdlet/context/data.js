@@ -187,7 +187,15 @@ export class DataProvider extends Component {
         }
 
         // eslint-disable-next-line
-        this.setState({ storageLocation, vizMapName: mapName, vizMapStorage: mapStorage, vizAccountId: accountId, vizHideMenu: hideMenu }, async () => {
+        this.setState(
+          {
+            storageLocation,
+            vizMapName: mapName,
+            vizMapStorage: mapStorage,
+            vizAccountId: accountId,
+            vizHideMenu: hideMenu
+          },
+          async () => {
             if (storageLocation.type === 'account') {
               const maps = await this.dataFetcher(['accountMaps']);
               const accountMaps = maps.accountMaps || [];
@@ -743,10 +751,30 @@ export class DataProvider extends Component {
 
       // reconstruct link data for graph
       const mapLinks = Object.keys((mapData || {}).linkData || {}).map(link => {
-        return {
+        const configuredLink = {
           source: mapData.linkData[link].source,
           target: mapData.linkData[link].target
         };
+
+        const sourceNodeData =
+          mapData.nodeData?.[mapData.linkData[link].source];
+
+        // link alert severity handling
+        if (sourceNodeData.alertSeverity === 'CRITICAL') {
+          configuredLink.strokeWidth = 2.5;
+          configuredLink.color = 'red';
+        } else if (sourceNodeData.alertSeverity === 'WARNING') {
+          configuredLink.strokeWidth = 2.5;
+          configuredLink.color = 'orange';
+        } else if (sourceNodeData.alertSeverity === 'WARNING') {
+          configuredLink.strokeWidth = 2.5;
+          configuredLink.color = 'orange';
+        } else if (sourceNodeData.alertSeverity === 'NOT_ALERTING') {
+          configuredLink.strokeWidth = 2.5;
+          configuredLink.color = 'green';
+        }
+
+        return configuredLink;
       });
 
       links = [...links, ...mapLinks];

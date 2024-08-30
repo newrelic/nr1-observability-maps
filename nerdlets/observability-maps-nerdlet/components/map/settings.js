@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form } from 'semantic-ui-react';
-import { writeUserDocument } from '../../lib/utils';
+import { writeUserDocument, writeAccountDocument } from '../../lib/utils';
 import { DataConsumer } from '../../context/data';
 
 export default class MapSettings extends React.PureComponent {
@@ -12,7 +12,8 @@ export default class MapSettings extends React.PureComponent {
       backgroundImage: null,
       backgroundPosition: null,
       backgroundRepeat: null,
-      backgroundSize: null
+      backgroundSize: null,
+      linkType: null
     };
   }
 
@@ -21,13 +22,20 @@ export default class MapSettings extends React.PureComponent {
   handleChange = (e, { value }, formType) =>
     this.setState({ [formType]: value });
 
-  handleSave = async (tempState, dataFetcher, mapConfig, selectedMap) => {
+  handleSave = async (
+    tempState,
+    dataFetcher,
+    mapConfig,
+    selectedMap,
+    storageLocation
+  ) => {
     const {
       backgroundColor,
       backgroundImage,
       backgroundPosition,
       backgroundRepeat,
-      backgroundSize
+      backgroundSize,
+      linkType
     } = tempState;
 
     if (!mapConfig.settings) {
@@ -54,9 +62,24 @@ export default class MapSettings extends React.PureComponent {
       this.state.backgroundRepeat || backgroundRepeat;
     mapConfig.settings.backgroundSize =
       this.state.backgroundSize || backgroundSize;
+    mapConfig.settings.linkType = this.state.linkType || linkType;
 
-    await writeUserDocument('ObservabilityMaps', selectedMap.value, mapConfig);
-    await dataFetcher(['userMaps']);
+    if (storageLocation.type === 'user') {
+      await writeUserDocument(
+        'ObservabilityMaps',
+        selectedMap.value,
+        mapConfig
+      );
+    } else if (storageLocation.type === 'account') {
+      await writeAccountDocument(
+        storageLocation.value,
+        'ObservabilityMaps',
+        selectedMap.value,
+        mapConfig
+      );
+    }
+
+    await dataFetcher(['userMaps', 'accountMaps']);
   };
 
   onUnmount = updateDataContextState => {
@@ -66,7 +89,8 @@ export default class MapSettings extends React.PureComponent {
       backgroundImage: null,
       backgroundPosition: null,
       backgroundRepeat: null,
-      backgroundSize: null
+      backgroundSize: null,
+      linkType: null
     });
   };
 
@@ -75,13 +99,20 @@ export default class MapSettings extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({ updateDataContextState, dataFetcher, mapConfig, selectedMap }) => {
+        {({
+          updateDataContextState,
+          dataFetcher,
+          mapConfig,
+          selectedMap,
+          storageLocation
+        }) => {
           const tempState = {
             backgroundColor: '',
             backgroundImage: '',
             backgroundPosition: '',
             backgroundRepeat: '',
-            backgroundSize: ''
+            backgroundSize: '',
+            linkType: ''
           };
 
           if (mapConfig.settings) {
@@ -91,6 +122,7 @@ export default class MapSettings extends React.PureComponent {
               mapConfig.settings.backgroundPosition;
             tempState.backgroundRepeat = mapConfig.settings.backgroundRepeat;
             tempState.backgroundSize = mapConfig.settings.backgroundSize;
+            tempState.linkType = mapConfig.settings.linkType;
           }
 
           const value = name =>
@@ -181,6 +213,22 @@ export default class MapSettings extends React.PureComponent {
                       label="Background Size"
                       placeholder="auto"
                     />
+                    <Form.Select
+                      fluid
+                      label="Link Type"
+                      width="8"
+                      value={value('linkType')}
+                      options={[
+                        { key: 's', text: 'STRAIGHT', value: 'STRAIGHT' },
+                        {
+                          key: 'cs',
+                          text: 'CURVE_SMOOTH',
+                          value: 'CURVE_SMOOTH'
+                        },
+                        { key: 'cf', text: 'CURVE_FULL', value: 'CURVE_FULL' }
+                      ]}
+                      onChange={(e, d) => this.handleChange(e, d, 'linkType')}
+                    />
                   </Form.Group>
                 </Form>
                 <br />
@@ -194,7 +242,8 @@ export default class MapSettings extends React.PureComponent {
                       tempState,
                       dataFetcher,
                       mapConfig,
-                      selectedMap
+                      selectedMap,
+                      storageLocation
                     )
                   }
                 />
