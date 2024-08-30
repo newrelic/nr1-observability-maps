@@ -104,7 +104,9 @@ export const rightClick = (
           sourceEntityType &&
           targetEntityType &&
           !sourceEntityType.includes('INFRA') &&
-          !targetEntityType.includes('INFRA')
+          !targetEntityType.includes('INFRA') &&
+          !sourceEntityType.includes('WORKLOAD') &&
+          !targetEntityType.includes('WORKLOAD')
         ) {
           // add node
           let selectedEntity = null;
