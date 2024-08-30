@@ -1,3 +1,10 @@
+# [0.28.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.27.0...v0.28.0) (2024-08-30)
+
+
+### Features
+
+* link status and control ([#111](https://github.com/newrelic/nr1-observability-maps/issues/111)) ([3d16311](https://github.com/newrelic/nr1-observability-maps/commit/3d1631131015c8ad33bf3254d7363a17073d20a9))
+
 # [0.27.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.26.0...v0.27.0) (2024-08-23)
 
 
