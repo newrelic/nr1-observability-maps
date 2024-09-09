@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.28.0...v0.29.0) (2024-09-09)
+
+
+### Features
+
+* upgrade add entity search and table to nr1 ([#112](https://github.com/newrelic/nr1-observability-maps/issues/112)) ([04526bf](https://github.com/newrelic/nr1-observability-maps/commit/04526bff58e38a0f62801a63bcb1631ac43d62ce))
+
 # [0.28.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.27.0...v0.28.0) (2024-08-30)
 
 
