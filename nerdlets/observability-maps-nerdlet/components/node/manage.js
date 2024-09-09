@@ -2,9 +2,17 @@
 no-console: 0
 */
 import React from 'react';
-import { Modal, Button, Form, Table, Menu, Input } from 'semantic-ui-react';
+import { Modal, Button, Form, Menu, Input } from 'semantic-ui-react';
 import { nerdGraphQuery, entitySearchByAccountQuery } from '../../lib/utils';
 import DeleteNode from './delete-node';
+import {
+  Spinner,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+  TableRowCell
+} from 'nr1';
 import { DataConsumer } from '../../context/data';
 
 const options = [
@@ -26,6 +34,7 @@ export default class ManageNodes extends React.PureComponent {
       activeNodeItem: 'Add Node',
       showSearchMsg: false,
       searchText: '',
+      fetchingEntities: false,
       domainOptions: [
         { key: 'a', text: 'APM', value: 'APM' },
         { key: 'b', text: 'BROWSER', value: 'BROWSER' },
@@ -183,6 +192,7 @@ export default class ManageNodes extends React.PureComponent {
         );
         this.fetchEntities(entitySearchResults.nextCursor);
       } else {
+        this.setState({ fetchingEntities: false });
         // console.log("complete", this.state.searchedEntities.length)
       }
       this.setState({ showSearchMsg: true });
@@ -207,8 +217,15 @@ export default class ManageNodes extends React.PureComponent {
       searchedEntities,
       activeNodeItem,
       showSearchMsg,
-      searchText
+      searchText,
+      fetchingEntities
     } = this.state;
+
+    const tableEntities = searchedEntities.filter(entity =>
+      entity.name
+        ? entity.name.toLowerCase().includes(searchText.toLowerCase())
+        : false
+    );
 
     return (
       <DataConsumer>
@@ -338,7 +355,9 @@ export default class ManageNodes extends React.PureComponent {
                           width="3"
                           content="Fetch Entities"
                           onClick={() => {
-                            this.fetchEntities();
+                            this.setState({ fetchingEntities: true }, () => {
+                              this.fetchEntities();
+                            });
                           }}
                         />
                       </Form.Group>
@@ -377,55 +396,63 @@ export default class ManageNodes extends React.PureComponent {
                         style={{
                           overflowY: 'scroll',
                           height: '300px',
-                          display: searchedEntities.length === 0 ? 'none' : ''
+                          display: fetchingEntities ? '' : 'none'
                         }}
                       >
-                        <Table compact>
-                          <Table.Body>
-                            {searchedEntities
-                              .filter(entity =>
-                                entity.name
-                                  ? entity.name
-                                      .toLowerCase()
-                                      .includes(searchText.toLowerCase())
-                                  : false
-                              )
-                              .map((entity, i) => {
-                                // check artifical status
-                                const stateStatus = this.state[
-                                  `${entity.name} [${entity.domain}]`
-                                ];
+                        <Spinner />
+                      </div>
+                      <div
+                        style={{
+                          overflowY: 'scroll',
+                          height: '300px',
+                          display:
+                            searchedEntities.length === 0 || fetchingEntities
+                              ? 'none'
+                              : ''
+                        }}
+                      >
+                        <Table items={tableEntities}>
+                          <TableHeader>
+                            <TableHeaderCell>Name</TableHeaderCell>
+                            <TableHeaderCell />
+                          </TableHeader>
+                          {({ item }) => {
+                            const entity = item;
 
-                                // keep both for backwards compatibility
-                                const exists =
-                                  stateStatus ||
-                                  mapConfig.nodeData[entity.name] ||
-                                  mapConfig.nodeData[
-                                    `${entity.name} [${entity.domain}]`
-                                  ];
+                            // check artifical status
+                            const stateStatus = this.state[
+                              `${entity.name} [${entity.domain}]`
+                            ];
 
-                                return (
-                                  <Table.Row key={i}>
-                                    <Table.Cell>{entity.name}</Table.Cell>
-                                    <Table.Cell>
-                                      <Button
-                                        style={{ float: 'right' }}
-                                        onClick={() =>
-                                          this.action(
-                                            exists ? 'del' : 'add',
-                                            mapConfig,
-                                            updateDataContextState,
-                                            entity
-                                          )
-                                        }
-                                      >
-                                        {exists ? 'Delete' : 'Add'}
-                                      </Button>
-                                    </Table.Cell>
-                                  </Table.Row>
-                                );
-                              })}
-                          </Table.Body>
+                            // keep both for backwards compatibility
+                            const exists =
+                              stateStatus ||
+                              mapConfig.nodeData[entity.name] ||
+                              mapConfig.nodeData[
+                                `${entity.name} [${entity.domain}]`
+                              ];
+
+                            return (
+                              <TableRow key={item.guid}>
+                                <TableRowCell>{item.name}</TableRowCell>
+                                <TableRowCell>
+                                  <Button
+                                    style={{ float: 'right' }}
+                                    onClick={() =>
+                                      this.action(
+                                        exists ? 'del' : 'add',
+                                        mapConfig,
+                                        updateDataContextState,
+                                        entity
+                                      )
+                                    }
+                                  >
+                                    {exists ? 'Delete' : 'Add'}
+                                  </Button>
+                                </TableRowCell>
+                              </TableRow>
+                            );
+                          }}
                         </Table>
                       </div>
                     </>
