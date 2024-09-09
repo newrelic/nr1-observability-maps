@@ -118,15 +118,37 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
   }
 
   let domainQuery = `domain IN ('${domain}') AND`;
-  if (domain === 'WORKLOAD') domainQuery = '';
+  if (domain === 'WORKLOAD') {
+    domainQuery = '';
+    subType = 'WORKLOAD';
+  }
 
-  return ngql`{
+  let query = domainQuery;
+
+  if (subType) {
+    if (query) query += ' AND ';
+    query += `type = '${subType}'`;
+  }
+
+  if (accountId) {
+    if (subType || query) query += ' AND ';
+    query += `tags.accountId IN ('${accountId}')`;
+  }
+
+  if (query) {
+    if (query) query += ' AND ';
+    query += `reporting = 'true'`;
+  }
+
+  // const query = `${domainQuery} ${
+  //   subType ? ` type = '${subType}'` : ``
+  // } reporting = 'true' ${
+  //   accountId ? `AND tags.accountId IN ('${accountId}')` : ''
+  // }`;
+
+  const finalQuery = `{
   actor {
-    entitySearch(query: "${domainQuery} ${
-    subType ? ` type = '${subType}'` : ``
-  } reporting = 'true' ${
-    accountId ? `AND tags.accountId IN ('${accountId}')` : ''
-  }") {
+    entitySearch(query: "${query}") {
       query
       results${cursor ? `(cursor: "${cursor}")` : ''} {
         nextCursor
@@ -140,6 +162,8 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
     }
   }
 }`;
+
+  return finalQuery;
 };
 
 export const singleNrql = (alias, query, accountId) => `

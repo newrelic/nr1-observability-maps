@@ -26,7 +26,10 @@ export const buildEntityMap = entityData => {
 
     (entityData[guid]?.relatedEntities?.results || []).forEach(r => {
       // if (mapData.nodes.some(n => n.id === r?.target?.entity?.guid)) {
-      mapData.links.push({ source: guid, target: r.target.entity.guid });
+      mapData.links.push({
+        source: guid,
+        target: r.target.entity.guid
+      });
       // } else {
       //   console.log('missing', r.target.entity.__typename);
       // }
