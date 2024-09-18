@@ -35,7 +35,9 @@ export default class MapSettings extends React.PureComponent {
       backgroundPosition,
       backgroundRepeat,
       backgroundSize,
-      linkType
+      linkType,
+      iconSpinSpeed,
+      staticGraph
     } = tempState;
 
     if (!mapConfig.settings) {
@@ -63,6 +65,9 @@ export default class MapSettings extends React.PureComponent {
     mapConfig.settings.backgroundSize =
       this.state.backgroundSize || backgroundSize;
     mapConfig.settings.linkType = this.state.linkType || linkType;
+    mapConfig.settings.iconSpinSpeed =
+      this.state.iconSpinSpeed || iconSpinSpeed;
+    mapConfig.settings.staticGraph = this.state.staticGraph || staticGraph;
 
     if (storageLocation.type === 'user') {
       await writeUserDocument(
@@ -90,7 +95,9 @@ export default class MapSettings extends React.PureComponent {
       backgroundPosition: null,
       backgroundRepeat: null,
       backgroundSize: null,
-      linkType: null
+      linkType: null,
+      iconSpinSpeed: null,
+      staticGraph: null
     });
   };
 
@@ -112,7 +119,9 @@ export default class MapSettings extends React.PureComponent {
             backgroundPosition: '',
             backgroundRepeat: '',
             backgroundSize: '',
-            linkType: ''
+            linkType: '',
+            iconSpinSpeed: '',
+            staticGraph: ''
           };
 
           if (mapConfig.settings) {
@@ -123,6 +132,8 @@ export default class MapSettings extends React.PureComponent {
             tempState.backgroundRepeat = mapConfig.settings.backgroundRepeat;
             tempState.backgroundSize = mapConfig.settings.backgroundSize;
             tempState.linkType = mapConfig.settings.linkType;
+            tempState.iconSpinSpeed = mapConfig.settings.iconSpinSpeed;
+            tempState.staticGraph = mapConfig.settings.staticGraph;
           }
 
           const value = name =>
@@ -228,6 +239,36 @@ export default class MapSettings extends React.PureComponent {
                         { key: 'cf', text: 'CURVE_FULL', value: 'CURVE_FULL' }
                       ]}
                       onChange={(e, d) => this.handleChange(e, d, 'linkType')}
+                    />
+                    <Form.Select
+                      fluid
+                      label="Icon Spin Speed"
+                      width="8"
+                      value={value('iconSpinSpeed')}
+                      options={[
+                        { key: '1', text: '1', value: '1' },
+                        { key: '2', text: '2', value: '2' },
+                        { key: '3', text: '3', value: '3' },
+                        { key: '4', text: '4', value: '4' },
+                        { key: '5', text: '5', value: '5' }
+                      ]}
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'iconSpinSpeed')
+                      }
+                    />
+
+                    <Form.Select
+                      fluid
+                      label="Static Graph"
+                      width="8"
+                      value={value('staticGraph')}
+                      options={[
+                        { key: '1', text: 'true', value: 'true' },
+                        { key: '2', text: 'false', value: 'false' }
+                      ]}
+                      onChange={(e, d) =>
+                        this.handleChange(e, d, 'staticGraph')
+                      }
                     />
                   </Form.Group>
                 </Form>
