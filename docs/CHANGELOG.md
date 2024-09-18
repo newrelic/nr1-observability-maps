@@ -1,3 +1,8 @@
+# [0.30.0](https://github.com/Kruthika-Jahagirdar/nr1-observability-maps) (2024-09-18)
+
+### Fixes
+* reduced icon image size and animation speed
+
 # [0.29.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.28.0...v0.29.0) (2024-09-09)
 
 
