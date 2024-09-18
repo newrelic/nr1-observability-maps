@@ -530,3 +530,7 @@ i {
 .ace-monokai .ace_nrql.ace_operator {
   color: #70c0b1;
 }
+i.icon.loading{
+  animation: icon-loading 6s linear infinite !important;
+
+}

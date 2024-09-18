@@ -41,16 +41,17 @@ export default class CustomNode extends React.PureComponent {
         if (iconSet) {
           return (
             <Image
-              onClick={() =>
-                this.setState({
+              onClick={() =>{
+                               this.setState({
                   [`popup_${nodeId}`]: !this.state[`popup_${nodeId}`]
                 })
+              }
               }
               className="om-icon icon"
               style={{
                 zIndex: 999999,
-                height: '35px',
-                width: '35px',
+                height: '25px',
+                width: '25px',
                 borderRadius: '50%'
               }}
               src={iconSrc}
