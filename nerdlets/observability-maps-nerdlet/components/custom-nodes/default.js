@@ -78,7 +78,8 @@ export default class CustomNode extends React.PureComponent {
     iconOne,
     colorTwo,
     colorOne,
-    closeCharts
+    closeCharts,
+    iconSpinSpeed
   ) => {
     const isOpen = this.state[`popup_${nodeId}`] || false;
     const iconOuter = `circle ${iconOne}`;
@@ -89,7 +90,13 @@ export default class CustomNode extends React.PureComponent {
           <Popup
             className="popup-custom"
             trigger={
-              <Icon loading size="big" color={colorTwo} name={iconOuter} />
+              <Icon
+                loading
+                size="big"
+                className={`spin-speed-${iconSpinSpeed}`}
+                color={colorTwo}
+                name={iconOuter}
+              />
             }
             // on="click"
             style={{ borderRadius: 0 }}
@@ -99,7 +106,13 @@ export default class CustomNode extends React.PureComponent {
             content={<HoverContent metrics={metrics} />}
           />
         ) : (
-          <Icon loading size="big" color={colorTwo} name={iconOuter} />
+          <Icon
+            className={`spin-speed-${iconSpinSpeed}`}
+            loading
+            size="big"
+            color={colorTwo}
+            name={iconOuter}
+          />
         )}
 
         <Popup
@@ -128,7 +141,7 @@ export default class CustomNode extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({ userIcons, mapData, closeCharts }) => {
+        {({ userIcons, mapData, closeCharts, mapConfig }) => {
           const data = ((mapData || {}).nodeData || {})[node.id] || {};
           const icon = data.icon || setEntityDesign(data.entityType).icon;
           const metrics = buildNodeMetrics(data);
@@ -151,6 +164,8 @@ export default class CustomNode extends React.PureComponent {
             iconOne = customAlertDesign.iconOne;
           }
 
+          const iconSpinSpeed = mapConfig?.settings?.iconSpinSpeed || '2';
+
           return (
             <div style={{ height: nodeSize / 10, width: nodeSize / 10 }}>
               <div
@@ -166,7 +181,8 @@ export default class CustomNode extends React.PureComponent {
                   iconOne,
                   colorTwo,
                   colorOne,
-                  closeCharts
+                  closeCharts,
+                  iconSpinSpeed
                 )}
               </div>
             </div>

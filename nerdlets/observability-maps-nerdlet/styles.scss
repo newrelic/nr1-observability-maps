@@ -530,7 +530,29 @@ i {
 .ace-monokai .ace_nrql.ace_operator {
   color: #70c0b1;
 }
-i.icon.loading{
-  animation: icon-loading 6s linear infinite !important;
 
+.spin-speed-1.icon.loading {
+  animation: icon-loading 1s linear infinite !important;
+  -webkit-animation: icon-loading 1s linear infinite !important;
 }
+
+.spin-speed-2.icon.loading {
+  animation: icon-loading 2s linear infinite !important;
+  -webkit-animation: icon-loading 2s linear infinite !important;
+}
+
+.spin-speed-3.icon.loading {
+  animation: icon-loading 3s linear infinite !important;
+  -webkit-animation: icon-loading 3s linear infinite !important;
+}
+
+.spin-speed-4.icon.loading {
+  animation: icon-loading 4s linear infinite !important;
+  -webkit-animation: icon-loading 4s linear infinite !important;
+}
+
+.spin-speed-5.icon.loading {
+  animation: icon-loading 5s linear infinite !important;
+  -webkit-animation: icon-loading 5s linear infinite !important;
+}
+

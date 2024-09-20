@@ -77,6 +77,9 @@ export default class ObservabilityMaps extends React.Component {
           d3MapConfig.link.type =
             mapConfig?.settings?.linkType || 'CURVE_SMOOTH';
 
+          d3MapConfig.staticGraph =
+            (mapConfig?.settings?.staticGraph || false) === 'true';
+
           if (isWidget) {
             if (!vizMapStorage) {
               errors.push('Map storage not selected');
