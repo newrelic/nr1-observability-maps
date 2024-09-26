@@ -1,5 +1,5 @@
-# [0.30.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.29.0...v0.30.0) (2024-09-18)
 
+# [0.30.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.29.0...v0.30.0) (2024-09-18)
 
 ### Features
 
