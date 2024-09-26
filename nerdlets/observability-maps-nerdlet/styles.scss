@@ -21,7 +21,7 @@ i {
   margin-right: 0px !important;
 }
 
-.ui.search > .results {
+.ui.search>.results {
   overflow-y: auto !important;
   max-height: 400px !important;
 }
@@ -38,9 +38,9 @@ i {
 }
 
 .filter-button {
-  margin-right: 10px !important;
-  padding: 14.5px !important;
+  padding: 4.5px !important;
   background-color: #fafbfb !important;
+  font-size: 0.8rem !important;
 }
 
 .filter-button-clear {
@@ -214,7 +214,7 @@ i {
 .react-select-input-group {
   position: relative;
   width: 100%;
-  max-width: 250px;
+  max-width: 150px;
   margin-right: 8px;
 
   label {
@@ -248,8 +248,8 @@ i {
 }
 
 .react-select__control {
-  height: 45px;
-  font-size: 13px;
+  height: 35px;
+  font-size: 10px;
   color: #2a3434;
   border-radius: 2px;
 }
@@ -294,7 +294,7 @@ i {
 
 .utility-bar {
   width: 100%;
-  height: 60px;
+  height: 40px;
   background-color: #edeeee;
   display: flex;
   // justify-content: space-between;
@@ -363,7 +363,7 @@ i {
   padding: 8px 0 8px;
 }
 
-.ui.input > input {
+.ui.input>input {
   margin: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -438,7 +438,7 @@ i {
   margin: 0 !important;
 }
 
-.icons > .icon {
+.icons>.icon {
   margin: 0 !important;
 }
 
@@ -446,7 +446,7 @@ i {
   padding: 0px !important;
 }
 
-.ui.inverted.table > tbody > tr > td {
+.ui.inverted.table>tbody>tr>td {
   background: #333 !important;
   color: white !important;
   border: none !important;
@@ -462,16 +462,17 @@ i {
   float: left;
 }
 
-.truncate-sidebar > label {
+.truncate-sidebar>label {
   width: 350px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+
 .ui.button,
 .ui.buttons .button,
 .ui.buttons .or {
-  font-size: inherit !important;
+  font-size: 0.8rem !important;
 }
 
 .MosaicWidget {
@@ -501,15 +502,19 @@ i {
   .keyword {
     color: #aa1bc8;
   }
+
   .function {
     color: #3083e1;
   }
+
   .string {
     color: #71ba02;
   }
+
   .numeric {
     color: #dd9715;
   }
+
   .operator {
     color: #19b1bb;
   }
@@ -518,17 +523,22 @@ i {
 .ace-monokai .ace_nrql.ace_keyword {
   color: #c397d8;
 }
+
 .ace-monokai .ace_nrql.ace_function {
   color: #7aa6da;
 }
+
 .ace-monokai .ace_nrql.ace_string {
   color: #b9ca4a;
 }
+
 .ace-monokai .ace_nrql.ace_numeric {
   color: #e78c45;
 }
+
 .ace-monokai .ace_nrql.ace_operator {
   color: #70c0b1;
+
 }
 
 .spin-speed-1.icon.loading {
@@ -555,4 +565,5 @@ i {
   animation: icon-loading 5s linear infinite !important;
   -webkit-animation: icon-loading 5s linear infinite !important;
 }
+
 
