@@ -68,7 +68,7 @@ export default class MapSettings extends React.PureComponent {
     mapConfig.settings.iconSpinSpeed =
       this.state.iconSpinSpeed || iconSpinSpeed;
     mapConfig.settings.staticGraph = this.state.staticGraph || staticGraph;
-
+console.log(storageLocation);
     if (storageLocation.type === 'user') {
       await writeUserDocument(
         'ObservabilityMaps',
@@ -153,7 +153,7 @@ export default class MapSettings extends React.PureComponent {
                   onClick={this.handleOpen}
                   icon="images outline"
                   content="Settings"
-                  style={{ height: '45px' }}
+                  style={{ height: '35px' }}
                   className="filter-button"
                 />
               }

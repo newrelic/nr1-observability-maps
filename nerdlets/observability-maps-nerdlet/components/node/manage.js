@@ -292,6 +292,7 @@ export default class ManageNodes extends React.PureComponent {
                   icon="block layout"
                   content="Nodes"
                   id="nodesbtn"
+                  style={{ height: '35px', width: '60px' }}
                 />
               }
               onUnmount={() => {
@@ -429,7 +430,7 @@ export default class ManageNodes extends React.PureComponent {
                               stateStatus ||
                               mapConfig.nodeData[entity.name] ||
                               mapConfig.nodeData[
-                                `${entity.name} [${entity.domain}]`
+                              `${entity.name} [${entity.domain}]`
                               ];
 
                             return (

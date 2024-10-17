@@ -30,7 +30,7 @@ import { buildContextOptions, rightClick } from './map-utils';
 
 // do not allow negative coordinates
 const safeCoordinate = coordinate =>
-  coordinate <= 0 ? Math.floor(Math.random() * 200) + 1 : coordinate;
+  coordinate <= 0 ? Math.floor(Math.random() * 150) + 1 : coordinate;
 
 function Map(props) {
   const [rightClickType, setRightClickType] = useState('');

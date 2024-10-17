@@ -41,16 +41,17 @@ export default class CustomNode extends React.PureComponent {
         if (iconSet) {
           return (
             <Image
-              onClick={() =>
-                this.setState({
+              onClick={() =>{
+                               this.setState({
                   [`popup_${nodeId}`]: !this.state[`popup_${nodeId}`]
                 })
+              }
               }
               className="om-icon icon"
               style={{
                 zIndex: 999999,
-                height: '35px',
-                width: '35px',
+                height: '25px',
+                width: '25px',
                 borderRadius: '50%'
               }}
               src={iconSrc}
@@ -91,7 +92,7 @@ export default class CustomNode extends React.PureComponent {
             trigger={
               <Icon
                 loading
-                size="big"
+                size="large"
                 className={`spin-speed-${iconSpinSpeed}`}
                 color={colorTwo}
                 name={iconOuter}
@@ -108,7 +109,7 @@ export default class CustomNode extends React.PureComponent {
           <Icon
             className={`spin-speed-${iconSpinSpeed}`}
             loading
-            size="big"
+            size="large"
             color={colorTwo}
             name={iconOuter}
           />

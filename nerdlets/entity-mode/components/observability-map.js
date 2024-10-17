@@ -19,7 +19,7 @@ function ObservabilityMap(props) {
 
   return useMemo(() => {
     // console.log('rendering: map', width, height);
-    const nodeSize = 700; // increasing this will not adjust the icon sizing, it will increase the svg area
+    const nodeSize = 500; // increasing this will not adjust the icon sizing, it will increase the svg area
 
     const d3MapConfig = {
       automaticRearrangeAfterDropNode: false,
@@ -33,7 +33,7 @@ function ObservabilityMap(props) {
       highlightDegree: 2,
       highlightOpacity: 0.2,
       linkHighlightBehavior: true,
-      initialZoom: 0.7,
+      initialZoom: 0.2,
       maxZoom: 12,
       minZoom: 0.05,
       nodeHighlightBehavior: true,
@@ -51,8 +51,8 @@ function ObservabilityMap(props) {
         color: 'lightgreen',
         size: nodeSize,
         highlightStrokeColor: 'blue',
-        fontSize: 16,
-        highlightFontSize: 16,
+        fontSize: 10,
+        highlightFontSize: 10,
         labelProperty: node =>
           cleanNodeId(node.customLabel || node.name || node.id),
         // fontColor: 'white',

@@ -196,7 +196,7 @@ export default class UserSettings extends React.PureComponent {
                     <Button
                       onClick={this.handleOpen}
                       icon="user"
-                      style={{ height: '45px' }}
+                      style={{ height: '35px', width: '40px' }}
                       className="filter-button"
                     />
                   }

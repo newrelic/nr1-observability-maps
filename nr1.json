@@ -1,6 +1,6 @@
 {
   "schemaType": "NERDPACK",
-  "id": "e3c8de28-21c2-4977-89f3-c97d1667d722",
-  "displayName": "Observability Maps",
+  "id": "de10b7f1-ba11-4a34-8098-e7fadc47f290",
+  "displayName": "Observability Maps - Internal",
   "description": "Create an observability map based on any of the data available in New Relic."
 }

@@ -126,6 +126,7 @@ export default class ManageLinks extends React.PureComponent {
                   className="filter-button"
                   icon="linkify"
                   content="Links"
+                  style={{ height: '35px', width: '60px' }}
                 />
               }
               onUnmount={() => updateDataContextState({ closeCharts: false })}

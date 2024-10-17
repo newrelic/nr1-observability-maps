@@ -167,6 +167,7 @@ export default class MenuBar extends React.PureComponent {
                     icon={timelineOpen ? 'clock' : 'clock outline'}
                     content="Timeline"
                     className="filter-button"
+                    style={{ height: '35px', width: '70px' }}
                     onClick={() =>
                       updateDataContextState({ timelineOpen: !timelineOpen })
                     }
