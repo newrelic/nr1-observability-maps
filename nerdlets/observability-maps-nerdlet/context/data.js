@@ -406,6 +406,7 @@ export class DataProvider extends Component {
     return new Promise(async resolve => {
       const dataPromises = [];
       const content = [];
+      const { storageLocation } = this.state;
 
       actions.forEach(action => {
         switch (action) {
@@ -421,7 +422,6 @@ export class DataProvider extends Component {
             );
             break;
           case 'accountMaps':
-            const { storageLocation } = this.state;
             content.push(action);
             dataPromises.push(
               getAccountCollection(storageLocation.value, collectionName)
