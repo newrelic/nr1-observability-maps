@@ -1,3 +1,10 @@
+## [0.30.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.30.0...v0.30.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* node entity search ([3562479](https://github.com/newrelic/nr1-observability-maps/commit/3562479900743b368149ddfa1d05695fba088aef))
+
 # [0.30.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.29.0...v0.30.0) (2024-09-18)
 
 
