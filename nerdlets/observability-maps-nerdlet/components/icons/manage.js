@@ -34,7 +34,7 @@ export default class ManageIcons extends React.PureComponent {
     const documentId = selected === 'new' || name !== '' ? name : selected;
     console.log(storageLocation);
     // writeUserDocument(iconCollection, documentId, { green, orange, red }); // commented to test storage of settings
-    //  writeAccountDocument("account",iconCollection,documentId,{green,orange,red});
+    
     if (storageLocation.type === 'user') {
       writeUserDocument(iconCollection, documentId, { green, orange, red });
     } else if (storageLocation.type === 'account') {
@@ -44,7 +44,7 @@ export default class ManageIcons extends React.PureComponent {
       );
     }
     dataFetcher(['userIcons']);
-    this.handleIconSetChange(null);
+ //   this.handleIconSetChange(null);
   }
 
   deleteIconSet(selected, dataFetcher) {

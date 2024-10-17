@@ -71,7 +71,7 @@ export class DataProvider extends Component {
         nodes: [
           defaultNodeData['Select or create a map, to get started!'],
           defaultNodeData[
-            'Tip: Right click on map nodes and links for more options!'
+          'Tip: Right click on map nodes and links for more options!'
           ]
         ],
         links: []
@@ -173,9 +173,9 @@ export class DataProvider extends Component {
           selectedMap = (userMaps || []).find(
             m =>
               m.id.toLowerCase().replaceAll('+', ' ') ===
-                (mapName || '').toLowerCase() ||
+              (mapName || '').toLowerCase() ||
               m.id.toLowerCase().replaceAll('-', ' ') ===
-                (mapName || '').toLowerCase()
+              (mapName || '').toLowerCase()
           );
         } else if (mapStorage === 'account') {
           storageLocation = {
@@ -202,9 +202,9 @@ export class DataProvider extends Component {
               selectedMap = (accountMaps || []).find(
                 m =>
                   m.id.toLowerCase().replaceAll('+', ' ') ===
-                    (mapName || '').toLowerCase() ||
+                  (mapName || '').toLowerCase() ||
                   m.id.toLowerCase().replaceAll('-', ' ') ===
-                    (mapName || '').toLowerCase()
+                  (mapName || '').toLowerCase()
               );
             }
 
@@ -415,7 +415,10 @@ export class DataProvider extends Component {
             break;
           case 'userIcons':
             content.push(action);
-            dataPromises.push(getUserCollection(iconCollection));
+            //dataPromises.push(getUserCollection(iconCollection));
+            dataPromises.push(
+              getAccountCollection(storageLocation.value, iconCollection)
+            );
             break;
           case 'accountMaps':
             const { storageLocation } = this.state;
