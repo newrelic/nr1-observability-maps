@@ -117,7 +117,7 @@ export const entitySearchByAccountQuery = (domain, accountId, cursor) => {
     subType = domainSplit[1];
   }
 
-  let domainQuery = `domain IN ('${domain}') AND`;
+  let domainQuery = `domain IN ('${domain}')`;
   if (domain === 'WORKLOAD') {
     domainQuery = '';
     subType = 'WORKLOAD';
