@@ -30,8 +30,9 @@ export default class ObservabilityMaps extends React.Component {
 
     // the graph configuration, you only need to pass down properties
     // that you want to override, otherwise default ones will be used
+    console.log(this.props,"props");
     const d3MapConfig = {
-      initialZoom: vizConfig?.initialZoom || null,
+      initialZoom: vizConfig?.initialZoom || 0.6,
       staticGraph: false,
       staticGraphWithDragAndDrop: true,
       d3: {
@@ -42,8 +43,8 @@ export default class ObservabilityMaps extends React.Component {
         color: 'lightgreen',
         size: nodeSize,
         highlightStrokeColor: 'blue',
-        fontSize: 16,
-        highlightFontSize: 16,
+        fontSize: 10,
+        highlightFontSize: 10,
         labelProperty: node => cleanNodeId(node.customLabel || node.id),
         fontColor: 'white',
         viewGenerator: node => <NodeHandler node={node} nodeSize={nodeSize} />
@@ -54,7 +55,7 @@ export default class ObservabilityMaps extends React.Component {
         renderLabel: true,
         labelProperty: link => <LinkHandler link={link} />,
         fontColor: '#21ba45',
-        fontSize: 13,
+        fontSize: 11,
         fontWeight: 'bold'
       },
       directed: true,
@@ -111,7 +112,7 @@ export default class ObservabilityMaps extends React.Component {
           }
 
           const mainGridStyle = {
-            height: this.props.height - 46,
+            height: this.props.height - 40,
             backgroundColor: 'black',
             marginTop: '0px'
           };
@@ -137,7 +138,7 @@ export default class ObservabilityMaps extends React.Component {
 
               <Grid columns={16} style={mainGridStyle}>
                 <Grid.Row style={{ paddingTop: '0px' }}>
-                  <Grid.Column width={16}>
+                  <Grid.Column width={12}>
                     <Map d3MapConfig={d3MapConfig} graphWidth={graphWidth} />
                   </Grid.Column>
                 </Grid.Row>

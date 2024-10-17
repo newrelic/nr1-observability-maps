@@ -140,15 +140,14 @@ export default class CreateMap extends React.PureComponent {
                   trigger={
                     <Button
                       onClick={this.handleOpen}
-                      style={{ height: '45px' }}
+                      style={{ height: '35px', width:'35px' }}
                       className="filter-button"
                     >
                       <Icon.Group
-                        size="large"
+                        size="small"
                         style={{
-                          marginTop: '5px',
-                          marginLeft: '8px',
-                          marginRight: '-10px'
+                           margin:'0px',
+                          fontSize:'1rem'
                         }}
                       >
                         <Icon name="map outline" />

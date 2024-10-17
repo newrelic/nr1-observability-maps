@@ -24,3 +24,7 @@ This file reimplements semantic css with !important to allow Semantic components
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
   padding: inherit !important;
 }
+i.icon.loading{
+  animation: icon-loading 6s linear infinite !important;
+
+}

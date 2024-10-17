@@ -165,7 +165,7 @@ export default class Map extends React.PureComponent {
         .getElementsByTagName('marker')
         [i].setAttribute('markerHeight', '12');
     }
-
+console.log(d3MapConfig,"map config");
     return (
       <DataConsumer>
         {({

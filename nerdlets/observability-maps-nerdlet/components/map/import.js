@@ -138,7 +138,7 @@ export default class ImportMap extends React.PureComponent {
                     <Button
                       onClick={this.handleOpen}
                       icon="upload"
-                      style={{ height: '45px' }}
+                      style={{ height: '35px', width:'35px' }}
                       className="filter-button"
                     />
                   }

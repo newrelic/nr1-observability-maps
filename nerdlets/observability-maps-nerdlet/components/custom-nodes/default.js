@@ -92,7 +92,7 @@ export default class CustomNode extends React.PureComponent {
             trigger={
               <Icon
                 loading
-                size="big"
+                size="large"
                 className={`spin-speed-${iconSpinSpeed}`}
                 color={colorTwo}
                 name={iconOuter}
@@ -109,7 +109,7 @@ export default class CustomNode extends React.PureComponent {
           <Icon
             className={`spin-speed-${iconSpinSpeed}`}
             loading
-            size="big"
+            size="large"
             color={colorTwo}
             name={iconOuter}
           />

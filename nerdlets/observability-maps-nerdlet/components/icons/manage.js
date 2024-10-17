@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form, Label } from 'semantic-ui-react';
-import { writeUserDocument, deleteUserDocument } from '../../lib/utils';
+import { writeUserDocument, deleteUserDocument, writeAccountDocument } from '../../lib/utils';
 import { DataConsumer } from '../../context/data';
 
 const iconCollection = 'ObservabilityIcons';
@@ -28,10 +28,21 @@ export default class ManageIcons extends React.PureComponent {
     this.handleIconSetChange = this.handleIconSetChange.bind(this);
   }
 
-  writeIconSet(dataFetcher) {
+  writeIconSet(dataFetcher, storageLocation) {
+    //use condition to save icon settings to User/Account type respectively.
     const { name, green, orange, red, selected } = this.state;
     const documentId = selected === 'new' || name !== '' ? name : selected;
-    writeUserDocument(iconCollection, documentId, { green, orange, red });
+    console.log(storageLocation);
+    // writeUserDocument(iconCollection, documentId, { green, orange, red }); // commented to test storage of settings
+    //  writeAccountDocument("account",iconCollection,documentId,{green,orange,red});
+    if (storageLocation.type === 'user') {
+      writeUserDocument(iconCollection, documentId, { green, orange, red });
+    } else if (storageLocation.type === 'account') {
+      writeAccountDocument(
+        storageLocation.value,
+        iconCollection, documentId, { green, orange, red }
+      );
+    }
     dataFetcher(['userIcons']);
     this.handleIconSetChange(null);
   }
@@ -71,7 +82,7 @@ export default class ManageIcons extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({ userIcons, updateDataContextState, dataFetcher }) => {
+        {({ userIcons, updateDataContextState, dataFetcher, storageLocation }) => {
           const options = userIcons.map((set, i) => ({
             key: i,
             text: set.id.replaceAll('+', ' ').replaceAll('-', ' '),
@@ -87,7 +98,7 @@ export default class ManageIcons extends React.PureComponent {
               onUnmount={() => updateDataContextState({ closeCharts: false })}
               onMount={() => updateDataContextState({ closeCharts: true })}
               trigger={
-                <Button icon="edit" content="Icons" className="filter-button" />
+                <Button icon="edit" content="Icons" className="filter-button" style={{ height: '35px', width: '60px' }} />
               }
             >
               <Modal.Header>Manage Icons</Modal.Header>
@@ -225,7 +236,7 @@ export default class ManageIcons extends React.PureComponent {
                     (selected === '' && name === '') ||
                     !isValidUrl(green)
                   }
-                  onClick={() => this.writeIconSet(dataFetcher)}
+                  onClick={() => this.writeIconSet(dataFetcher, storageLocation)}
                 >
                   Save
                 </Button>

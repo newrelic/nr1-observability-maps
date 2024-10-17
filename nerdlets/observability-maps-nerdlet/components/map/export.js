@@ -32,7 +32,7 @@ export default class ExportMap extends React.PureComponent {
                   <Button
                     onClick={this.handleOpen}
                     icon="download"
-                    style={{ height: '45px' }}
+                    style={{ height: '35px',width:'35px' }}
                     className="filter-button"
                   />
                 }
