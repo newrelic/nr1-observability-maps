@@ -34,7 +34,7 @@ export default class ManageIcons extends React.PureComponent {
     const documentId = selected === 'new' || name !== '' ? name : selected;
     console.log(storageLocation);
     // writeUserDocument(iconCollection, documentId, { green, orange, red }); // commented to test storage of settings
-    
+
     if (storageLocation.type === 'user') {
       writeUserDocument(iconCollection, documentId, { green, orange, red });
     } else if (storageLocation.type === 'account') {
@@ -44,7 +44,7 @@ export default class ManageIcons extends React.PureComponent {
       );
     }
     dataFetcher(['userIcons']);
- //   this.handleIconSetChange(null);
+    this.handleIconSetChange(null);
   }
 
   deleteIconSet(selected, dataFetcher) {
@@ -54,6 +54,7 @@ export default class ManageIcons extends React.PureComponent {
   }
 
   handleIconSetChange(value, userIcons) {
+    console.log(userIcons, "icons");
     this.setState({ selected: value });
     if (value === 'new' || !value) {
       this.setState({
@@ -89,8 +90,8 @@ export default class ManageIcons extends React.PureComponent {
             value: set.id,
             data: set.document
           }));
+          console.log(userIcons,  'list');
           options.unshift({ key: 'new', text: 'New Icon Set', value: 'new' });
-
           return (
             <Modal
               closeIcon

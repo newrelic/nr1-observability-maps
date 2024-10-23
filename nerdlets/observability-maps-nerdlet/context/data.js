@@ -416,6 +416,7 @@ export class DataProvider extends Component {
             break;
           case 'userIcons':
             content.push(action);
+            console.log(getAccountCollection(storageLocation.value,iconCollection),'icons');
             //dataPromises.push(getUserCollection(iconCollection));
             dataPromises.push(
               getAccountCollection(storageLocation.value, iconCollection)
