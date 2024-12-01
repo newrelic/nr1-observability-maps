@@ -25,9 +25,19 @@ export default class CustomNode extends React.PureComponent {
     this.renderIcon = this.renderIcon.bind(this);
   }
 
-  renderIcon(userIcons, nodeData, nodeId, isOpen, icon, colorOne) {
+  renderIcon(
+    accountIcons,
+    userIcons,
+    nodeData,
+    nodeId,
+    isOpen,
+    icon,
+    colorOne
+  ) {
     if (nodeData.iconSet) {
-      const iconSet = userIcons.filter(set => set.id === nodeData.iconSet)[0];
+      const iconSet = [...userIcons, ...accountIcons].filter(
+        set => set.id === nodeData.iconSet
+      )[0];
       if (iconSet && iconSet.document) {
         let iconSrc =
           iconSet.document.red ||
@@ -69,6 +79,7 @@ export default class CustomNode extends React.PureComponent {
   }
 
   renderIconGroup = (
+    accountIcons,
     userIcons,
     data,
     nodeId,
@@ -104,6 +115,7 @@ export default class CustomNode extends React.PureComponent {
         <Popup
           // className="popup-custom"
           trigger={this.renderIcon(
+            accountIcons,
             userIcons,
             data,
             nodeId,
@@ -127,7 +139,7 @@ export default class CustomNode extends React.PureComponent {
 
     return (
       <DataConsumer>
-        {({ userIcons, mapData, closeCharts }) => {
+        {({ userIcons, accountIcons, mapData, closeCharts }) => {
           const data = ((mapData || {}).nodeData || {})[node.id] || {};
           const icon =
             data.icon ||
@@ -159,6 +171,7 @@ export default class CustomNode extends React.PureComponent {
                 style={{ height: nodeSize / 10, width: nodeSize / 10 }}
               >
                 {this.renderIconGroup(
+                  accountIcons,
                   userIcons,
                   data,
                   node.id,
