@@ -21,6 +21,8 @@ jobs:
       - name: Checkout Self
         if: ${{ steps.default-branch.outputs.result == 'true' }}
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Run Repolinter
         if: ${{ steps.default-branch.outputs.result == 'true' }}
         uses: newrelic/repolinter-action@v1
