@@ -1,3 +1,11 @@
+# [0.31.0](https://github.com/newrelic/nr1-observability-maps/compare/v0.30.1...v0.31.0) (2024-12-02)
+
+
+### Features
+
+* account icons ([#116](https://github.com/newrelic/nr1-observability-maps/issues/116)) ([ec4ef7f](https://github.com/newrelic/nr1-observability-maps/commit/ec4ef7fdfa833763a29a5c6580cd84d2f6df3ae5))
+* update WFs ([#117](https://github.com/newrelic/nr1-observability-maps/issues/117)) ([d9d8c1c](https://github.com/newrelic/nr1-observability-maps/commit/d9d8c1c826b52b07c7b86e26fa8c7e489487123a))
+
 ## [0.30.1](https://github.com/newrelic/nr1-observability-maps/compare/v0.30.0...v0.30.1) (2024-10-17)
 
 
