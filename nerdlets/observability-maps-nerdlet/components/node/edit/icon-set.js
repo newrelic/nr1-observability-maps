@@ -18,13 +18,28 @@ export default class IconSet extends React.PureComponent {
   render() {
     return (
       <DataConsumer>
-        {({ userIcons, mapConfig, selectedNode, updateDataContextState }) => {
-          const userIconSelection = userIcons.map(set => ({
+        {({
+          userIcons,
+          accountIcons,
+          mapConfig,
+          selectedNode,
+          updateDataContextState
+        }) => {
+          const iconSelection = userIcons.map(set => ({
             key: set.id,
             value: set.id,
             text: set.id
           }));
-          userIconSelection.unshift({
+
+          accountIcons.forEach(set => {
+            iconSelection.push({
+              key: `account_${set.id}`,
+              value: set.id,
+              text: set.id
+            });
+          });
+
+          iconSelection.unshift({
             key: 'default',
             text: 'Default',
             value: 'default'
@@ -47,7 +62,7 @@ export default class IconSet extends React.PureComponent {
                   width="16"
                   style={{ display: 'inline', width: '100%' }}
                   search
-                  options={userIconSelection}
+                  options={iconSelection}
                   placeholder="Select Icon Set"
                   value={
                     this.state.iconSet === ''

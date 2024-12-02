@@ -78,6 +78,7 @@ export class DataProvider extends Component {
       },
       tempLocations: {},
       userIcons: [],
+      accountIcons: [],
       storeLocation: 'user',
       storageLocation: {
         key: 'User',
@@ -406,6 +407,11 @@ export class DataProvider extends Component {
     return new Promise(async resolve => {
       const dataPromises = [];
       const content = [];
+      const { storageLocation } = this.state;
+
+      if (actions.includes('accountMaps')) {
+        actions.push('accountIcons');
+      }
 
       actions.forEach(action => {
         switch (action) {
@@ -417,8 +423,13 @@ export class DataProvider extends Component {
             content.push(action);
             dataPromises.push(getUserCollection(iconCollection));
             break;
+          case 'accountIcons':
+            content.push(action);
+            dataPromises.push(
+              getAccountCollection(storageLocation.value, 'ObservabilityIcons')
+            );
+            break;
           case 'accountMaps':
-            const { storageLocation } = this.state;
             content.push(action);
             dataPromises.push(
               getAccountCollection(storageLocation.value, collectionName)
@@ -458,6 +469,10 @@ export class DataProvider extends Component {
               data.availableMaps = [...data.availableMaps, ...data[content[i]]];
               break;
             case 'userIcons':
+              data[content[i]] = value;
+              break;
+            case 'accountIcons':
+              console.log('!!!', value);
               data[content[i]] = value;
               break;
             case 'userConfig':
